@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Generated output directories (except example data)
+output_*/
+output_multi_*/
+ls_per_face/
+*_output/
+!example_data/
+
+# Generated data files (except in example_data/)
+*.ply
+*.pcd
+*.npy
+*.npz
+*.yaml
+*.npz
+!**/example_data/**
+!**/example_*/
+
+# CAD source files (large binaries)
+*.SLDPRT
+*.SLDASM
+*.SLDDRW
+*.bak
+
+# Roboguide simulation caches
+SavePoints/
+AVIs/
+VisionImage/
+VisionData/
+*.bin
+cmosimg.bin
+fromimg.bin
+frvirt.dat
+logfile.txt
+RecoveryLog.txt
+services.txt
+thisrobot.url
+chui_cache.xml
+tpgl/
+
+# Temporary files
+*.tmp
+*.log
+tmp/
+temp/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+~$*

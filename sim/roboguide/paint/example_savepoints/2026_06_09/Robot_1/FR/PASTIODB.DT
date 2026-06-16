@@ -1,0 +1,3339 @@
+! PaintTool I/O Auto Configurator Data File (PaStioDb.dt)	      
+! This data file is used to Automatically configure the Standard I/O
+! for PaintTool and any options that have been loaded.  This data
+! file is a TAB-delimited file that can be edited With Microsoft
+! Excel, Microsoft NotePad, Microsoft WordPad, or any editor that does
+! not remove the TAB-delimited characters from this Database.
+! Note: Microsoft Excel inserts bogus characters for two-dimensioal
+! arrays, therefore, it is not a recommended editor!
+! (example ins_to_par[1,1] will change to "ins_to_par[1,1]" resulting
+! in an error when this file is processed!)
+! Note: Comment lines may be inserted any place in this data file,
+! either inside a TOKEN or outside outside of a TOKEN but both must
+! start with the character (!) only!!!  This data file processes
+! three tokens (CELL, PROCESS, and VAR) to setup Cell I/O,
+! Process I/O, and Variables for PaintTool and any options, the
+! following syntax is required:
+! CELL  U.P.#1  U.V.#1  U.C.#1  U.P.#2  U.V.#2  U.C.#2  I.P.  I.V.
+! where:
+!	CELL - Instructs I/O Auto Configurator to assign Cell I/O
+!	U.P.#1(User Program #1) - User program #1 name (KAREL or *SYSTEM*)
+!	U.V.#1(User Variable #1) - User variable #1 name
+!	U.C.#1(User Value #1) - User value #1 (This token is processed if
+!                           variable #1 value = R-J3 variable)
+!	U.P.#2(User Program #2) - User program #2 name (KAREL or *SYSTEM*)
+!	U.V.#2(User Variable #2) - User variable #2 name
+!	U.C.#2(User Value #2) - User value #2 (This token is processed if
+!                           variable #2 value = R-J3 variable)
+!	I.P.(Integer Program) - Integer program name (KAREL or *SYSTEM*)
+!	I.V.(Integer Variable) - Integer variable name (PaintTool default
+!                            is the following:
+!
+!                            Cell Hardware I/O Type [PAVROPTN]cell_io_type,
+!                            user selects this at Controlled Start Menu)
+!   where:
+!     Supported Cell Hardware I/O Types (cell_io_type):
+!       Any-Type I/O (no hardware checked, always assign this type) = 0
+!       Memory-Mapped I/O					[PAVROPTN]cell_io_type = 1
+!       Model A I/O (5 or 10 Slot Rack)		[PAVROPTN]cell_io_type = 2
+!
+!	Note:	All PLC interfaces selected will set the following parameter
+!			to '9', therefore, the same section can be used to assign the
+!			CELL I/O.  The variables, [PAVROPTN]plc_rack_no and plc_slot_no
+!			are updated at the Controlled Start Tool Setup screen when one
+!			of the following are selected!
+!
+!						Rack	Slot
+!						----	----
+!		FANUC I/O Link	0		1			[PAVROPTN]cell_io_type = 9
+!       AB/Genius		16		1			[PAVROPTN]cell_io_type = 9
+!      	ControlNet		85		1			[PAVROPTN]cell_io_type = 9
+!       DeviceNet		81		1			[PAVROPTN]cell_io_type = 9
+!       Interbus-S		71		1			[PAVROPTN]cell_io_type = 9
+!       ProfiBus		67		1			[PAVROPTN]cell_io_type = 9
+!
+! PROCESS  U.P.#1  U.V.#1  U.C.#1  U.P.#2  U.V.#2  U.C.#2  I.P.  I.V.
+! where:							
+!	PROCESS - Instructs I/O Auto Configurator to assign Process I/O						
+!	U.P.#1(User Program #1) - User program #1 name (KAREL or *SYSTEM*)
+!	U.V.#1(User Variable #1) - User variable #1 name
+!	U.C.#1(User Value #1) - User value #1 (This token is processed if
+!                           variable #1 value = R-J3 variable)
+!	U.P.#2(User Program #2) - User program #2 name (KAREL or *SYSTEM*)
+!	U.V.#2(User Variable #2) - User variable #2 name
+!	U.C.#2(User Value #2) - User value #2 (This token is processed if
+!                           variable #2 value = R-J3 variable)
+!	I.P.(Integer Program) - Integer program name (KAREL or *SYSTEM*)
+!	I.V.(Integer Variable) - Integer variable name (PaintTool default
+!                            is the following:
+!
+!                            Process Hardware I/O Type [PAVROPTN]proc_io_type,
+!                            user selects this at Controlled Start Menu)
+!	where:
+!     Supported Process Hardware I/O Types (proc_io_type):
+!       Any-Type I/O (no hardware checked, always assign this type) = 0
+!       Memory-Mapped I/O    				[PAVROPTN]proc_io_type = 1
+!       Model A I/O (5 Slot Rack #1)			[PAVROPTN]proc_io_type = 2
+!       Model A I/O (5 Slot Rack #2)			[PAVROPTN]proc_io_type = 3
+!       DeviceNet	     				[PAVROPTN]proc_io_type = 5
+!
+! VAR  U.P.#1  U.V.#1  U.C.#1  U.P.#2  U.V.#2  U.C.#2  I.P.  I.V.
+! where:
+!   VAR - Instructs I/O Auto Configurator to assign Variable						
+!	U.P.#1(User Program #1) - User program #1 name (KAREL or *SYSTEM*)
+!	U.V.#1(User Variable #1) - User variable #1 name
+!	U.C.#1(User Value #1) - User value #1 (This token is processed if
+!                           variable #1 value = R-J3 variable)
+!	U.P.#2(User Program #2) - User program #2 name (KAREL or *SYSTEM*)
+!	U.V.#2(User Variable #2) - User variable #2 name
+!	U.C.#2(User Value #2) - User value #2 (This token is processed if
+!                           variable #2 value = R-J3 variable)
+!	I.P.(Integer Program) - Integer program name (KAREL or *SYSTEM*)
+!	I.V.(Integer Variable) - Integer variable name (PaintTool default
+!                            is the following:
+!
+!                            Applicator Types [PAVROPTN]which_gun,
+!                            user selects this at Controlled Start Menu)
+!   where:
+!     Supported Applicator Types (which_gun):
+!       Gun		    				[PAVROPTN]which_gun = 1
+!       Bell(306)					[PAVROPTN]which_gun = 2
+!       Bell(607)					[PAVROPTN]which_gun = 3
+!
+! The contents between CELL or PROCESS TOKEN and the STOPSECTION may
+! contain only the following syntax, either a comment line (!) or an
+! I/O assignment line as described below:
+!
+! *****NOTE:*****
+! Please map any unused I/O that does not contain special logic in
+! the KAREL code ( if dout[] <> 0 ) to DIN[1025] OR DOUT[1025]
+! because these signals are already mapped to memory!!!
+!
+! I/O Type	LP Type	LP No.	Rack	Slot	PP Type	PP No.	Points	Comment	Program	Variable
+! where:
+!  I/O Type	This item is the Hardware I/O Type for this particular I/O
+!           assignment line (CELL or PROCESS) as described above; if
+!           this number is equal to the TOKEN Hardware I/O Type field,
+!           OR if this item is set to '0', then this I/O assignment
+!           line will be executed.
+!  where:
+!   Supported Cell Hardware I/O Types:
+!     Any-Type I/O (no hardware checked, always assign this type) = 0
+!     Memory-Mapped I/O	    			[PAVROPTN]cell_io_type = 1
+!     Model A I/O (5 or 10 Slot Rack)		[PAVROPTN]cell_io_type = 2
+!
+!	Note:	All PLC interfaces selected will set the following parameter
+!			to '9', therefore, the same section can be used to assign the
+!			CELL I/O.  The variables, [PAVROPTN]plc_rack_no and plc_slot_no
+!			are updated at the Controlled Start Tool Setup screen when one
+!			of the following are selected!
+!
+!						Rack	Slot
+!						----	----
+!		FANUC I/O Link	0		1			[PAVROPTN]cell_io_type = 9
+!       AB/Genius		16		1			[PAVROPTN]cell_io_type = 9
+!      	ControlNet		85		1			[PAVROPTN]cell_io_type = 9
+!       DeviceNet		81		1			[PAVROPTN]cell_io_type = 9
+!       Interbus-S		71		1			[PAVROPTN]cell_io_type = 9
+!       ProfiBus		67		1			[PAVROPTN]cell_io_type = 9
+!
+!   Supported Process Hardware I/O Types:
+!     Any-Type I/O (no hardware checked, always assign this type) = 0
+!     Memory-Mapped I/O						[PAVROPTN]proc_io_type = 1
+!     Model A I/O (5 Slot Rack #1)				[PAVROPTN]proc_io_type = 2
+!     Model A I/O (5 Slot Rack #2) 				[PAVROPTN]proc_io_type = 3
+!     Model A I/O (10 Slot Rack #1 5 slots Cell - 5 slots Process)  [PAVROPTN]proc_io_type = 4
+!     DeviceNet								[PAVROPTN]proc_io_type = 5
+!
+!  LP Type	This is the Logical Port Type field for the I/O assignment:
+!  where:
+!    1 -	Digital Input (DIN)
+!    2 -	Digital Output (DOUT)
+!    3 -	Analog Input (AIN)
+!    4 -	Analog Output (AOUT)
+!    6 -	PLC Digital Input (PI)
+!    7 -	PLC Digital Output (PO)
+!    8 -	Robot Digital Input (RDI)
+!    9 -	Robot Digital Output (RDO)
+!   11 -	Operator Panel Input (SOPIN)
+!   12 -	Operator Panel Output (SOPOUT)
+!   18 -	Group Digital Input (GPIN)
+!   19 -	Group Digital Output (GPOUT)
+!   20 -	User Operator Panel Input (UOPIN)
+!   21 -	User Operator Panel Output (UOPOUT)
+!
+!  LP No.	This is the Logical Port Number field for the I/O assignment:		
+!  where:
+!    DIN	(1 - 256)
+!    DOUT	(1 - 256)
+!    AIN	(1 - 25)
+!    AOUT	(1 - 25)
+!    PI		(1 - 128)
+!    PO		(1 - 128)
+!    RDI	(1 - 8)
+!    RDO	(1 - 8)
+!    SOPIN	(1 - 15)
+!    SOPOUT	(1 - 15)
+!    GPIN	(1 - 25)
+!    GPOUT	(1 - 25)
+!    UOPIN	(1 - 20)
+!    UOPOUT	(1 - 20)
+!
+!  Rack		This is the Rack number field for the I/O assignment:
+!  where:
+!    0 -	Memory-Mapped I/O or FANUC I/O Link
+!    1 -	Cell Model A I/O (5 or 10 Slot Rack) or
+!           Process Model A I/O (5 Slot Rack#1)
+!    2 -	Process Model A I/O (5 Slot Rack#2)
+!
+!	Note:	The Rack number field for PLC I/O is ignored during processing,
+!			the following is for reference ONLY!  The variable,
+!			[PAVROPTN]plc_rack_no is updated at the Controlled Start Tool Setup
+!			screen when one of the following are selected!
+!
+!	0  -	FANUC I/O Link
+!   16 -	AB/Genius I/O
+!   66 -	ProfiBus Master Mode
+!   67 -	ProfiBus Slave Mode
+!	70 -	Interbus-S Master Mode
+!	71 -	Interbus-S Slave Mode
+!   81 -	DeviceNet
+!	85 -	ControlNet Channel #1 Mode
+!	86 - 	ControlNet Channel #2 Mode
+!
+!  Slot		This is the Slot number field for the I/O assignment:
+!  where:
+!    0 -	Memory-Mapped I/O
+!
+!	Note:	The Slot number field for PLC I/O is ignored during processing,
+!			the variable, [PAVROPTN]plc_slot_no is updated at the Controlled
+!			Start Tool Setup screen when one of the above PLC interfaces is selected!
+!
+!    1 -	Physical cell or process module, AB/Genius, ControlNet, DeviceNet,
+!           FANUC I/O Link, Interbus-S and ProfiBus
+!    2 -	Physical cell or process module
+!    3 -	Physical cell or process module
+!    4 -	Physical cell or process module
+!    5 -	Physical cell or process module
+!    6 -	Physical cell or process module
+!    7 -	Physical cell or process module
+!    8 -	Physical cell or process module
+!    9 -	Physical cell or process module
+!   10 -	Physical cell or process module
+!
+!  PP Type	This is the Physical Port Type field for the I/O assignment:
+!  where:
+!    1 -	Digital Input (DIN)
+!    2 -	Digital Output (DOUT)
+!    3 -	Analog Input (AIN)
+!    4 -	Analog Output (AOUT)
+!   28 -	Memory Image BOOLEANS (DIN and DOUT)
+!   29 -	Memory Image Numbers (GPIN, GPOUT, AIN, and AOUT)
+!
+!  PP No.	This is the Physical Port Type Number field for the I/O assignment:
+!  where:
+!    DIN	(1 - 256 only multiples of 8 are assigned)
+!    DOUT	(1 - 256 only multiples of 8 are assigned)
+!    AIN	(1 - 4 channels)
+!    AOUT	(1 - 2 channels)
+!    MEM_BOO_TYPE	(1 - 1024)
+!    MEM_NUM_TYPE	(1 - 100)
+!
+!  Points	This is the Points field for the I/O assignment:
+!  where:
+!    1 -	DIN, DOUT, AIN, AOUT, MEM_BOO_TYPE, MEM_NUM_TYPE
+!    1 - ?	GPIN AND GPOUT to physical number of points on module
+!
+!  Comment	This is the Comment field for the I/O assignment which is
+!           an optional field.
+!
+!  Program	This is the Program name field for the I/O assignment
+!           which is an optional field.
+!
+!  Note:	This program must be a valid KAREL program loaded on the
+!           controller or specify *SYSTEM*.
+!
+!  Variable	This is the Variable name field for the I/O assignment
+!           which is an optional field.
+!
+!  Note:	This variable will be set to the value of the
+!           Logical Port Number (LP No.) field if this is a valid
+!           KAREL program variable or *SYSTEM* variable.
+!
+! The contents between the VAR TOKEN and the STOPSECTION may contain
+! only the following syntax, either a comment line (!) or a variable
+! assignment line as described below:
+!
+! User Integer  Data Type  Program  Variable  Value
+! where:				
+!  User Integer	This is the User Integer field that contains a
+!               specified value used to compare against the Integer
+!               Variable defined in the VAR TOKEN.  PaintTool defaults
+!               this Integer Variable to [PAVROPTN]which_gun with the
+!               following configurations:
+!  where:
+!    0 -	Any Applicator Type		
+!    1 -	Gun
+!    2 -	Bell(306)
+!    3 -	Bell(607)
+!
+!  Data Type	This is the Data Type field with the following types
+!               supported:
+!  where:
+!    BOOLEAN	Can specify 0, 1, FALSE, or TRUE
+!    BYTE		Whole numbers from 1 to 255
+!    SHORT		Whole numbers from 1 to 32767
+!    INTEGER	Whole numbers from -2,147,483,648 to 2,147,483,647
+!    REAL		Fraction numbers from 10xy-38 to 10xy38
+!    STRING		Character expressions from 1 to 80 characters
+!
+!  Program		This is the Program name field which must contain a
+!               valid KAREL program name loaded onto the controller or
+!               *SYSTEM*.
+!
+!  Variable		This is the Variable name field which must contain a
+!               valid KAREL program variable loaded onto the controller
+!               or *SYSTEM*.
+!
+!  Value		This is the Value field which is the value that the
+!               above specified variable will be assigned.
+!
+!  NOTE: The following constants are defined in PAVROPPR.EDD to represent the array index
+!        element into the new [PAVROPTN]byOptn[1..MAX_NUM_GRPS].byOp[MAX_OPS] OF BYTE data type to conserve memory
+!        for boolean data type operations in PaintTool!
+!  ConvSyncOpt  = 1;
+!  job_que_rep  = 2;
+!  job_ent_tp   = 3;  
+!  job_strt_sg  = 4;
+!  job_clr_que  = 5;
+!  job_in_que   = 6;
+!  pushout_req  = 7;
+!  pamnent_clr  = 8;
+!  rob_cc_use   = 9;
+!  rob_accu_use = 10;
+!  rob_dq_set   = 11;
+!  rob_cc_set   = 12;
+!  rob_last_use = 13;
+!  rob_auto_out = 14;
+!  CPXType = 15 (0 = Non-P-500, 
+!                1 = CPX-MPA-1K/IC, 
+!                2 = CPX-MPA-2K, 
+!                3 = CPX-MPA-Simple2K)
+!  rob_ac_use   = 16;
+!  rob_ac_set   = 17;
+!  rob_ac2_use  = 18;
+!  rob_ln_use   = 19;
+!  rob_ln_set   = 20;
+!  rob_rl_use   = 21;
+!  rob_rl_set   = 22;
+!  rob_jog_pn   = 23;
+!  AutoTCPUpd   = 24;
+!  rob_eip_use  = 25;
+!  rob_canc_use = 26;
+!  rob_que_use  = 27;
+!  rob_cq_use   = 28;
+!  rob_op_use   = 29;
+!  rob_mov_home = 30;
+!  rob_op_type  = 31;
+!  rob_ae_use   = 32;
+!  rob_2gun_use = 33;
+!  rob_2fg_use  = 34;
+!  rob_mt_use   = 35;
+!  rob_mtap_use = 36;
+!  rob_prst_use = 37;
+!  rob_func_use = 38;
+!  UserTP_use   = 39;
+!  rob_ipc_use  = 40;
+!  rob_2kgn_use = 41;
+!  rob_mtr_use  = 42;
+!  rob_aa_use   = 43;
+!  rob_ts_use   = 44;
+!  bLimitTurns  = 45;
+!  rob_tper_use = 46;
+!  dm_auto_res  = 47;
+!  force_use    = 48;
+!  rob_bell_use = 49;
+!  rob_607_use  = 50;
+!  rob_stio_use = 51;
+!  rob_stio_set = 52;
+!  rob_enio_use = 53;
+!  rob_enio_set = 54;
+!  rob_parm_use = 55;
+!  rob_trk_use  = 56;
+!  rob_ethr_set = 57;
+!  rob_dnet_use = 58;
+!  dnet_sv_set  = 59;
+!  rob_prof_use = 60;
+!  prof_sv_set  = 61;
+!  rob_2ksp_use = 62;
+!  aflw_chp_1ch = 63;
+!  aflw_chp_2ch = 64;
+!  rob_acch_use = 65;
+!  rob_padg_use = 66;
+!  rob_chmp_use = 67;
+!  rob_hscd_use = 68;
+!  spare        = 69;
+!  rob_dsl_use  = 70;
+!  rob_pnt_type = 71;
+!  rob_wba_use  = 72;
+!  rob_sba_use  = 73;
+!  rob_dq_use   = 74;
+!  rob_dual_arm = 75;
+!  AppEnabTch  = 76;
+!  AppEnbTstRun   = 77;
+!  prst_by_job  = 78;
+!  rob_zone_use = 79;
+!  rob_2kgn_set = 80;
+!  rob_accu_set = 81;
+!  rob_ipc_set  = 82;
+!  rob_parm_set = 83;
+!  rob_main_set = 84;
+!  rob_trk_set  = 85;
+!  MskSpeedMsg  = 86;
+!  BrakeRelUse  = 87;
+!  hiresaout    = 88;
+!  hondaevb_use = 89;
+!  SMCNodeCfg   = 90;
+!  spare        = 91;
+!  SolvAir_use  = 92;
+!  rob_pmc_use  = 93;
+!  rob_pmc_set  = 94;
+!  rob_es_use   = 95;
+!  ISTP        = 96;
+!  rob_ppro_use = 97;
+!  Sames_USE    = 98;
+!  rob_virt_use = 99;
+!  spare        = 100;
+!  rob_ic_use   = 101;
+!  rob_ff_use   = 102;
+!  rob_p500_mnt = 103;
+!  rob_mcro_use = 104;
+!  CellNumCntr  = 105;
+!  RosIpUse     = 106;
+!  ArmNumber    = 107;
+!  spare        = 108;
+!  rob_svhk_use = 109;
+!  rob_vis_use  = 110;
+!  rob_mate_use = 111;
+!  rob_mate_set = 112;
+!  old_trig_use = 113;
+!  rob_aa_set   = 114;
+!  rob_clr_use  = 115;
+!  rob_ichk_use = 116;
+!  rob_rvrs_ufm = 117;
+!  rob_eenc_use = 118;
+!  rob_pwrf_use = 119;
+!  rob_sync_use = 120;
+!  rob_aseq_use = 121;
+!  rob_sync_frc = 122;
+!  rob_tfrm_use = 123;
+!  rob_zdt_use  = 125;
+!  rob_irdg_use = 126;
+!
+! Start Data File TOKENS
+
+!rob_stio_use = 51
+CELL	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	cell_io_type
+! Cell Digital Inputs (Memory-Mapped)							
+1	1	1	0	0	28	1	1
+1	1	2	0	0	28	2	1
+1	1	3	0	0	28	3	1
+1	1	4	0	0	28	4	1
+1	1	5	0	0	28	5	1
+1	1	6	0	0	28	6	1
+1	1	7	0	0	28	7	1
+1	1	8	0	0	28	8	1			
+1	1	9	0	0	28	9	1	Start Job	PAVRSHIO	strt_sty_di
+1	1	10	0	0	28	10	1	Abort Prod.	PAVRSHIO	prd_abort_di
+1	1	11	0	0	28	11	1			
+1	1	12	0	0	28	12	1	Cancel Job	PAVRSHIO	tShioCmos[1].cancel_di
+1	1	13	0	0	28	13	1	Continue Job	PAVRSHIO	tShioCmos[1].continue_di
+1	1	14	0	0	28	14	1			
+1	1	15	0	0	28	15	1	Clear Ques	PAVRSHIO	clr_ques_di
+1	1	16	0	0	28	16	1			
+1	1	17	0	0	28	17	1	Job Data B0	PAVRSHIO	tShioInit[1].iDataBeg
+1	1	18	0	0	28	18	1	Job Data B1		
+1	1	19	0	0	28	19	1	Job Data B2		
+1	1	20	0	0	28	20	1	Job Data B3		
+1	1	21	0	0	28	21	1	Job Data B4		
+1	1	22	0	0	28	22	1	Job Data B5		
+1	1	23	0	0	28	23	1	Job Data B6
+1	1	24	0	0	28	24	1	Job Data B7
+1	1	25	0	0	28	25	1	Job Data B8
+1	1	26	0	0	28	26	1	Job Data B9	PAVRSHIO	tShioInit[1].iDataEnd
+1	1	27	0	0	28	27	1	ColorData B0	PAVRSHIO	tShioInit[1].iColInitBeg
+1	1	28	0	0	28	28	1	ColorData B1
+1	1	29	0	0	28	29	1	ColorData B2
+1	1	30	0	0	28	30	1	ColorData B3
+1	1	31	0	0	28	31	1	ColorData B4	PAVRSHIO	tShioInit[1].iColInitEnd
+1	1	32	0	0	28	32	1	Read Strobe	PAVRSHIO	tShioInit[1].read_sty_di
+1	1	33	0	0	28	33	1	
+1	1	34	0	0	28	34	1	
+1	1	35	0	0	28	35	1	
+1	1	36	0	0	28	36	1	
+1	1	37	0	0	28	37	1	
+1	1	38	0	0	28	38	1	
+1	1	39	0	0	28	39	1
+1	1	40	0	0	28	40	1
+1	1	41	0	0	28	41	1
+1	1	42	0	0	28	42	1
+1	1	43	0	0	28	43	1
+1	1	44	0	0	28	44	1
+1	1	45	0	0	28	45	1
+1	1	46	0	0	28	46	1
+1	1	47	0	0	28	47	1
+1	1	48	0	0	28	48	1
+1	1	49	0	0	28	49	1
+1	1	50	0	0	28	50	1
+1	1	51	0	0	28	51	1
+1	1	52	0	0	28	52	1
+1	1	53	0	0	28	53	1
+1	1	54	0	0	28	54	1
+1	1	55	0	0	28	55	1
+1	1	56	0	0	28	56	1
+1	1	57	0	0	28	57	1
+1	1	58	0	0	28	58	1
+1	1	59	0	0	28	59	1
+1	1	60	0	0	28	60	1
+1	1	61	0	0	28	61	1
+1	1	62	0	0	28	62	1
+1	1	63	0	0	28	63	1
+1	1	64	0	0	28	64	1
+1	1	65	0	0	28	65	1
+1	1	66	0	0	28	66	1
+1	1	67	0	0	28	67	1
+1	1	68	0	0	28	68	1
+1	1	69	0	0	28	69	1
+1	1	70	0	0	28	70	1
+1	1	71	0	0	28	71	1
+1	1	72	0	0	28	72	1
+1	1	73	0	0	28	73	1
+1	1	74	0	0	28	74	1
+1	1	75	0	0	28	75	1
+1	1	76	0	0	28	76	1
+1	1	77	0	0	28	77	1
+1	1	78	0	0	28	78	1
+1	1	79	0	0	28	79	1
+1	1	80	0	0	28	80	1
+1	1	81	0	0	28	81	1
+1	1	82	0	0	28	82	1
+1	1	83	0	0	28	83	1
+1	1	84	0	0	28	84	1
+1	1	85	0	0	28	85	1
+1	1	86	0	0	28	86	1
+1	1	87	0	0	28	87	1
+1	1	88	0	0	28	88	1
+1	1	89	0	0	28	89	1
+1	1	90	0	0	28	90	1
+1	1	91	0	0	28	91	1
+1	1	92	0	0	28	92	1
+1	1	93	0	0	28	93	1
+1	1	94	0	0	28	94	1
+1	1	95	0	0	28	95	1
+1	1	96	0	0	28	96	1
+1	1	97	0	0	28	97	1
+1	1	98	0	0	28	98	1
+1	1	99	0	0	28	99	1
+1	1	100	0	0	28	100	1
+1	1	101	0	0	28	101	1
+1	1	102	0	0	28	102	1
+1	1	103	0	0	28	103	1
+1	1	104	0	0	28	104	1
+1	1	105	0	0	28	105	1
+1	1	106	0	0	28	106	1
+1	1	107	0	0	28	107	1
+1	1	108	0	0	28	108	1
+1	1	109	0	0	28	109	1
+1	1	110	0	0	28	110	1
+1	1	111	0	0	28	111	1
+1	1	112	0	0	28	112	1
+1	1	113	0	0	28	113	1
+1	1	114	0	0	28	114	1
+1	1	115	0	0	28	115	1
+1	1	116	0	0	28	116	1
+1	1	117	0	0	28	117	1
+1	1	118	0	0	28	118	1
+1	1	119	0	0	28	119	1
+1	1	120	0	0	28	120	1
+1	1	121	0	0	28	121	1
+1	1	122	0	0	28	122	1
+1	1	123	0	0	28	123	1
+1	1	124	0	0	28	124	1
+1	1	125	0	0	28	125	1
+1	1	126	0	0	28	126	1
+1	1	127	0	0	28	127	1
+1	1	128	0	0	28	128	1
+
+! Cell Digital Inputs (Model A I/O - 5 or 10 Slot Rack)
+2	1	9	1	1	1	9	1	Start Job	PAVRSHIO	strt_sty_di
+2	1	10	1	1	1	10	1	Abort Prod.	PAVRSHIO	prd_abort_di
+2	1	11	1	1	1	11	1			
+2	1	12	1	1	1	12	1	Cancel Job	PAVRSHIO	tShioCmos[1].cancel_di
+2	1	13	1	1	1	13	1	Continue Job	PAVRSHIO	tShioCmos[1].continue_di
+2	1	14	1	1	1	14	1			
+!2	1	15	1	1	1	15	1	Clear Ques	PAVRSHIO	clr_ques_di
+2	1	16	1	1	1	16	1			
+2	1	17	1	2	1	1	1	Job Data B0	PAVRSHIO	tShioInit[1].iDataBeg
+2	1	18	1	2	1	2	1	Job Data B1		
+2	1	19	1	2	1	3	1	Job Data B2		
+2	1	20	1	2	1	4	1	Job Data B3		
+2	1	21	1	2	1	5	1	Job Data B4		
+2	1	22	1	2	1	6	1	Job Data B5
+2	1	23	1	2	1	7	1	Job Data B6
+2	1	24	1	2	1	8	1	Job Data B7
+2	1	25	1	2	1	9	1	Job Data B8
+2	1	26	1	2	1	10	1	Job Data B9	PAVRSHIO	tShioInit[1].iDataEnd
+2	1	27	1	2	1	11	1	ColorData B0	PAVRSHIO	tShioInit[1].iColInitBeg
+2	1	28	1	2	1	12	1	ColorData B1
+2	1	29	1	2	1	13	1	ColorData B2
+2	1	30	1	2	1	14	1	ColorData B3
+2	1	31	1	2	1	15	1	ColorData B4	PAVRSHIO	tShioInit[1].iColInitEnd
+2	1	32	1	2	1	16	1	Read Strobe	PAVRSHIO	tShioInit[1].read_sty_di
+
+! Cell Digital Inputs (PLC I/O)
+9	1	9	0	0	1	9	1	Start Job	PAVRSHIO	strt_sty_di			
+9	1	10	0	0	1	10	1	Abort Prod.	PAVRSHIO	prd_abort_di
+9	1	11	0	0	1	11	1			
+9	1	12	0	0	1	12	1	Cancel Job	PAVRSHIO	tShioCmos[1].cancel_di
+9	1	13	0	0	1	13	1	Continue Job	PAVRSHIO	tShioCmos[1].continue_di
+9	1	14	0	0	1	14	1			
+9	1	15	0	0	1	15	1	Clear Ques	PAVRSHIO	clr_ques_di
+9	1	16	0	0	1	16	1			
+9	1	17	0	0	1	17	1	Job Data B0	PAVRSHIO	tShioInit[1].iDataBeg		
+9	1	18	0	0	1	18	1	Job Data B1		
+9	1	19	0	0	1	19	1	Job Data B2		
+9	1	20	0	0	1	20	1	Job Data B3		
+9	1	21	0	0	1	21	1	Job Data B4
+9	1	22	0	0	1	22	1	Job Data B5
+9	1	23	0	0	1	23	1	Job Data B6
+9	1	24	0	0	1	24	1	Job Data B7
+9	1	25	0	0	1	25	1	Job Data B8
+9	1	26	0	0	1	26	1	Job Data B9	PAVRSHIO	tShioInit[1].iDataEnd
+9	1	27	0	0	1	27	1	ColorData B0	PAVRSHIO	tShioInit[1].iColInitBeg
+9	1	28	0	0	1	28	1	ColorData B1
+9	1	29	0	0	1	29	1	ColorData B2
+9	1	30	0	0	1	30	1	ColorData B3
+9	1	31	0	0	1	31	1	ColorData B4	PAVRSHIO	tShioInit[1].iColInitEnd
+9	1	32	0	0	1	32	1	Read Strobe	PAVRSHIO	tShioInit[1].read_sty_di
+
+! Cell Digital Inputs (PDI IO)
+13	1	9	48	1	1	9	1	Start Job	PAVRSHIO	strt_sty_di
+13	1	10	48	1	1	10	1	Abort Prod.	PAVRSHIO	prd_abort_di
+13	1	11	48	1	1	11	1	Cancel Job	PAVRSHIO	tShioCmos[1].cancel_di
+13	1	12	48	1	1	12	1	Continue Job	PAVRSHIO	tShioCmos[1].continue_di
+13	1	13	48	1	1	13	1	Clear Ques	PAVRSHIO	clr_ques_di
+13	1	14	48	1	1	14	1	Job Data B0	PAVRSHIO	tShioInit[1].iDataBeg
+13	1	15	48	1	1	15	1	Job Data B1
+13	1	16	48	1	1	16	1	Job Data B2
+13	1	17	48	1	1	17	1	Job Data B3
+13	1	18	48	1	1	18	1	Job Data B4
+13	1	19	48	1	1	19	1	Job Data B5
+13	1	20	48	1	1	20	1	Job Data B6
+13	1	21	48	1	1	21	1	Job Data B7
+13	1	22	48	1	1	22	1	Job Data B8
+13	1	23	48	1	1	23	1	Job Data B9	PAVRSHIO	tShioInit[1].iDataEnd
+13	1	24	48	1	1	24	1	ColorData B0	PAVRSHIO	tShioInit[1].iColInitBeg
+13	1	25	48	1	1	25	1	ColorData B1
+13	1	26	48	1	1	26	1	ColorData B2
+13	1	27	48	1	1	27	1	ColorData B3	PAVRSHIO	tShioInit[1].iColInitEnd
+13	1	28	48	1	1	28	1	Read Strobe	PAVRSHIO	tShioInit[1].read_sty_di
+13	1	29	0	0	28	29	1
+13	1	30	0	0	28	30	1
+13	1	31	0	0	28	31	1
+13	1	32	0	0	28	32	1
+
+! Cell Digital Inputs (Robot I/O mapped to RDI[1])
+15	1	9	0	0	8	1	1	Start Job	PAVRSHIO	strt_sty_di
+
+! Cell Group Inputs (Memory-Mapped)
+1	18	1	0	0	29	1	1	Job Data	PAVRSHIO	sty_code_gi
+1	18	2	0	0	29	2	1	Color Data	PAVRSHIO	colr_code_gi
+1	18	3	0	0	29	3	1			
+1	18	4	0	0	29	4	1			
+1	18	5	0	0	29	5	1			
+1	18	6	0	0	29	6	1			
+1	18	7	0	0	29	7	1			
+1	18	8	0	0	29	8	1			
+1	18	9	0	0	29	9	1			
+1	18	10	0	0	29	10	1			
+1	18	11	0	0	29	11	1			
+1	18	12	0	0	29	12	1			
+1	18	13	0	0	29	13	1			
+1	18	14	0	0	29	14	1			
+1	18	15	0	0	29	15	1			
+1	18	16	0	0	29	16	1			
+1	18	17	0	0	29	17	1			
+1	18	18	0	0	29	18	1			
+1	18	19	0	0	29	19	1			
+1	18	20	0	0	29	20	1			
+1	18	21	0	0	29	21	1			
+1	18	22	0	0	29	22	1			
+1	18	23	0	0	29	23	1			
+1	18	24	0	0	29	24	1			
+1	18	25	0	0	29	25	1
+1	18	65	0	0	29	247	1	!(Note:Memory-Map for BYTE access only!)
+1	18	66	0	0	29	248	1	!(Note:Memory-Map for INTEGER access only!)
+
+! Cell Group Inputs (Model A I/O - 5 or 10 Slot Rack)
+2	18	1	1	2	1	1	10	Job Data	PAVRSHIO	sty_code_gi
+2	18	2	1	2	1	11	5	Color Data	PAVRSHIO	colr_code_gi
+
+! Cell Group Inputs (PLC I/O)
+9	18	1	0	0	1	17	10	Job Data	PAVRSHIO	sty_code_gi
+9	18	2	0	0	1	27	5	Color Data	PAVRSHIO	colr_code_gi
+
+! Cell Group Inputs (PDI IO)
+13	18	1	48	1	1	14	10	Job Data	PAVRSHIO	sty_code_gi
+13	18	2	48	1	1	24	4	Color Data	PAVRSHIO	colr_code_gi
+
+! Cell Digital Outputs (Memory-Mapped)
+1	2	1	0	0	28	257	1			
+1	2	2	0	0	28	258	1			
+1	2	3	0	0	28	259	1			
+1	2	4	0	0	28	260	1			
+1	2	5	0	0	28	261	1			
+1	2	6	0	0	28	262	1			
+1	2	7	0	0	28	263	1			
+1	2	8	0	0	28	264	1			
+1	2	9	0	0	28	265	1	Prod. Mode	PAVRSHIO	tShioCmos[1].prd_mode_do
+1	2	10	0	0	28	266	1	Job Active	PAVRSHIO	tShioCmos[1].job_actv_do
+1	2	11	0	0	28	267	1			
+1	2	12	0	0	28	268	1	Job Ready	PAVRSHIO	tShioCmos[1].sty_ready_do
+1	2	13	0	0	28	269	1	At HOME	PAVRSHIO	rob_home_do
+1	2	14	0	0	28	270	1	Major Fault	PAVRSHIO	maj_flt_do
+1	2	15	0	0	28	271	1	Heartbeat	PAVRSHIO	sh_runing_do
+1	2	16	0	0	28	272	1			
+1	2	17	0	0	28	273	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+1	2	18	0	0	28	274	1			
+1	2	19	0	0	28	275	1	Wait For PLC	PAVRSHIO	tShioCmos[1].wait_plc_do
+1	2	20	0	0	28	276	1	No Continue	PAVRSHIO	tShioCmos[1].mot_nrec_do
+1	2	21	0	0	28	277	1			
+1	2	22	0	0	28	278	1			
+1	2	23	0	0	28	279	1			
+1	2	24	0	0	28	280	1			
+1	2	25	0	0	28	281	1			
+1	2	26	0	0	28	282	1			
+1	2	27	0	0	28	283	1
+1	2	28	0	0	28	284	1
+1	2	29	0	0	28	285	1
+1	2	30	0	0	28	286	1
+1	2	31	0	0	28	287	1
+1	2	32	0	0	28	288	1
+1	2	33	0	0	28	289	1
+1	2	34	0	0	28	290	1
+1	2	35	0	0	28	291	1
+1	2	36	0	0	28	292	1
+1	2	37	0	0	28	293	1
+1	2	38	0	0	28	294	1
+1	2	39	0	0	28	295	1
+1	2	40	0	0	28	296	1
+1	2	41	0	0	28	297	1
+1	2	42	0	0	28	298	1
+1	2	43	0	0	28	299	1
+1	2	44	0	0	28	300	1
+1	2	45	0	0	28	301	1
+1	2	46	0	0	28	302	1
+1	2	47	0	0	28	303	1
+1	2	48	0	0	28	304	1
+1	2	49	0	0	28	305	1
+1	2	50	0	0	28	306	1
+1	2	51	0	0	28	307	1
+1	2	52	0	0	28	308	1
+1	2	53	0	0	28	309	1
+1	2	54	0	0	28	310	1
+1	2	55	0	0	28	311	1
+1	2	56	0	0	28	312	1
+1	2	57	0	0	28	313	1
+1	2	58	0	0	28	314	1
+1	2	59	0	0	28	315	1
+1	2	60	0	0	28	316	1
+1	2	61	0	0	28	317	1
+1	2	62	0	0	28	318	1
+1	2	63	0	0	28	319	1
+1	2	64	0	0	28	320	1
+1	2	65	0	0	28	321	1
+1	2	66	0	0	28	322	1
+1	2	67	0	0	28	323	1
+1	2	68	0	0	28	324	1
+1	2	69	0	0	28	325	1
+1	2	70	0	0	28	326	1
+1	2	71	0	0	28	327	1
+1	2	72	0	0	28	328	1
+1	2	73	0	0	28	329	1
+1	2	74	0	0	28	330	1
+1	2	75	0	0	28	331	1
+1	2	76	0	0	28	332	1
+1	2	77	0	0	28	333	1
+1	2	78	0	0	28	334	1
+1	2	79	0	0	28	335	1
+1	2	80	0	0	28	336	1
+1	2	81	0	0	28	337	1
+1	2	82	0	0	28	338	1
+1	2	83	0	0	28	339	1
+1	2	84	0	0	28	340	1
+1	2	85	0	0	28	341	1
+1	2	86	0	0	28	342	1
+1	2	87	0	0	28	343	1
+1	2	88	0	0	28	344	1
+1	2	89	0	0	28	345	1
+1	2	90	0	0	28	346	1
+1	2	91	0	0	28	347	1
+1	2	92	0	0	28	348	1
+1	2	93	0	0	28	349	1
+1	2	94	0	0	28	350	1
+1	2	95	0	0	28	351	1
+1	2	96	0	0	28	352	1
+1	2	97	0	0	28	353	1
+1	2	98	0	0	28	354	1
+1	2	99	0	0	28	355	1
+1	2	100	0	0	28	356	1
+1	2	101	0	0	28	357	1
+1	2	102	0	0	28	358	1
+1	2	103	0	0	28	359	1
+1	2	104	0	0	28	360	1
+1	2	105	0	0	28	361	1
+1	2	106	0	0	28	362	1
+1	2	107	0	0	28	363	1
+1	2	108	0	0	28	364	1
+1	2	109	0	0	28	365	1
+1	2	110	0	0	28	366	1
+1	2	111	0	0	28	367	1
+1	2	112	0	0	28	368	1
+1	2	113	0	0	28	369	1
+1	2	114	0	0	28	370	1
+1	2	115	0	0	28	371	1
+1	2	116	0	0	28	372	1
+1	2	117	0	0	28	373	1
+1	2	118	0	0	28	374	1
+1	2	119	0	0	28	375	1
+1	2	120	0	0	28	376	1
+1	2	121	0	0	28	377	1
+1	2	122	0	0	28	378	1
+1	2	123	0	0	28	379	1			
+1	2	124	0	0	28	380	1			
+1	2	125	0	0	28	381	1			
+1	2	126	0	0	28	382	1			
+1	2	127	0	0	28	383	1			
+1	2	128	0	0	28	384	1			
+
+! Cell Digital Outputs (Model A I/O - 5 or 10 Slot Rack)
+2	2	9	1	4	2	9	1	Prod. Mode	PAVRSHIO	tShioCmos[1].prd_mode_do
+2	2	10	1	4	2	10	1	Job Active	PAVRSHIO	tShioCmos[1].job_actv_do
+2	2	11	1	4	2	11	1			
+2	2	12	1	4	2	12	1	Job Ready	PAVRSHIO	tShioCmos[1].sty_ready_do
+2	2	13	1	4	2	13	1	At HOME	PAVRSHIO	rob_home_do
+2	2	14	1	4	2	14	1	Major Fault	PAVRSHIO	maj_flt_do
+2	2	15	1	4	2	15	1	Heartbeat	PAVRSHIO	sh_runing_do
+2	2	16	1	4	2	16	1			
+2	2	17	1	5	2	1	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+2	2	18	1	5	2	2	1			
+2	2	19	1	5	2	3	1	Wait For PLC	PAVRSHIO	tShioCmos[1].wait_plc_do
+2	2	20	1	5	2	4	1	No Continue	PAVRSHIO	tShioCmos[1].mot_nrec_do
+2	2	21	1	5	2	5	1			
+2	2	22	1	5	2	6	1			
+2	2	23	1	5	2	7	1			
+2	2	24	1	5	2	8	1			
+2	2	25	1	5	2	9	1			
+2	2	26	1	5	2	10	1
+2	2	27	1	5	2	11	1
+2	2	28	1	5	2	12	1
+2	2	29	1	5	2	13	1
+2	2	30	1	5	2	14	1
+2	2	31	1	5	2	15	1
+2	2	32	1	5	2	16	1
+
+! Cell Digital Outputs (PLC I/O)
+9	2	9	0	0	2	9	1	Prod. Mode	PAVRSHIO	tShioCmos[1].prd_mode_do
+9	2	10	0	0	2	10	1	Job Active	PAVRSHIO	tShioCmos[1].job_actv_do
+9	2	11	0	0	2	11	1			
+9	2	12	0	0	2	12	1	Job Ready	PAVRSHIO	tShioCmos[1].sty_ready_do
+9	2	13	0	0	2	13	1	At HOME	PAVRSHIO	rob_home_do
+9	2	14	0	0	2	14	1	Major Fault	PAVRSHIO	maj_flt_do
+9	2	15	0	0	2	15	1	Heartbeat	PAVRSHIO	sh_runing_do
+9	2	16	0	0	2	16	1
+9	2	17	0	0	2	17	1
+9	2	18	0	0	2	18	1			
+9	2	19	0	0	2	19	1	Wait For PLC	PAVRSHIO	tShioCmos[1].wait_plc_do
+9	2	20	0	0	2	20	1	No Continue	PAVRSHIO	tShioCmos[1].mot_nrec_do
+9	2	21	0	0	2	21	1			
+9	2	22	0	0	2	22	1			
+9	2	23	0	0	2	23	1			
+9	2	24	0	0	2	24	1			
+9	2	25	0	0	2	25	1
+9	2	26	0	0	2	26	1
+9	2	27	0	0	2	27	1
+9	2	28	0	0	2	28	1
+9	2	29	0	0	2	29	1
+9	2	30	0	0	2	30	1
+9	2	31	0	0	2	31	1
+9	2	32	0	0	2	32	1
+
+! Cell Digital Outputs (PDI IO)
+13	2	9	48	1	2	9	1	Prod. Mode	PAVRSHIO	tShioCmos[1].prd_mode_do
+13	2	10	48	1	2	10	1	Job Active	PAVRSHIO	tShioCmos[1].job_actv_do
+13	2	11	48	1	2	11	1	Job Ready	PAVRSHIO	tShioCmos[1].sty_ready_do
+13	2	12	48	1	2	12	1	At HOME	PAVRSHIO	rob_home_do
+13	2	13	48	1	2	13	1	Major Fault	PAVRSHIO	maj_flt_do
+13	2	14	48	1	2	14	1	Heartbeat	PAVRSHIO	sh_runing_do
+13	2	15	48	1	2	15	1	Wait For PLC	PAVRSHIO	tShioCmos[1].wait_plc_do
+13	2	16	48	1	2	16	1	No Continue	PAVRSHIO	tShioCmos[1].mot_nrec_do
+
+! uncomment this line (and comment out the followning line) if you don't want to use RDO for gun triggering
+!13	2	17	48	1	2	17	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Cell Digital Outputs (PDI IO but mapped to RDO[1])
+13	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+13	2	18	48	1	2	18	1
+13	2	19	48	1	2	19	1
+13	2	20	48	1	2	20	1
+13	2	21	48	1	2	21	1
+13	2	22	48	1	2	22	1
+13	2	23	48	1	2	23	1
+13	2	24	48	1	2	24	1
+
+! Cell Group Outputs (Memory-Mapped)
+1	19	1	0	0	29	26	1
+1	19	2	0	0	29	27	1
+1	19	3	0	0	29	28	1
+1	19	4	0	0	29	29	1
+1	19	5	0	0	29	30	1
+1	19	6	0	0	29	31	1
+1	19	7	0	0	29	32	1
+1	19	8	0	0	29	33	1
+1	19	9	0	0	29	34	1
+1	19	10	0	0	29	35	1
+1	19	11	0	0	29	36	1
+1	19	12	0	0	29	37	1
+1	19	13	0	0	29	38	1
+1	19	14	0	0	29	39	1
+1	19	15	0	0	29	40	1
+1	19	16	0	0	29	41	1
+1	19	17	0	0	29	42	1
+1	19	18	0	0	29	43	1
+1	19	19	0	0	29	44	1
+1	19	20	0	0	29	45	1
+1	19	21	0	0	29	46	1
+1	19	22	0	0	29	47	1
+1	19	23	0	0	29	48	1
+1	19	24	0	0	29	49	1
+1	19	25	0	0	29	50	1
+1	19	65	0	0	29	249	1	!(Note:Memory-Map for BYTE access only!)
+1	19	66	0	0	29	250	1	!(Note:Memory-Map for INTEGER access only!)
+
+! Cell Group Outputs (Model A I/O - 5 Slot Rack)
+! Cell Group Outputs (Model A I/O - 10 Slot Rack)
+! Cell Group Outputs (PLC I/O)
+STOPSECTION
+
+!rob_stio_use = 51
+!rob_vis_use = 110
+CELL	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[110]	1	PAVROPTN	cell_io_type
+! Cell Group Inputs (Memory-Mapped)
+1	18	1	0	0	29	1	1
+
+! Cell Group Inputs (Model A I/O - 5 or 10 Slot Rack)
+2	18	1	1	2	1	1	10
+
+! Cell Group Inputs (PLC I/O)
+9	18	1	0	0	1	17	10
+STOPSECTION
+
+!NOTE: AccuChop cannot support Clear Ques input for Model A Cell I/O because there are not available ports!
+!rob_stio_use = 51
+!rob_acch_use = 65
+CELL	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[65]	0	PAVROPTN	cell_io_type
+! Cell Digital Inputs (Model A I/O - 5 or 10 Slot Rack)
+2	1	15	1	1	1	15	1	Clear Ques	PAVRSHIO	clr_ques_di
+STOPSECTION
+
+!rob_stio_use = 51
+PROCESS	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	proc_io_type
+! Process Digital Inputs (Memory-Mapped)
+1	1	129	0	0	28	129	1
+1	1	130	0	0	28	130	1
+1	1	131	0	0	28	131	1
+1	1	132	0	0	28	132	1
+1	1	133	0	0	28	133	1
+1	1	134	0	0	28	134	1
+1	1	135	0	0	28	135	1
+1	1	136	0	0	28	136	1
+1	1	137	0	0	28	137	1
+1	1	138	0	0	28	138	1
+1	1	139	0	0	28	139	1
+1	1	140	0	0	28	140	1
+1	1	141	0	0	28	141	1
+1	1	142	0	0	28	142	1
+1	1	143	0	0	28	143	1
+1	1	144	0	0	28	144	1
+1	1	145	0	0	28	145	1
+1	1	146	0	0	28	146	1
+1	1	147	0	0	28	147	1
+1	1	148	0	0	28	148	1
+1	1	149	0	0	28	149	1
+1	1	150	0	0	28	150	1
+1	1	151	0	0	28	151	1
+1	1	152	0	0	28	152	1
+1	1	153	0	0	28	153	1
+1	1	154	0	0	28	154	1
+1	1	155	0	0	28	155	1
+1	1	156	0	0	28	156	1
+1	1	157	0	0	28	157	1
+1	1	158	0	0	28	158	1
+1	1	159	0	0	28	159	1
+1	1	160	0	0	28	160	1
+1	1	161	0	0	28	161	1
+1	1	162	0	0	28	162	1
+1	1	163	0	0	28	163	1
+1	1	164	0	0	28	164	1
+1	1	165	0	0	28	165	1
+1	1	166	0	0	28	166	1
+1	1	167	0	0	28	167	1
+1	1	168	0	0	28	168	1
+1	1	169	0	0	28	169	1
+1	1	170	0	0	28	170	1
+1	1	171	0	0	28	171	1
+1	1	172	0	0	28	172	1
+1	1	173	0	0	28	173	1
+1	1	174	0	0	28	174	1
+1	1	175	0	0	28	175	1
+1	1	176	0	0	28	176	1
+1	1	177	0	0	28	177	1
+1	1	178	0	0	28	178	1
+1	1	179	0	0	28	179	1
+1	1	180	0	0	28	180	1
+1	1	181	0	0	28	181	1
+1	1	182	0	0	28	182	1
+1	1	183	0	0	28	183	1
+1	1	184	0	0	28	184	1
+1	1	185	0	0	28	185	1
+1	1	186	0	0	28	186	1
+1	1	187	0	0	28	187	1
+1	1	188	0	0	28	188	1
+1	1	189	0	0	28	189	1
+1	1	190	0	0	28	190	1
+1	1	191	0	0	28	191	1
+1	1	192	0	0	28	192	1
+1	1	193	0	0	28	193	1
+1	1	194	0	0	28	194	1
+1	1	195	0	0	28	195	1
+1	1	196	0	0	28	196	1
+1	1	197	0	0	28	197	1
+1	1	198	0	0	28	198	1
+1	1	199	0	0	28	199	1
+1	1	200	0	0	28	200	1
+1	1	201	0	0	28	201	1
+1	1	202	0	0	28	202	1
+1	1	203	0	0	28	203	1
+1	1	204	0	0	28	204	1
+1	1	205	0	0	28	205	1
+1	1	206	0	0	28	206	1
+1	1	207	0	0	28	207	1
+1	1	208	0	0	28	208	1
+1	1	209	0	0	28	209	1
+1	1	210	0	0	28	210	1
+1	1	211	0	0	28	211	1
+1	1	212	0	0	28	212	1
+1	1	213	0	0	28	213	1
+1	1	214	0	0	28	214	1
+1	1	215	0	0	28	215	1
+1	1	216	0	0	28	216	1
+1	1	217	0	0	28	217	1
+1	1	218	0	0	28	218	1
+1	1	219	0	0	28	219	1
+1	1	220	0	0	28	220	1
+1	1	221	0	0	28	221	1
+1	1	222	0	0	28	222	1
+1	1	223	0	0	28	223	1
+1	1	224	0	0	28	224	1
+1	1	225	0	0	28	225	1
+1	1	226	0	0	28	226	1
+1	1	227	0	0	28	227	1
+1	1	228	0	0	28	228	1
+1	1	229	0	0	28	229	1
+1	1	230	0	0	28	230	1
+1	1	231	0	0	28	231	1
+1	1	232	0	0	28	232	1
+1	1	233	0	0	28	233	1
+1	1	234	0	0	28	234	1
+1	1	235	0	0	28	235	1
+1	1	236	0	0	28	236	1
+1	1	237	0	0	28	237	1
+1	1	238	0	0	28	238	1
+1	1	239	0	0	28	239	1
+1	1	240	0	0	28	240	1
+1	1	241	0	0	28	241	1
+1	1	242	0	0	28	242	1
+1	1	243	0	0	28	243	1
+1	1	244	0	0	28	244	1
+1	1	245	0	0	28	245	1
+1	1	246	0	0	28	246	1
+1	1	247	0	0	28	247	1
+1	1	248	0	0	28	248	1
+1	1	249	0	0	28	249	1
+1	1	250	0	0	28	250	1
+1	1	251	0	0	28	251	1
+1	1	252	0	0	28	252	1
+1	1	253	0	0	28	253	1
+1	1	254	0	0	28	254	1
+1	1	255	0	0	28	255	1
+1	1	256	0	0	28	256	1
+
+! Process Digital Inputs (Model A I/O - 5 Slot Rack)
+! Process Digital Inputs (Model A I/O - 10 Slot Rack)
+! Process Analog Inputs (Memory-Mapped)
+1	3	1	0	0	29	51	1
+1	3	2	0	0	29	52	1
+1	3	3	0	0	29	53	1
+1	3	4	0	0	29	54	1
+1	3	5	0	0	29	55	1
+1	3	6	0	0	29	56	1
+1	3	7	0	0	29	57	1
+1	3	8	0	0	29	58	1
+1	3	9	0	0	29	59	1
+1	3	10	0	0	29	60	1
+1	3	11	0	0	29	61	1
+1	3	12	0	0	29	62	1
+1	3	13	0	0	29	63	1
+1	3	14	0	0	29	64	1
+1	3	15	0	0	29	65	1
+1	3	16	0	0	29	66	1
+1	3	17	0	0	29	67	1
+1	3	18	0	0	29	68	1
+1	3	19	0	0	29	69	1
+1	3	20	0	0	29	70	1
+1	3	21	0	0	29	71	1
+1	3	22	0	0	29	72	1
+1	3	23	0	0	29	73	1
+1	3	24	0	0	29	74	1
+1	3	25	0	0	29	75	1
+
+! Process Analog Inputs (Model A I/O - 5 Slot Rack)
+! Process Analog Inputs (Model A I/O - 10 Slot Rack)
+! Process Digital Outputs (Memory-Mapped)
+1	2	129	0	0	28	385	1
+1	2	130	0	0	28	386	1
+1	2	131	0	0	28	387	1
+1	2	132	0	0	28	388	1
+1	2	133	0	0	28	389	1
+1	2	134	0	0	28	390	1
+1	2	135	0	0	28	391	1
+1	2	136	0	0	28	392	1
+1	2	137	0	0	28	393	1
+1	2	138	0	0	28	394	1
+1	2	139	0	0	28	395	1
+1	2	140	0	0	28	396	1
+1	2	141	0	0	28	397	1
+1	2	142	0	0	28	398	1
+1	2	143	0	0	28	399	1
+1	2	144	0	0	28	400	1
+1	2	145	0	0	28	401	1
+1	2	146	0	0	28	402	1
+1	2	147	0	0	28	403	1
+1	2	148	0	0	28	404	1
+1	2	149	0	0	28	405	1
+1	2	150	0	0	28	406	1
+1	2	151	0	0	28	407	1
+1	2	152	0	0	28	408	1
+1	2	153	0	0	28	409	1
+1	2	154	0	0	28	410	1
+1	2	155	0	0	28	411	1
+1	2	156	0	0	28	412	1
+1	2	157	0	0	28	413	1
+1	2	158	0	0	28	414	1
+1	2	159	0	0	28	415	1
+1	2	160	0	0	28	416	1
+1	2	161	0	0	28	417	1
+1	2	162	0	0	28	418	1
+1	2	163	0	0	28	419	1
+1	2	164	0	0	28	420	1
+1	2	165	0	0	28	421	1
+1	2	166	0	0	28	422	1
+1	2	167	0	0	28	423	1
+1	2	168	0	0	28	424	1
+1	2	169	0	0	28	425	1
+1	2	170	0	0	28	426	1
+1	2	171	0	0	28	427	1
+1	2	172	0	0	28	428	1
+1	2	173	0	0	28	429	1
+1	2	174	0	0	28	430	1
+1	2	175	0	0	28	431	1
+1	2	176	0	0	28	432	1
+1	2	177	0	0	28	433	1
+1	2	178	0	0	28	434	1
+1	2	179	0	0	28	435	1
+1	2	180	0	0	28	436	1
+1	2	181	0	0	28	437	1
+1	2	182	0	0	28	438	1
+1	2	183	0	0	28	439	1
+1	2	184	0	0	28	440	1
+1	2	185	0	0	28	441	1
+1	2	186	0	0	28	442	1
+1	2	187	0	0	28	443	1
+1	2	188	0	0	28	444	1
+1	2	189	0	0	28	445	1
+1	2	190	0	0	28	446	1
+1	2	191	0	0	28	447	1
+1	2	192	0	0	28	448	1
+1	2	193	0	0	28	449	1
+1	2	194	0	0	28	450	1
+1	2	195	0	0	28	451	1
+1	2	196	0	0	28	452	1
+1	2	197	0	0	28	453	1
+1	2	198	0	0	28	454	1
+1	2	199	0	0	28	455	1
+1	2	200	0	0	28	456	1
+1	2	201	0	0	28	457	1
+1	2	202	0	0	28	458	1
+1	2	203	0	0	28	459	1
+1	2	204	0	0	28	460	1
+1	2	205	0	0	28	461	1
+1	2	206	0	0	28	462	1
+1	2	207	0	0	28	463	1
+1	2	208	0	0	28	464	1
+1	2	209	0	0	28	465	1
+1	2	210	0	0	28	466	1
+1	2	211	0	0	28	467	1
+1	2	212	0	0	28	468	1
+1	2	213	0	0	28	469	1
+1	2	214	0	0	28	470	1
+1	2	215	0	0	28	471	1
+1	2	216	0	0	28	472	1
+1	2	217	0	0	28	473	1
+1	2	218	0	0	28	474	1
+1	2	219	0	0	28	475	1
+1	2	220	0	0	28	476	1
+1	2	221	0	0	28	477	1
+1	2	222	0	0	28	478	1
+1	2	223	0	0	28	479	1
+1	2	224	0	0	28	480	1
+1	2	225	0	0	28	481	1
+1	2	226	0	0	28	482	1
+1	2	227	0	0	28	483	1
+1	2	228	0	0	28	484	1
+1	2	229	0	0	28	485	1
+1	2	230	0	0	28	486	1
+1	2	231	0	0	28	487	1
+1	2	232	0	0	28	488	1
+1	2	233	0	0	28	489	1
+1	2	234	0	0	28	490	1
+1	2	235	0	0	28	491	1
+1	2	236	0	0	28	492	1
+1	2	237	0	0	28	493	1
+1	2	238	0	0	28	494	1
+1	2	239	0	0	28	495	1
+1	2	240	0	0	28	496	1
+1	2	241	0	0	28	497	1
+1	2	242	0	0	28	498	1
+1	2	243	0	0	28	499	1
+1	2	244	0	0	28	500	1
+1	2	245	0	0	28	501	1
+1	2	246	0	0	28	502	1
+1	2	247	0	0	28	503	1
+1	2	248	0	0	28	504	1
+1	2	249	0	0	28	505	1
+1	2	250	0	0	28	506	1
+1	2	251	0	0	28	507	1
+1	2	252	0	0	28	508	1
+1	2	253	0	0	28	509	1
+1	2	254	0	0	28	510	1
+1	2	255	0	0	28	511	1
+1	2	256	0	0	28	512	1
+
+! Process Digital Outputs (Model A I/O - 5 Slot Rack)
+2	2	144	1	1	2	16	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Process Digital Outputs (Model A I/O - 10 Slot Rack)
+3	2	144	2	1	2	16	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Process Digital Outputs (Model A I/O - 10 Slot Rack)
+4	2	144	1	6	2	16	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Process Digital Outputs (Ethernet IP but mapped to RDO[1])
+7	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Process Digital Outputs (Robot I/O mapped to RDO[1])
+8	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Process Analog Outputs (Memory-Mapped)
+1	4	1	0	0	29	76	1
+1	4	2	0	0	29	77	1
+1	4	3	0	0	29	78	1
+1	4	4	0	0	29	79	1
+1	4	5	0	0	29	80	1
+1	4	6	0	0	29	81	1
+1	4	7	0	0	29	82	1
+1	4	8	0	0	29	83	1
+1	4	9	0	0	29	84	1
+1	4	10	0	0	29	85	1
+1	4	11	0	0	29	86	1
+1	4	12	0	0	29	87	1
+1	4	13	0	0	29	88	1
+1	4	14	0	0	29	89	1
+1	4	15	0	0	29	90	1
+1	4	16	0	0	29	91	1
+1	4	17	0	0	29	92	1
+1	4	18	0	0	29	93	1
+1	4	19	0	0	29	94	1
+1	4	20	0	0	29	95	1
+1	4	21	0	0	29	96	1
+1	4	22	0	0	29	97	1
+1	4	23	0	0	29	98	1
+1	4	24	0	0	29	99	1
+1	4	25	0	0	29	100	1
+! Process Analog Outputs (Model A I/O - 5 Slot Rack)
+! Process Analog Outputs (Model A I/O - 10 Slot Rack)
+STOPSECTION
+
+!rob_stio_use = 51
+CELL	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	cell_io_type
+! Cell Digital Inputs (Memory-Mapped)
+! Note: Just always assign reserved I/O ports for any Cell I/O Type for unsed I/O in system
+0	1	1025	0	0	28	2049	1
+0	1	1026	0	0	28	2050	1
+0	1	1027	0	0	28	2051	1
+0	1	1028	0	0	28	2052	1
+0	1	1029	0	0	28	2053	1
+0	1	1030	0	0	28	2054	1
+0	1	1031	0	0	28	2055	1
+0	1	1032	0	0	28	2056	1
+
+! Cell Digital Outputs (Memory-Mapped)
+! Note: Just always assign reserved I/O ports for any Cell I/O Type for unsed I/O in system
+0	2	1025	0	0	28	2057	1
+0	2	1026	0	0	28	2058	1
+0	2	1027	0	0	28	2059	1
+0	2	1028	0	0	28	2060	1
+0	2	1029	0	0	28	2061	1
+0	2	1030	0	0	28	2062	1
+0	2	1031	0	0	28	2063	1
+0	2	1032	0	0	28	2064	1
+STOPSECTION
+
+!rob_stio_use = 51
+!rob_vis_use = 110
+VAR	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[110]	1	PAVROPTN	cell_io_type
+0	INTEGER	PAVROPTN	job_init_typ	3
+0	BYTE	PAVROPTN	byOptn[1].byOp[27]	0
+0	BYTE	PAVROPTN	byOptn[1].byOp[28]	0
+0	BOOLEAN	*SYSTEM*	$VTSENS[1].$ENABLED	TRUE				
+0	REAL	*SYSTEM*	$VTSENS[1].$TRIG_DIST	10
+STOPSECTION
+
+!rob_stio_use = 51
+!rob_main_set = 84 - One time setup
+VAR	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[84]	0	PAVROPTN	which_gun
+! PaintTool Standard I/O Variables (Any Type)
+!Set default color name once
+0	STRING	PAVRSYSC	sys_colors[1].color_desc	default
+
+!The following must be set for Standard I/O
+!force_use = 48
+0	BYTE	PAVROPTN	byOptn[1].byOp[48]	1
+
+!rob_main_set = 84
+0	BYTE	PAVROPTN	byOptn[1].byOp[84]	1
+
+!job_ent_tp = 3
+0	BYTE	PAVROPTN	byOptn[1].byOp[3]	1
+STOPSECTION
+
+!rob_stio_use = 51
+!rob_chmp_use = 67
+VAR	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[67]	0	PAVROPTN	which_gun
+! PaintTool Standard I/O Variables (Any Type)
+0	INTEGER	*SYSTEM*	$TG_MX_EVUS	200
+STOPSECTION										
+
+!rob_func_use = 38
+CELL	PAVROPTN	byOptn[1].byOp[38]	1	PAVROPTN	byOptn[1].byOp[38]	1	PAVROPTN	cell_io_type
+! Cell Digital Outputs Function Instruction (Memory-Mapped)
+1	2	25	0	0	28	281	1	UserFunc B0	PAVRFUNC	func_array[1].dout
+1	2	26	0	0	28	282	1	UserFunc B1	PAVRFUNC	func_array[2].dout
+1	2	27	0	0	28	283	1	UserFunc B2	PAVRFUNC	func_array[3].dout
+1	2	28	0	0	28	284	1	UserFunc B3	PAVRFUNC	func_array[4].dout
+1	2	29	0	0	28	285	1	UserFunc B4	PAVRFUNC	func_array[5].dout
+1	2	30	0	0	28	286	1	UserFunc B5	PAVRFUNC	func_array[6].dout
+1	2	31	0	0	28	287	1	UserFunc B6	PAVRFUNC	func_array[7].dout
+1	2	32	0	0	28	288	1	UserFunc B7	PAVRFUNC	func_array[8].dout
+
+! Cell Digital Outputs Function Instruction (Model A I/O - 5 or 10 Slot Rack)
+2	2	25	1	5	2	9	1	UserFunc B0	PAVRFUNC	func_array[1].dout
+2	2	26	1	5	2	10	1	UserFunc B1	PAVRFUNC	func_array[2].dout
+2	2	27	1	5	2	11	1	UserFunc B2	PAVRFUNC	func_array[3].dout
+2	2	28	1	5	2	12	1	UserFunc B3	PAVRFUNC	func_array[4].dout
+2	2	29	1	5	2	13	1	UserFunc B4	PAVRFUNC	func_array[5].dout
+2	2	30	1	5	2	14	1	UserFunc B5	PAVRFUNC	func_array[6].dout
+2	2	31	1	5	2	15	1	UserFunc B6	PAVRFUNC	func_array[7].dout
+2	2	32	1	5	2	16	1	UserFunc B7	PAVRFUNC	func_array[8].dout
+
+! Cell Digital Outputs Function Instruction (PLC I/O)
+9	2	25	0	0	2	25	1	UserFunc B0	PAVRFUNC	func_array[1].dout
+9	2	26	0	0	2	26	1	UserFunc B1	PAVRFUNC	func_array[2].dout
+9	2	27	0	0	2	27	1	UserFunc B2	PAVRFUNC	func_array[3].dout
+9	2	28	0	0	2	28	1	UserFunc B3	PAVRFUNC	func_array[4].dout
+9	2	29	0	0	2	29	1	UserFunc B4	PAVRFUNC	func_array[5].dout
+9	2	30	0	0	2	30	1	UserFunc B5	PAVRFUNC	func_array[6].dout
+9	2	31	0	0	2	31	1	UserFunc B6	PAVRFUNC	func_array[7].dout
+9	2	32	0	0	2	32	1	UserFunc B7	PAVRFUNC	func_array[8].dout
+STOPSECTION										
+
+!rob_jog_pn = 23
+CELL	PAVROPTN	byOptn[1].byOp[23]	1	PAVROPTN	byOptn[1].byOp[23]	1	PAVROPTN	cell_io_type
+! Cell Digital Inputs Manual Jog Panel Option (Memory-Mapped)
+1	1	33	0	0	28	33	1	MCP Joint	PAVRSHIO	mcp_jmde_di
+1	1	34	0	0	28	34	1	MCP World	PAVRSHIO	mcp_wmde_di
+1	1	35	0	0	28	35	1	MCP Dev B1	PAVRSHIO	mcp_dev1_di
+1	1	36	0	0	28	36	1	MCP Dev B2	PAVRSHIO	mcp_dev2_di
+1	1	37	0	0	28	37	1	MCP Axis B1	PAVRSHIO	mcp_axis1_di
+1	1	38	0	0	28	38	1	MCP Axis B2	PAVRSHIO	mcp_axis2_di
+1	1	39	0	0	28	39	1	MCP Axis B3	PAVRSHIO	mcp_axis3_di
+1	1	40	0	0	28	40	1	MCP Jog +	PAVRSHIO	mcp_plus_di
+1	1	41	0	0	28	41	1	MCP Jog -	PAVRSHIO	mcp_mnus_di
+
+! Cell Digital Inputs Manual Jog Panel Option (Model A I/O - 5 or 10 Slot Rack)
+2	1	33	1	3	1	1	1	MCP Joint	PAVRSHIO	mcp_jmde_di
+2	1	34	1	3	1	2	1	MCP World	PAVRSHIO	mcp_wmde_di
+2	1	35	1	3	1	3	1	MCP Dev B1	PAVRSHIO	mcp_dev1_di
+2	1	36	1	3	1	4	1	MCP Dev B2	PAVRSHIO	mcp_dev2_di
+2	1	37	1	3	1	5	1	MCP Axis B1	PAVRSHIO	mcp_axis1_di
+2	1	38	1	3	1	6	1	MCP Axis B2	PAVRSHIO	mcp_axis2_di
+2	1	39	1	3	1	7	1	MCP Axis B3	PAVRSHIO	mcp_axis3_di
+2	1	40	1	3	1	8	1	MCP Jog +	PAVRSHIO	mcp_plus_di
+2	1	41	1	3	1	9	1	MCP Jog -	PAVRSHIO	mcp_mnus_di
+
+! Cell Digital Inputs Manual Jog Panel Option (PLC I/O)
+9	1	33	0	0	1	33	1	MCP Joint	PAVRSHIO	mcp_jmde_di
+9	1	34	0	0	1	34	1	MCP World	PAVRSHIO	mcp_wmde_di
+9	1	35	0	0	1	35	1	MCP Dev B1	PAVRSHIO	mcp_dev1_di
+9	1	36	0	0	1	36	1	MCP Dev B2	PAVRSHIO	mcp_dev2_di
+9	1	37	0	0	1	37	1	MCP Axis B1	PAVRSHIO	mcp_axis1_di
+9	1	38	0	0	1	38	1	MCP Axis B2	PAVRSHIO	mcp_axis2_di
+9	1	39	0	0	1	39	1	MCP Axis B3	PAVRSHIO	mcp_axis3_di
+9	1	40	0	0	1	40	1	MCP Jog +	PAVRSHIO	mcp_plus_di
+9	1	41	0	0	1	41	1	MCP Jog -	PAVRSHIO	mcp_mnus_di
+
+! Cell Digital Outputs Manual Jog Panel Option (Memory-Mapped)
+1	2	18	0	0	28	274	1	MCP Jog Act	PAVRSHIO	mcp_actv_do
+
+! Cell Digital Outputs Manual Jog Panel Option (Model A I/O - 5 or 10 Slot Rack)
+2	2	18	1	5	2	2	1	MCP Jog Act	PAVRSHIO	mcp_actv_do
+
+! Cell Digital Outputs Manual Jog Panel Option (PLC I/O)
+9	2	18	0	0	2	18	1	MCP Jog Act	PAVRSHIO	mcp_actv_do
+STOPSECTION
+
+!rob_ac_use = 16
+PROCESS	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	proc_io_type
+! Process Analog Outputs Accuflow Option (Any Type I/O)
+0	4	5	0	0	29	80	1	Flw Setpoint	PAVRAFIO	diag_ttl_ao
+0	4	6	0	0	29	81	1	Flw Diag Out	PAVRAFIO	diag_meas_ao
+STOPSECTION
+
+!rob_ac_use = 16
+VAR	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	which_gun
+! AccuFlow Option Variables (Any Type)
+!       Accuflow interface type, 1 = AID31B, 2 = HDI Pulse module
+! Defaults to 1, Uncomment & set to 2 for the HDI Pulse module type
+0	INTEGER	PAVRAFGL	int_type	2
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[1].app_cntr_typ	3
+! 0	INTEGER	PAVRAAI1	air_sel_di	257
+! 0	INTEGER	PAVRAAI1	air_seld_do	257						
+! AccuFlow Option Variables (Gun)
+! AccuFlow Option Variables (Bell-306)
+! AccuFlow Option Variables (Bell-607)
+STOPSECTION
+
+!rob_ac_use = 16
+!rob_mate_use = 111
+VAR	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	byOptn[1].byOp[111]	1	PAVROPTN	which_gun
+! AccuFlow Option Variables (Any Type)
+!       Accuflow interface type, 1 = AID31B, 2 = HDI Pulse module
+! Defaults to 1, Uncomment & set to 2 for the HDI Pulse module type
+0	INTEGER	PAVRAFGL	int_type	1
+STOPSECTION
+
+! Accuflow Interface Type:
+!rob_ac_use = 16
+VAR	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	byOptn[1].byOp[16]	1	PAVRAFGL	int_type
+1	BOOLEAN	*SYSTEM*	$fqint_setup[1].$freq_enable	0
+! HDI Pulse Module Type:
+2	BOOLEAN	*SYSTEM*	$fqint_setup[1].$freq_enable	1
+2	BOOLEAN	*SYSTEM*	$fqint_setup[1].$fast_on	1
+!        Frequency for Max. Frequency Exceeded alarm:
+2	REAL	*SYSTEM*	$fqint_setup[1].$freq_max_al	8000
+! The following is the correct value for the above sys var.  Pending a required hardware 
+! upgrade, this value has been adjusted to the above value to prevent bogus alarms.
+!2	REAL	*SYSTEM*	$fqint_setup[1].$freq_max_al	1020
+STOPSECTION
+
+! Do Only if AID32B input Interface Type (new interface enable = false-0):
+!rob_ac_use = 16
+PROCESS	PAVROPTN	byOptn[1].byOp[16]	1	*SYSTEM*	$fqint_setup[1].$freq_enable	0	PAVROPTN	proc_io_type
+! Process Group Inputs Accuflow Option (Memory-Mapped)
+1	18	3	0	0	29	3	1	Totl Cnt	PAVRAFIO	totl_cntr_gi
+1	18	4	0	0	29	4	1	Rate Cnt	PAVRAFIO	flow_cntr_gi
+
+! Process Group Inputs Accuflow Option (Model A I/O - 5 Slot Rack #1)
+2	18	3	1	5	1	1	16	Totl Cnt	PAVRAFIO	totl_cntr_gi
+2	18	4	1	5	1	17	16	Rate Cnt	PAVRAFIO	flow_cntr_gi
+
+! Process Group Inputs Accuflow Option (Model A I/O - 5 Slot Rack #2)
+3	18	3	2	5	1	1	16	Totl Cnt	PAVRAFIO	totl_cntr_gi
+3	18	4	2	5	1	17	16	Rate Cnt	PAVRAFIO	flow_cntr_gi
+
+! Process Group Inputs Accuflow Option (Model A I/O - 10 Slot Rack)
+4	18	3	1	10	1	1	16	Totl Cnt	PAVRAFIO	totl_cntr_gi
+4	18	4	1	10	1	17	16	Rate Cnt	PAVRAFIO	flow_cntr_gi
+STOPSECTION										
+
+!rob_parm_use = 55
+!rob_acch_use = 65
+PROCESS	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	byOptn[1].byOp[65]	0	PAVROPTN	proc_io_type
+! Process Analog Outputs Applicator Parameter Option (Memory-Mapped)										
+1	4	1	0	0	29	76	1	Fluid Flow	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num
+1	4	2	0	0	29	77	1	Atom. Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+1	4	3	0	0	29	78	1	Fan Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+1	4	4	0	0	29	79	1	Estats	PAVRPARM	tParmEq[1].con_prm_desc[4].app_otpt_num
+
+! Process Analog Outputs Applicator Parameter Option (Model A I/O - 5 Slot Rack #1)
+2	4	1	1	3	4	1	1	Fluid Flow	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num
+2	4	2	1	3	4	2	1	Atom. Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+2	4	3	1	4	4	1	1	Fan Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+2	4	4	1	4	4	2	1	Estats	PAVRPARM	tParmEq[1].con_prm_desc[4].app_otpt_num
+
+! Process Analog Outputs Applicator Parameter Option (Model A I/O - 5 Slot Rack #2)
+3	4	1	2	3	4	1	1	Fluid Flow	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num
+3	4	2	2	3	4	2	1	Atom. Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+3	4	3	2	4	4	1	1	Fan Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+3	4	4	2	4	4	2	1	Estats	PAVRPARM	tParmEq[1].con_prm_desc[4].app_otpt_num
+
+! Process Analog Outputs Applicator Parameter Option (Model A I/O - 10 Slot Rack)
+4	4	1	1	8	4	1	1	Fluid Flow	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num
+4	4	2	1	8	4	2	1	Atom. Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+4	4	3	1	9	4	1	1	Fan Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+4	4	4	1	9	4	2	1	Estats	PAVRPARM	tParmEq[1].con_prm_desc[4].app_otpt_num
+
+! Process Analog Outputs Applicator Parameter Option (Ethernet IP)
+7	4	1	89	2	4	3	1	Fluid Flow	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num
+7	4	2	89	2	4	4	1	Atom. Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+7	4	3	89	2	4	5	1	Fan Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+7	4	4	89	2	4	1	1	Estats	PAVRPARM	tParmEq[1].con_prm_desc[4].app_otpt_num
+STOPSECTION
+
+! Note: If the physical locations of the Applicator Parameters are changed in the above section,
+!       you MUST also change the corresponding variables below to match!!!
+!rob_parm_use = 55
+VAR	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	proc_io_type
+! Applicator Parameter Option Variables (Any Type)
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_rack	1
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_slot	3
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_rack	1
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_slot	3
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_rack	1
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_slot	4
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_rack	1
+2	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_slot	4
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_rack	2
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_slot	3
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_rack	2
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_slot	3
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_rack	2
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_slot	4
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_rack	2
+3	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_slot	4
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_rack	1
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_slot	8
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_rack	1
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_slot	8
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_rack	1
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_slot	9
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_rack	1
+4	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_slot	9
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_rack	89
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_slot	2
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_rack	89
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[2].app_slot	2
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_rack	89
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[3].app_slot	2
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_rack	89
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[4].app_slot	2
+STOPSECTION
+
+!rob_parm_use = 55
+VAR	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	which_gun
+! Applicator Parameter Option Variables (Any Type)
+0	INTEGER	PAVRPARM	estat_type	3						
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_type	3						
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_date	0						
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_source	5						
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_status	3						
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_units	cc/min
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_max	1500
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_setp	TRUE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_frst_bit	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_bts	12
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_max_out	8000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_out	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_strb_out	0
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_nam	FF
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_titl	Fluid Flow
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[1].app_cntr_typ	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[1].app_cntr_st	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[1].app_echo_scl	1
+! 
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_type	3
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_source	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_status	3
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_max	150
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[2].app_min_setp	TRUE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_frst_bit	2
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_bts	12
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_max_out	8000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_min_out	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_strb_out	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[2].app_cntr_typ	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[2].app_cntr_st	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[2].app_echo_scl	10
+!
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_type	3
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_source	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_status	3
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_units	psi
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_max	150
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[3].app_min_setp	TRUE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_frst_bit	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_bts	12
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_max_out	8000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_min_out	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_strb_out	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[3].app_cntr_typ	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[3].app_cntr_st	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[3].app_echo_scl	10
+!
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_con_type	3
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].cal_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].cal_source	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].cal_status	3
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[4].cal_units	Kv
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].app_con_max	100
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[4].app_min_setp	TRUE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_frst_bit	2
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_otpt_bts	12
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_max_out	8000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_min_out	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].app_strb_out	0
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[4].app_con_nam	ES
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[4].app_con_titl	Estats
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[4].app_cntr_typ	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[4].app_cntr_st	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[4].app_echo_scl	10
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[1].cmd	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[2].cmd	11.1
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[3].cmd	22.2
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[4].cmd	33.3
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[5].cmd	44.4
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[6].cmd	55.6
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[7].cmd	66.7
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[8].cmd	77.8
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[9].cmd	88.9
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[10].cmd	100
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[1].output	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[2].output	2311
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[3].output	3022
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[4].output	3733
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[5].output	4444
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[6].output	5156
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[7].output	5867
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[8].output	6578
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[9].output	7289
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[4].control_cal[10].output	8000
+0	INTEGER	PAPARMDB	num_con_parm	4
+0	BYTE	PAPARMDB	ins_to_par[1,1]	1
+0	BYTE	PAPARMDB	ins_to_par[1,2]	2
+0	BYTE	PAPARMDB	ins_to_par[1,3]	3
+0	BYTE	PAPARMDB	ins_to_par[2,1]	4
+0	BYTE	PAPARMDB	scrn_to_par[1,1]	1
+0	BYTE	PAPARMDB	scrn_to_par[1,2]	2
+0	BYTE	PAPARMDB	scrn_to_par[1,3]	3
+0	BYTE	PAPARMDB	scrn_to_par[1,4]	0
+0	BYTE	PAPARMDB	scrn_to_par[2,1]	4
+0	BYTE	PAPARMDB	scrn_to_par[2,2]	0
+0	BYTE	PAPARMDB	scrn_to_par[2,3]	0
+0	BYTE	PAPARMDB	scrn_to_par[2,4]	0
+! Applicator Parameter Option Variables (Gun)
+1	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_units	psi
+1	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_nam	AA
+1	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_titl	Atom. Air
+1	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_nam	FA
+1	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_titl	Fan Air
+! Applicator Parameter Option Variables (Bell-306)
+2	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_units	Krpm
+2	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_nam	TA
+2	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_titl	Turbine Air
+2	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_nam	SA
+2	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_titl	Shaping Air
+! Applicator Parameter Option Variables (Bell-607)
+3	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_units	Krpm
+3	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_nam	TA
+3	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_titl	Turbine Air
+3	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_nam	SA
+3	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_titl	Shaping Air
+STOPSECTION
+
+!rob_parm_use = 55
+VAR	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	byOptn[1].byOp[55]	1	PAVROPTN	proc_io_type
+! Applicator Parameter Option Variables (Ethernet IP)
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_max	1100
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_min	0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_max_out	1000
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_out	0
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[1].cmd	0
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[2].cmd	122.2
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[3].cmd	244.4
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[4].cmd	366.6
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[5].cmd	488.8
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[6].cmd	611.1
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[7].cmd	733.3
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[8].cmd	855.5
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[9].cmd	977.7
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[10].cmd	1100.0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[1].output	0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[2].output	111
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[3].output	222
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[4].output	333
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[5].output	444
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[6].output	555
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[7].output	666
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[8].output	777
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[9].output	888
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].control_cal[10].output	1000
+
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_max	145
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_min	0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_max_out	1450
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_min_out	0
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[1].cmd	0
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[2].cmd	16.1
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[3].cmd	32.2
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[4].cmd	48.3
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[5].cmd	64.4
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[6].cmd	80.5
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[7].cmd	96.6
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[8].cmd	112.7
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[9].cmd	128.8
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[10].cmd	145.0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[1].output	0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[2].output	161
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[3].output	322
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[4].output	483
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[5].output	644
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[6].output	805
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[7].output	966
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[8].output	1127
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[9].output	1288
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[10].output	1450
+!
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_max	145
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_min	0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_max_out	1450
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_min_out	0
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[1].cmd	0
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[2].cmd	16.1
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[3].cmd	32.2
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[4].cmd	48.3
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[5].cmd	64.4
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[6].cmd	80.5
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[7].cmd	96.6
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[8].cmd	112.7
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[9].cmd	128.8
+7	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[10].cmd	145.0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[1].output	0
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[2].output	161
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[3].output	322
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[4].output	483
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[5].output	644
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[6].output	805
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[7].output	966
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[8].output	1127
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[9].output	1288
+7	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[10].output	1450
+STOPSECTION
+
+!rob_cc_use = 9
+CELL	PAVROPTN	byOptn[1].byOp[9]	1	PAVROPTN	byOptn[1].byOp[9]	1	PAVROPTN	cell_io_type
+! Cell Digital Outputs Standard Color Change Option (Memory-Mapped)
+1	2	17	0	0	28	273	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+! Cell Digital Outputs Standard Color Change Option (Model A I/O - 5 or 10 Slot Rack)
+2	2	17	1	5	2	1	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+! Cell Digital Outputs Standard Color Change Option (PLC I/O)
+
+! Cell Digital Outputs Standard Color Change Option (PDI I/O)
+! uncomment this line (and comment out the followning line) if you don't want to use RDO for gun triggering
+!13	2	17	48	1	2	17	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+! Cell Digital Outputs Standard Color Change Option (PDI I/O but mapped to RDO[1])
+13	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+! Cell Digital Outputs Standard Color Change Option (Robot I/O mapped to RDO[1])
+15	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+STOPSECTION										
+
+!rob_cc_use = 9
+PROCESS	PAVROPTN	byOptn[1].byOp[9]	1	PAVROPTN	byOptn[1].byOp[9]	1	PAVROPTN	proc_io_type
+! Process Digital Outputs Standard Color Change Option (Memory-Mapped)
+1	2	129	0	0	28	385	1	pPE
+1	2	130	0	0	28	386	1	pIW
+1	2	131	0	0	28	387	1	pBW
+1	2	132	0	0	28	388	1	pSOL
+1	2	133	0	0	28	389	1	pAIR
+1	2	134	0	0	28	390	1	pCC
+1	2	135	0	0	28	391	1	pDUMP
+1	2	136	0	0	28	392	1	pFLUSH
+1	2	137	0	0	28	393	1	ACA
+1	2	138	0	0	28	394	1	pDUMP2
+1	2	139	0	0	28	395	1	ACVA
+1	2	140	0	0	28	396	1	pACS
+1	2	141	0	0	28	397	1	Reserved
+1	2	142	0	0	28	398	1	p2T
+1	2	143	0	0	28	399	1	Reserved
+1	2	144	0	0	28	400	1	Gun 1 Pilot
+
+! Reserved for 2nd CC Control Valve group output (maximum 15 bits)
+1	2	145	0	0	28	401	1	Reserved
+1	2	146	0	0	28	402	1	Reserved
+1	2	147	0	0	28	403	1	Reserved
+1	2	148	0	0	28	404	1	Reserved
+1	2	149	0	0	28	405	1	Reserved
+1	2	150	0	0	28	406	1	Reserved
+1	2	151	0	0	28	407	1	Reserved
+1	2	152	0	0	28	408	1	Reserved
+1	2	153	0	0	28	409	1	Reserved
+1	2	154	0	0	28	410	1	Reserved
+1	2	155	0	0	28	411	1	Reserved
+1	2	156	0	0	28	412	1	Reserved
+1	2	157	0	0	28	413	1	Reserved
+1	2	158	0	0	28	414	1	Reserved
+1	2	159	0	0	28	415	1	Reserved
+
+! Reserved for IPC mix valves and catalyst valves
+1	2	160	0	0	28	416	1	Reserved
+1	2	161	0	0	28	417	1	Reserved
+1	2	162	0	0	28	418	1	Reserved
+1	2	163	0	0	28	419	1	Reserved
+1	2	164	0	0	28	420	1	Reserved
+1	2	165	0	0	28	421	1	Reserved
+1	2	166	0	0	28	422	1	Reserved
+1	2	167	0	0	28	423	1	Reserved
+
+1	2	168	0	0	28	424	1	Color Vlv 1
+1	2	169	0	0	28	425	1	Color Vlv 2
+1	2	170	0	0	28	426	1	Color Vlv 3
+1	2	171	0	0	28	427	1	Color Vlv 4
+1	2	172	0	0	28	428	1	Color Vlv 5
+1	2	173	0	0	28	429	1	Color Vlv 6
+1	2	174	0	0	28	430	1	Color Vlv 7
+1	2	175	0	0	28	431	1	Color Vlv 8
+
+! Process Digital Outputs Standard Color Change Option (Model A I/O - 5 Slot Rack #1)
+2	2	129	1	1	2	1	1	pPE
+2	2	130	1	1	2	2	1	pIW
+2	2	131	1	1	2	3	1	pBW
+2	2	132	1	1	2	4	1	pSOL
+2	2	133	1	1	2	5	1	pAIR
+2	2	134	1	1	2	6	1	pCC
+2	2	135	1	1	2	7	1	pDUMP
+2	2	136	1	1	2	8	1	pFLUSH
+2	2	137	1	1	2	9	1	ACA
+2	2	138	1	1	2	10	1	pDUMP2
+2	2	139	1	1	2	11	1	ACVA
+2	2	140	1	1	2	12	1	pACS
+2	2	141	1	1	2	13	1	Reserved
+2	2	142	1	1	2	14	1	p2T
+2	2	143	1	1	2	15	1	Reserved
+2	2	144	1	1	2	16	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+2	2	168	1	2	2	1	1	Color Vlv 1
+2	2	169	1	2	2	2	1	Color Vlv 2
+2	2	170	1	2	2	3	1	Color Vlv 3
+2	2	171	1	2	2	4	1	Color Vlv 4
+2	2	172	1	2	2	5	1	Color Vlv 5
+2	2	173	1	2	2	6	1	Color Vlv 6
+2	2	174	1	2	2	7	1	Color Vlv 7
+2	2	175	1	2	2	8	1	Color Vlv 8
+2	2	176	1	2	2	9	1	Color Vlv 9
+2	2	177	1	2	2	10	1	Color Vlv 10
+2	2	178	1	2	2	11	1	Color Vlv 11
+2	2	179	1	2	2	12	1	Color Vlv 12
+2	2	180	1	2	2	13	1	Color Vlv 13
+2	2	181	1	2	2	14	1	Color Vlv 14
+2	2	182	1	2	2	15	1	Color Vlv 15
+2	2	183	1	2	2	16	1	Color Vlv 16
+
+! Process Digital Outputs Standard Color Change Option (Model A I/O - 5 Slot Rack #2)
+3	2	129	2	1	2	1	1	pPE
+3	2	130	2	1	2	2	1	pIW
+3	2	131	2	1	2	3	1	pBW
+3	2	132	2	1	2	4	1	pSOL
+3	2	133	2	1	2	5	1	pAIR
+3	2	134	2	1	2	6	1	pCC
+3	2	135	2	1	2	7	1	pDUMP
+3	2	136	2	1	2	8	1	pFLUSH
+3	2	137	2	1	2	9	1	ACA
+3	2	138	2	1	2	10	1	pDUMP2
+3	2	139	2	1	2	11	1	ACVA
+3	2	140	2	1	2	12	1	pACS
+3	2	141	2	1	2	13	1	Reserved
+3	2	142	2	1	2	14	1	p2T
+3	2	143	2	1	2	15	1	Reserved
+3	2	144	2	1	2	16	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+3	2	168	2	2	2	1	1	Color Vlv 1
+3	2	169	2	2	2	2	1	Color Vlv 2
+3	2	170	2	2	2	3	1	Color Vlv 3
+3	2	171	2	2	2	4	1	Color Vlv 4
+3	2	172	2	2	2	5	1	Color Vlv 5
+3	2	173	2	2	2	6	1	Color Vlv 6
+3	2	174	2	2	2	7	1	Color Vlv 7
+3	2	175	2	2	2	8	1	Color Vlv 8
+3	2	176	2	2	2	9	1	Color Vlv 9
+3	2	177	2	2	2	10	1	Color Vlv 10
+3	2	178	2	2	2	11	1	Color Vlv 11
+3	2	179	2	2	2	12	1	Color Vlv 12
+3	2	180	2	2	2	13	1	Color Vlv 13
+3	2	181	2	2	2	14	1	Color Vlv 14
+3	2	182	2	2	2	15	1	Color Vlv 15
+3	2	183	2	2	2	16	1	Color Vlv 16
+
+! Process Digital Outputs Standard Color Change Option (Model A I/O - 10 Slot Rack)
+4	2	129	1	6	2	1	1	pPE
+4	2	130	1	6	2	2	1	pIW
+4	2	131	1	6	2	3	1	pBW
+4	2	132	1	6	2	4	1	pSOL
+4	2	133	1	6	2	5	1	pAIR
+4	2	134	1	6	2	6	1	pCC
+4	2	135	1	6	2	7	1	pDUMP
+4	2	136	1	6	2	8	1	pFLUSH
+4	2	137	1	6	2	9	1	ACA
+4	2	138	1	6	2	10	1	pDUMP2
+4	2	139	1	6	2	11	1	ACVA
+4	2	140	1	6	2	12	1	pACS
+4	2	141	1	6	2	13	1	Reserved
+4	2	142	1	6	2	14	1	p2T
+4	2	143	1	6	2	15	1	Reserved
+4	2	144	1	6	2	16	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+4	2	168	1	7	2	1	1	Color Vlv 1
+4	2	169	1	7	2	2	1	Color Vlv 2
+4	2	170	1	7	2	3	1	Color Vlv 3
+4	2	171	1	7	2	4	1	Color Vlv 4
+4	2	172	1	7	2	5	1	Color Vlv 5
+4	2	173	1	7	2	6	1	Color Vlv 6
+4	2	174	1	7	2	7	1	Color Vlv 7
+4	2	175	1	7	2	8	1	Color Vlv 8
+4	2	176	1	7	2	9	1	Color Vlv 9
+4	2	177	1	7	2	10	1	Color Vlv 10
+4	2	178	1	7	2	11	1	Color Vlv 11
+4	2	179	1	7	2	12	1	Color Vlv 12
+4	2	180	1	7	2	13	1	Color Vlv 13
+4	2	181	1	7	2	14	1	Color Vlv 14
+4	2	182	1	7	2	15	1	Color Vlv 15
+4	2	183	1	7	2	16	1	Color Vlv 16
+
+! Process Digital Outputs Standard Color Change Option (Ethernet IP)
+7	2	129	89	2	2	1	1	pPE
+7	2	130	89	2	2	2	1	pIW
+7	2	131	89	2	2	3	1	pBW
+7	2	132	89	2	2	4	1	pSOL
+7	2	133	89	2	2	5	1	pAIR
+7	2	134	89	2	2	6	1	pCC
+7	2	135	89	2	2	7	1	pDUMP
+7	2	136	89	2	2	8	1	pFLUSH
+7	2	137	89	2	2	9	1	ACA
+7	2	138	89	2	2	10	1	pDUMP2
+7	2	139	89	2	2	11	1	ACVA
+7	2	140	89	2	2	12	1	pACS
+7	2	141	89	2	2	13	1	Reserved
+7	2	142	89	2	2	14	1	p2T
+7	2	143	89	2	2	15	1	Reserved
+7	2	144	89	2	2	16	1	Reserved
+
+7	2	168	89	2	2	17	1	Color Vlv 1
+7	2	169	89	2	2	18	1	Color Vlv 2
+7	2	170	89	2	2	19	1	Color Vlv 3
+7	2	171	89	2	2	20	1	Color Vlv 4
+7	2	172	89	2	2	21	1	Color Vlv 5
+7	2	173	89	2	2	22	1	Color Vlv 6
+7	2	174	89	2	2	23	1	Color Vlv 7
+7	2	175	89	2	2	24	1	Color Vlv 8
+
+! Process Group Outputs Standard Color Change Option (Memory-Mapped)
+1	19	1	0	0	29	26	1	CC Cntr Valv	PAVRCCIO	tCCIOEqCmos[1].cc_grp1_go
+1	19	2	0	0	29	27	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Group Outputs Standard Color Change Option (Model A I/O - 5 Slot Rack #1)
+2	19	1	1	1	2	1	15	CC Cntr Valv	PAVRCCIO	tCCIOEqCmos[1].cc_grp1_go
+2	19	2	1	2	2	1	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Group Outputs Standard Color Change Option (Model A I/O - 5 Slot Rack #2)
+3	19	1	2	1	2	1	15	CC Cntr Valv	PAVRCCIO	tCCIOEqCmos[1].cc_grp1_go
+3	19	2	2	2	2	1	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Group Outputs Standard Color Change Option (Model A I/O - 10 Slot Rack)
+4	19	1	1	6	2	1	15	CC Cntr Valv	PAVRCCIO	tCCIOEqCmos[1].cc_grp1_go
+4	19	2	1	7	2	1	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Robot Outputs Standard Color Change Option (Ethernet IP but mapped to RDO[1])
+7	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+7	19	1	89	2	2	1	16	CC Cntr Valv	PAVRCCIO	tCCIOEqCmos[1].cc_grp1_go
+7	19	2	89	2	2	17	8	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Group Outputs Standard Color Change Option (Robot I/O mapped to RDO[1])
+8	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+STOPSECTION										
+
+!rob_cc_use = 9
+PROCESS	PAVROPTN	byOptn[1].byOp[9]	1	PAVRDBCV	qty_clr_val	16	PAVROPTN	proc_io_type
+! Process Digital Outputs Standard Color Change Option (Memory-Mapped)
+1	2	176	0	0	28	432	1	Color Vlv 9
+1	2	177	0	0	28	433	1	Color Vlv 10
+1	2	178	0	0	28	434	1	Color Vlv 11
+1	2	179	0	0	28	435	1	Color Vlv 12
+1	2	180	0	0	28	436	1	Color Vlv 13
+1	2	181	0	0	28	437	1	Color Vlv 14
+1	2	182	0	0	28	438	1	Color Vlv 15
+1	2	183	0	0	28	439	1	Color Vlv 16
+
+! Process Digital Outputs Standard Color Change Option (Ethernet IP)
+7	2	176	89	2	2	25	1	Color Vlv 9
+7	2	177	89	2	2	26	1	Color Vlv 10
+7	2	178	89	2	2	27	1	Color Vlv 11
+7	2	179	89	2	2	28	1	Color Vlv 12
+7	2	180	89	2	2	29	1	Color Vlv 13
+7	2	181	89	2	2	30	1	Color Vlv 14
+7	2	182	89	2	2	31	1	Color Vlv 15
+7	2	183	89	2	2	32	1	Color Vlv 16
+
+! Process Group Outputs Standard Color Change Option (Memory-Mapped)
+1	19	2	0	0	29	27	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Robot Outputs Standard Color Change Option (Ethernet IP)
+7	19	2	89	2	2	17	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+STOPSECTION										
+
+!rob_cc_use = 9
+PROCESS	PAVROPTN	byOptn[1].byOp[9]	1	PAVRDBCV	qty_clr_val	24	PAVROPTN	proc_io_type
+! Process Digital Outputs Standard Color Change Option (Memory-Mapped)
+1	2	176	0	0	28	432	1	Color Vlv 9
+1	2	177	0	0	28	433	1	Color Vlv 10
+1	2	178	0	0	28	434	1	Color Vlv 11
+1	2	179	0	0	28	435	1	Color Vlv 12
+1	2	180	0	0	28	436	1	Color Vlv 13
+1	2	181	0	0	28	437	1	Color Vlv 14
+1	2	182	0	0	28	438	1	Color Vlv 15
+1	2	183	0	0	28	439	1	Color Vlv 16
+1	2	184	0	0	28	440	1	Color Vlv 17
+1	2	185	0	0	28	441	1	Color Vlv 18
+1	2	186	0	0	28	442	1	Color Vlv 19
+1	2	187	0	0	28	443	1	Color Vlv 20
+1	2	188	0	0	28	444	1	Color Vlv 21
+1	2	189	0	0	28	445	1	Color Vlv 22
+1	2	190	0	0	28	446	1	Color Vlv 23
+1	2	191	0	0	28	447	1	Color Vlv 24
+
+! Process Digital Outputs Standard Color Change Option (Ethernet IP)
+7	2	176	89	2	2	25	1	Color Vlv 9
+7	2	177	89	2	2	26	1	Color Vlv 10
+7	2	178	89	2	2	27	1	Color Vlv 11
+7	2	179	89	2	2	28	1	Color Vlv 12
+7	2	180	89	2	2	29	1	Color Vlv 13
+7	2	181	89	2	2	30	1	Color Vlv 14
+7	2	182	89	2	2	31	1	Color Vlv 15
+7	2	183	89	2	2	32	1	Color Vlv 16
+7	2	184	89	2	2	33	1	Color Vlv 17
+7	2	185	89	2	2	34	1	Color Vlv 18
+7	2	186	89	2	2	35	1	Color Vlv 19
+7	2	187	89	2	2	36	1	Color Vlv 20
+7	2	188	89	2	2	37	1	Color Vlv 21
+7	2	189	89	2	2	38	1	Color Vlv 22
+7	2	190	89	2	2	39	1	Color Vlv 23
+7	2	191	89	2	2	40	1	Color Vlv 24
+
+! Process Group Outputs Standard Color Change Option (Memory-Mapped)
+1	19	2	0	0	29	27	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+1	19	3	0	0	29	28	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color2go
+
+! Process Robot Outputs Standard Color Change Option (Ethernet IP)
+7	19	2	89	2	2	17	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+7	19	3	89	2	2	33	8	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color2go
+STOPSECTION										
+
+!rob_cc_use = 9
+VAR	PAVROPTN	byOptn[1].byOp[9]	1	PAVROPTN	byOptn[1].byOp[75]	0	PAVROPTN	which_gun
+! Standard Color Change Option Variables (Any Type)
+0	BOOLEAN	PAVRCCEX	tCCEXCmos.sap_unknown	FALSE
+0	BOOLEAN	PAVRCCEX	tCCEXCmos.cln_unknown	FALSE
+
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[1]	Push Out Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[2]	Clean Out Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[3]	Cap Clean Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[4]	Fill Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[5]	Refill Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[6]	Full Push to Dump
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[7]	Spare 1
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[8]	Super Purge
+
+0	INTEGER	PAVRCCEX	tCCEXCmos.push_cyc_no	1
+0	INTEGER	PAVRCCEX	tCCEXCmos.clean_cyc_no	2
+0	INTEGER	PAVRCCEX	tCCEXCmos.cap_cyc_no	3
+0	INTEGER	PAVRCCEX	tCCEXCmos.fill_cyc_no	4
+0	INTEGER	PAVRCCEX	tCCEXCmos.refil_cyc_no	5
+0	INTEGER	PAVRCCEX	tCCEXCmos.purge_cyc_no	6
+0	INTEGER	PAVRCCEX	tCCEXCmos.trig_cyc_no	0
+0	INTEGER	PAVRCCEX	tCCEXCmos.super_cyc_no	8
+
+0	SHORT	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[4]	1025
+
+0	STRING	PAVRCCEX	tCCEXCmos.dvalve_nam[1]	pTRIG
+0	STRING	PAVRCCEX	tCCEXCmos.dvalve_nam[2]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.dvalve_nam[3]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.dvalve_nam[4]	pCC1-24
+
+0	STRING	PAVRCCEX	tCCEXCmos.action_nam[1]	Exit App Clnr
+0	STRING	PAVRCCEX	tCCEXCmos.action_nam[2]	Goto App Clnr
+0	STRING	PAVRCCEX	tCCEXCmos.action_nam[3]	Goto Purge
+0	STRING	PAVRCCEX	tCCEXCmos.action_nam[4]	Goto Home
+
+0	STRING	PAVRCCEX	tCCEXCmos.event_nam[1]	Above Cleaner
+0	STRING	PAVRCCEX	tCCEXCmos.event_nam[2]	In Cleaner
+0	STRING	PAVRCCEX	tCCEXCmos.event_nam[3]	At Purge
+0	STRING	PAVRCCEX	tCCEXCmos.event_nam[4]	At Home
+
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[1]	2
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[2]	4
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[3]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[5]	0
+
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[1]	6
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[2]	2
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[3]	4
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[5]	0
+
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[1]	6
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[2]	2
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[3]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[5]	0
+
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_gun_no	1
+0	BYTE	PAVRCCEX	tCCEXCmos.clr_ena_no	4
+0	BYTE	PAVRCCEX	tCCEXCmos.prg_solv_no	4
+0	BYTE	PAVRCCEX	tCCEXCmos.prg_air_no	5
+0	BYTE	PAVRCCEX	tCCEXCmos.gun_dump_no	7
+
+! Standard Color Change Option Variables (Gun)
+! wet_mask is now a 31 bit word!
+1	INTEGER	PAVRCCEX	tCCEXCmos.wet_mask	0
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[1]	pPE
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[2]	pIW
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[3]	pBW
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[4]	pSOL
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[5]	pAIR
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[6]	pCC
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[7]	pDUMP
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[8]	pFLUSH
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[9]	ACA
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[10]	pDUMP2
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[11]	ACVA
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[12]	pACS
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[13]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[14]	p2T
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[15]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[16]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[17]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[18]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[19]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[20]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[21]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[22]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[23]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[24]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[25]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[26]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[27]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[28]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[29]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[30]	RESERVED
+1	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[31]	RESERVED
+
+! Standard Color Change Option Variables (Bell-306)
+! Standard Color Change Option Variables (Bell-607)
+STOPSECTION
+
+!rob_ipc_use = 40
+CELL	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	cell_io_type
+! Cell Digital Outputs Integral Pump Control Option (Memory-Mapped)										
+1	2	21	0	0	28	277	1	Pmp1 Running	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].pump_run_do
+1	2	22	0	0	28	278	1	Pmp2 Running	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].pump_run_do
+
+! Cell Digital Outputs Integral Pump Control Option (Model A I/O - 5 or 10 Slot Rack)
+2	2	21	1	5	2	5	1	Pmp1 Running	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].pump_run_do
+2	2	22	1	5	2	6	1	Pmp2 Running	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].pump_run_do
+
+! Cell Digital Outputs Integral Pump Control Option (PLC I/O)
+9	2	21	0	0	2	21	1	Pmp1 Running	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].pump_run_do
+9	2	22	0	0	2	22	1	Pmp2 Running	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].pump_run_do
+STOPSECTION										
+
+!rob_ipc_use = 40
+!rob_mtr_use = 42 (Flowmeters)
+PROCESS	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[42]	1	PAVROPTN	proc_io_type
+! Process Analog Inputs Integral Pump Control Option (Memory-Mapped)
+1	3	1	0	0	29	51	1	Resin Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tFlowMeter.tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	3	1	1	5	3	1	1	Resin Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tFlowMeter.tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	3	1	2	5	3	1	1	Resin Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tFlowMeter.tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	3	1	1	10	3	1	1	Resin Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tFlowMeter.tIo.num
+STOPSECTION
+
+!rob_ipc_use = 40
+!rob_mtr_use = 42 (Inlet Sensors)
+PROCESS	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[42]	2	PAVROPTN	proc_io_type
+! Process Analog Inputs Integral Pump Control Option (Memory-Mapped)
+1	3	1	0	0	29	51	1	Resin Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[1].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	3	1	1	5	3	1	1	Resin Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[1].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	3	1	2	5	3	1	1	Resin Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[1].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	3	1	1	10	3	1	1	Resin Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[1].tIo.num
+STOPSECTION
+
+!rob_ipc_use = 40
+PROCESS	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	proc_io_type
+! Process Analog Inputs Integral Pump Control Option (Memory-Mapped)
+1	3	2	0	0	29	52	1	Resin Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	3	2	1	5	3	2	1	Resin Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	3	2	2	5	3	2	1	Resin Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	3	2	1	10	3	2	1	Resin Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Ethernet IP)
+7	3	2	89	2	3	1	1	Resin Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tSensor[2].tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Memory-Mapped)
+1	4	1	0	0	29	76	1	Resin Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	4	1	1	3	4	1	1	Resin Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	4	1	2	3	4	1	1	Resin Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	4	1	1	8	4	1	1	Resin Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Ethernet IP)
+7	4	1	89	2	4	3	1	Resin Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.num
+STOPSECTION
+
+!rob_ipc_use = 40
+VAR	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	which_gun
+! Integral Pump Control Option Variables (Any Type)
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.min_cnts	1600
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_cnts	8000
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.min_units	0
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_units	100
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_requnits	100
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_req_cnts	8000
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.out_to_in	10.0
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.psi_to_cnts	0.015625
+STOPSECTION
+
+!rob_ipc_use = 40
+VAR	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	proc_io_type
+! Integral Pump Control Option Variables (Any Type)
+7	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.min_cnts	0
+7	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_cnts	6000
+7	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_requnits	100
+7	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.tIo.max_req_cnts	4082
+7	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.out_to_in	10.0
+7	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[1].tRegulator.psi_to_cnts	0.0167
+STOPSECTION
+
+!rob_ipc_use = 40
+VAR	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	byOptn[1].byOp[40]	1	PAVROPTN	which_gun
+! Integral Pump Control Option Variables (Any Type)
+0	INTEGER	PAVRIPC	tIpcCmos.LowPresCCMsk	25
+0	INTEGER	PAVRIPC	tIpcCmos.HiPresCCMsk	1023
+0	INTEGER	PAVRIPC	tIpcCmos.RegAdjCCMsk	1
+0	BYTE	PAPARMDB	ins_to_par[1,1]	0
+
+!rob_mtap_use = 36
+0	BYTE	PAVROPTN	byOptn[1].byOp[36]	1
+
+0	BOOLEAN	PACNTLMN	off_on_exit	FALSE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_rack	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des2[1].app_slot	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_source	3
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_status	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_type	4
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_units	cc/min
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_max	3600
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_setp	FALSE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_frst_bit	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_bts	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_max_out	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_out	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_strb_out	0
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_nam	NA
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_titl	Fluid Flow
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].chg_date	0
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.num	0
+! Integral Pump Control Option Variables (Gun)
+! Integral Pump Control Option Variables (Bell-306)
+! Integral Pump Control Option Variables (Bell-607)
+STOPSECTION								
+
+!rob_2kgn_use = 41
+!rob_mtr_use = 42 (Flowmeters)
+PROCESS	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[42]	1	PAVROPTN	proc_io_type
+! Process Analog Inputs Integral Pump Control Option (Memory-Mapped)
+1	3	3	0	0	29	53	1	Catalyst Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tFlowMeter.tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	3	3	1	5	3	3	1	Catalyst Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tFlowMeter.tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	3	3	2	5	3	3	1	Catalyst Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tFlowMeter.tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	3	3	1	10	3	3	1	Catalyst Meter	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tFlowMeter.tIo.num
+STOPSECTION
+
+!rob_2kgn_use = 41
+!rob_mtr_use = 42 (Inlet Sensors)
+PROCESS	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[42]	2	PAVROPTN	proc_io_type
+! Process Analog Inputs Integral Pump Control Option (Memory-Mapped)
+1	3	3	0	0	29	53	1	Catalsyt Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[1].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	3	3	1	5	3	3	1	Catalyst Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[1].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	3	3	2	5	3	3	1	Catalyst Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[1].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	3	3	1	10	3	3	1	Catalyst Inlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[1].tIo.num
+STOPSECTION
+
+!rob_2kgn_use = 41
+PROCESS	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	proc_io_type
+! Process Analog Inputs Integral Pump Control Option (Memory-Mapped)
+1	3	4	0	0	29	54	1	Catalyst Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+2	3	4	1	5	3	4	1	Catalyst Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+3	3	4	2	5	3	4	1	Catalyst Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+4	3	4	1	10	3	4	1	Catalyst Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[2].tIo.num
+
+! Process Analog Inputs Integral Pump Control Option (Ethernet IP)
+7	3	4	89	2	3	2	1	Catalyst Outlet	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tSensor[2].tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Memory-Mapped)
+!1	4	5	0	0	29	76	1	Catalyst Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #1)
+!2	4	5	1	3	4	1	1	Catalyst Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Model A I/O - 5 Slot Rack #2)
+!3	4	5	2	3	4	1	1	Catalyst Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Model A I/O - 10 Slot Rack)
+!4	4	5	1	8	4	1	1	Catalyst Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.num
+
+! Process Analog Outputs Integral Pump Control Option (Ethernet IP)
+7	4	5	89	2	4	6	1	Catalyst Reg.	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.num
+
+! Process Digital Outputs General 2k Option (Memory-Mapped)
+1	2	129	0	0	28	385	1	pPE
+1	2	130	0	0	28	386	1	pIW
+1	2	131	0	0	28	387	1	pBW
+1	2	132	0	0	28	388	1	pSOL
+1	2	133	0	0	28	389	1	pAIR
+1	2	134	0	0	28	390	1	pCC
+1	2	135	0	0	28	391	1	pDUMP
+1	2	136	0	0	28	392	1	pFLUSH
+1	2	137	0	0	28	393	1	ACA
+1	2	138	0	0	28	394	1	pDUMP2
+1	2	139	0	0	28	395	1	pSOL2
+1	2	140	0	0	28	396	1	pFLUSH2
+1	2	141	0	0	28	397	1	pDUMP3
+1	2	142	0	0	28	398	1	p2T
+1	2	143	0	0	28	399	1	pWASH
+1	2	144	0	0	28	400	1	Reserved
+
+! Reserved for 2nd CC Control Valve group output (maximum 15 bits)
+1	2	145	0	0	28	401	1	Reserved
+1	2	146	0	0	28	402	1	Reserved
+1	2	147	0	0	28	403	1	Reserved
+1	2	148	0	0	28	404	1	Reserved
+1	2	149	0	0	28	405	1	Reserved
+1	2	150	0	0	28	406	1	Reserved
+1	2	151	0	0	28	407	1	Reserved
+1	2	152	0	0	28	408	1	Reserved
+1	2	153	0	0	28	409	1	Reserved
+1	2	154	0	0	28	410	1	Reserved
+1	2	155	0	0	28	411	1	Reserved
+1	2	156	0	0	28	412	1	Reserved
+1	2	157	0	0	28	413	1	Reserved
+1	2	158	0	0	28	414	1	Reserved
+1	2	159	0	0	28	415	1	Reserved
+
+! Reserved for IPC mix valves and catalyst valves
+1	2	160	0	0	28	416	1	Mix Resin	PAVRCCIO	tCCIOEqCmos[1].cc_res_do
+1	2	161	0	0	28	417	1	Mix Catalyst	PAVRCCIO	tCCIOEqCmos[1].cc_hdr_do
+1	2	162	0	0	28	418	1	Cat. Valve 1
+1	2	163	0	0	28	419	1	Cat. Valve 2
+1	2	164	0	0	28	420	1	Cat. Valve 3
+1	2	165	0	0	28	421	1	Reserved
+1	2	166	0	0	28	422	1	Reserved
+1	2	167	0	0	28	423	1	Reserved
+
+1	2	168	0	0	28	424	1	Color Vlv 1
+1	2	169	0	0	28	425	1	Color Vlv 2
+1	2	170	0	0	28	426	1	Color Vlv 3
+1	2	171	0	0	28	427	1	Color Vlv 4
+1	2	172	0	0	28	428	1	Color Vlv 5
+1	2	173	0	0	28	429	1	Color Vlv 6
+1	2	174	0	0	28	430	1	Color Vlv 7
+1	2	175	0	0	28	431	1	Color Vlv 8
+
+! Process Digital Outputs General 2k Option (Model A I/O - 5 Slot Rack #1)
+2	2	129	1	1	2	1	1	pPE
+2	2	130	1	1	2	2	1	pIW
+2	2	131	1	1	2	3	1	pBW
+2	2	132	1	1	2	4	1	pSOL
+2	2	133	1	1	2	5	1	pAIR
+2	2	134	1	1	2	6	1	pCC
+2	2	135	1	1	2	7	1	pDUMP
+2	2	136	1	1	2	8	1	pFLUSH
+2	2	137	1	1	2	9	1	ACA
+2	2	138	1	1	2	10	1	pDUMP2
+2	2	139	1	1	2	11	1	pSOL2
+2	2	140	1	1	2	12	1	pFLUSH2
+2	2	141	1	1	2	13	1	pDUMP3
+2	2	142	1	1	2	14	1	p2T
+2	2	143	1	1	2	15	1	pWASH
+2	2	144	1	1	2	16	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+2	2	160	1	2	2	12	1	Mix Resin	PAVRCCIO	tCCIOEqCmos[1].cc_res_do
+2	2	161	1	2	2	13	1	Mix Catalyst	PAVRCCIO	tCCIOEqCmos[1].cc_hdr_do
+2	2	162	1	2	2	14	1	Cat. Valve 1
+2	2	163	1	2	2	15	1	Cat. Valve 2
+2	2	164	1	2	2	16	1	Cat. Valve 3
+
+2	2	168	1	2	2	1	1	Color Vlv 1
+2	2	169	1	2	2	2	1	Color Vlv 2
+2	2	170	1	2	2	3	1	Color Vlv 3
+2	2	171	1	2	2	4	1	Color Vlv 4
+2	2	172	1	2	2	5	1	Color Vlv 5
+2	2	173	1	2	2	6	1	Color Vlv 6
+2	2	174	1	2	2	7	1	Color Vlv 7
+2	2	175	1	2	2	8	1	Color Vlv 8
+2	2	176	1	2	2	9	1	Color Vlv 9
+2	2	177	1	2	2	10	1	Color Vlv 10
+2	2	178	1	2	2	11	1	Color Vlv 11
+
+! Process Digital Outputs General 2k Option (Model A I/O - 5 Slot Rack #2)
+3	2	129	2	1	2	1	1	pPE
+3	2	130	2	1	2	2	1	pIW
+3	2	131	2	1	2	3	1	pBW
+3	2	132	2	1	2	4	1	pSOL
+3	2	133	2	1	2	5	1	pAIR
+3	2	134	2	1	2	6	1	pCC
+3	2	135	2	1	2	7	1	pDUMP
+3	2	136	2	1	2	8	1	pFLUSH
+3	2	137	2	1	2	9	1	ACA
+3	2	138	2	1	2	10	1	pDUMP2
+3	2	139	2	1	2	11	1	pSOL2
+3	2	140	2	1	2	12	1	pFLUSH2
+3	2	141	2	1	2	13	1	pDUMP3
+3	2	142	2	1	2	14	1	p2T
+3	2	143	2	1	2	15	1	pWASH
+3	2	144	2	1	2	16	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+3	2	160	2	2	2	12	1	Mix Resin	PAVRCCIO	tCCIOEqCmos[1].cc_res_do
+3	2	161	2	2	2	13	1	Mix Catalyst	PAVRCCIO	tCCIOEqCmos[1].cc_hdr_do
+3	2	162	2	2	2	14	1	Cat. Valve 1
+3	2	163	2	2	2	15	1	Cat. Valve 2
+3	2	164	2	2	2	16	1	Cat. Valve 3
+
+3	2	168	2	2	2	1	1	Color Vlv 1
+3	2	169	2	2	2	2	1	Color Vlv 2
+3	2	170	2	2	2	3	1	Color Vlv 3
+3	2	171	2	2	2	4	1	Color Vlv 4
+3	2	172	2	2	2	5	1	Color Vlv 5
+3	2	173	2	2	2	6	1	Color Vlv 6
+3	2	174	2	2	2	7	1	Color Vlv 7
+3	2	175	2	2	2	8	1	Color Vlv 8
+3	2	176	2	2	2	9	1	Color Vlv 9
+3	2	177	2	2	2	10	1	Color Vlv 10
+3	2	178	2	2	2	11	1	Color Vlv 11
+
+! Process Digital Outputs General 2k Option (Model A I/O - 10 Slot Rack)
+4	2	129	1	6	2	1	1	pPE
+4	2	130	1	6	2	2	1	pIW
+4	2	131	1	6	2	3	1	pBW
+4	2	132	1	6	2	4	1	pSOL
+4	2	133	1	6	2	5	1	pAIR
+4	2	134	1	6	2	6	1	pCC
+4	2	135	1	6	2	7	1	pDUMP
+4	2	136	1	6	2	8	1	pFLUSH
+4	2	137	1	6	2	9	1	ACA
+4	2	138	1	6	2	10	1	pDUMP2
+4	2	139	1	6	2	11	1	pSOL2
+4	2	140	1	6	2	12	1	pFLUSH2
+4	2	141	1	6	2	13	1	pDUMP3
+4	2	142	1	6	2	14	1	p2T
+4	2	143	1	6	2	15	1	pWASH
+4	2	144	1	6	2	16	1	Gun 1 Pilot	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[1]
+
+4	2	160	1	7	2	12	1	Mix Resin	PAVRCCIO	tCCIOEqCmos[1].cc_res_do
+4	2	161	1	7	2	13	1	Mix Catalyst	PAVRCCIO	tCCIOEqCmos[1].cc_hdr_do
+4	2	162	1	7	2	14	1	Cat. Valve 1
+4	2	163	1	7	2	15	1	Cat. Valve 2
+4	2	164	1	7	2	16	1	Cat. Valve 3
+
+4	2	168	1	7	2	1	1	Color Vlv 1
+4	2	169	1	7	2	2	1	Color Vlv 2
+4	2	170	1	7	2	3	1	Color Vlv 3
+4	2	171	1	7	2	4	1	Color Vlv 4
+4	2	172	1	7	2	5	1	Color Vlv 5
+4	2	173	1	7	2	6	1	Color Vlv 6
+4	2	174	1	7	2	7	1	Color Vlv 7
+4	2	175	1	7	2	8	1	Color Vlv 8
+4	2	176	1	7	2	9	1	Color Vlv 9
+4	2	177	1	7	2	10	1	Color Vlv 10
+4	2	178	1	7	2	11	1	Color Vlv 11
+
+! Process Digital Outputs General 2k Option (Ethernet IP)
+7	2	129	89	2	2	1	1	pPE
+7	2	130	89	2	2	2	1	pIW
+7	2	131	89	2	2	3	1	pBW
+7	2	132	89	2	2	4	1	pSOL
+7	2	133	89	2	2	5	1	pAIR
+7	2	134	89	2	2	6	1	pCC 
+7	2	135	89	2	2	7	1	pDUMP
+7	2	136	89	2	2	8	1	pFLUSH
+7	2	137	89	2	2	9	1	ACA
+7	2	138	89	2	2	10	1	pDUMP2
+7	2	139	89	2	2	11	1	pSOL2
+7	2	140	89	2	2	12	1	pFLUSH2
+7	2	141	89	2	2	13	1	pDUMP3
+7	2	142	89	2	2	14	1	p2T
+7	2	143	89	2	2	15	1	pWASH
+7	2	144	89	2	2	16	1	Reserved
+
+7	2	145	89	2	2	17	1	pACS
+7	2	146	89	2	2	18	1	ACVA
+7	2	147	89	2	2	19	1	Reserved
+
+7	2	160	89	2	2	20	1	Mix Resin	PAVRCCIO	tCCIOEqCmos[1].cc_res_do
+7	2	161	89	2	2	21	1	Mix Catalyst	PAVRCCIO	tCCIOEqCmos[1].cc_hdr_do
+7	2	162	89	2	2	22	1	Cat. Valve 1		
+7	2	163	89	2	2	23	1	Cat. Valve 2		
+7	2	164	89	2	2	24	1	Cat. Valve 3
+
+7	2	168	89	2	2	25	1	Color Vlv 1
+7	2	169	89	2	2	26	1	Color Vlv 2
+7	2	170	89	2	2	27	1	Color Vlv 3
+7	2	171	89	2	2	28	1	Color Vlv 4
+7	2	172	89	2	2	29	1	Color Vlv 5
+7	2	173	89	2	2	30	1	Color Vlv 6
+7	2	174	89	2	2	31	1	Color Vlv 7
+7	2	175	89	2	2	32	1	Color Vlv 8
+
+! Process Group Outputs General 2k Option (Memory-Mapped)
+1	19	2	0	0	29	27	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+1	19	4	0	0	29	29	1	Catalyst. Valves	PAVRCCIO	tCCIOEqCmos[1].csb_hdr_go
+1	19	5	0	0	29	30	1	CC Cntr Valv2	PAVRCCIO	tCCIOEqCmos[1].cc_grp2_go
+
+! Process Group Outputs General 2k Option (Model A I/O - 5 Slot Rack #1)
+2	19	2	1	2	2	1	11	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+2	19	4	1	2	2	14	3	Catalyst Valves	PAVRCCIO	tCCIOEqCmos[1].csb_hdr_go
+
+! Process Group Outputs General 2k Option (Model A I/O - 5 Slot Rack #2)
+3	19	2	2	2	2	1	11	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+3	19	4	2	2	2	14	3	Catalyst Valves	PAVRCCIO	tCCIOEqCmos[1].csb_hdr_go
+
+! Process Group Outputs General 2k Option (Model A I/O - 10 Slot Rack)
+4	19	2	1	7	2	1	11	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+4	19	4	1	7	2	14	3	Catalyst Valves	PAVRCCIO	tCCIOEqCmos[1].csb_hdr_go
+
+! Process Group Outputs General 2k Option (Ethernet IP)
+7	19	2	89	2	2	25	8	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+7	19	4	89	2	2	22	3	Catalyst Valves	PAVRCCIO	tCCIOEqCmos[1].csb_hdr_go
+7	19	5	89	2	2	17	3	CC Cntr Valv2	PAVRCCIO	tCCIOEqCmos[1].cc_grp2_go
+STOPSECTION										       
+
+!rob_2kgn_use = 41
+PROCESS	PAVROPTN	byOptn[1].byOp[41]	1	PAVRDBCV	qty_clr_val	16	PAVROPTN	proc_io_type
+! Process Digital Outputs Standard Color Change Option (Memory-Mapped)
+1	2	176	0	0	28	432	1	Color Vlv 9
+1	2	177	0	0	28	410	1	Color Vlv 10
+1	2	178	0	0	28	411	1	Color Vlv 11
+1	2	179	0	0	28	412	1	Color Vlv 12
+1	2	180	0	0	28	413	1	Color Vlv 13
+1	2	181	0	0	28	414	1	Color Vlv 14
+1	2	182	0	0	28	415	1	Color Vlv 15
+1	2	183	0	0	28	416	1	Color Vlv 16
+
+! Process Digital Outputs Standard Color Change Option (Ethernet IP)
+7	2	176	89	2	2	33	1	Color Vlv 9
+7	2	177	89	2	2	34	1	Color Vlv 10
+7	2	178	89	2	2	35	1	Color Vlv 11
+7	2	179	89	2	2	36	1	Color Vlv 12
+7	2	180	89	2	2	37	1	Color Vlv 13
+7	2	181	89	2	2	38	1	Color Vlv 14
+7	2	182	89	2	2	39	1	Color Vlv 15
+7	2	183	89	2	2	40	1	Color Vlv 16
+
+! Process Group Outputs Standard Color Change Option (Memory-Mapped)
+1	19	2	0	0	29	27	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+
+! Process Robot Outputs Standard Color Change Option (Ethernet IP)
+7	19	2	89	2	2	25	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+STOPSECTION
+
+!rob_2kgn_use = 41
+PROCESS	PAVROPTN	byOptn[1].byOp[41]	1	PAVRDBCV	qty_clr_val	24	PAVROPTN	proc_io_type
+! Process Digital Outputs Standard Color Change Option (Memory-Mapped)
+1	2	176	0	0	28	432	1	Color Vlv 9
+1	2	177	0	0	28	433	1	Color Vlv 10
+1	2	178	0	0	28	434	1	Color Vlv 11
+1	2	179	0	0	28	435	1	Color Vlv 12
+1	2	180	0	0	28	436	1	Color Vlv 13
+1	2	181	0	0	28	437	1	Color Vlv 14
+1	2	182	0	0	28	438	1	Color Vlv 15
+1	2	183	0	0	28	439	1	Color Vlv 16
+1	2	184	0	0	28	440	1	Color Vlv 17
+1	2	185	0	0	28	441	1	Color Vlv 18
+1	2	186	0	0	28	442	1	Color Vlv 19
+1	2	187	0	0	28	443	1	Color Vlv 20
+1	2	188	0	0	28	444	1	Color Vlv 21
+1	2	189	0	0	28	445	1	Color Vlv 22
+1	2	190	0	0	28	446	1	Color Vlv 23
+1	2	191	0	0	28	447	1	Color Vlv 24
+
+! Process Digital Outputs Standard Color Change Option (Ethernet IP)
+7	2	176	89	2	2	33	1	Color Vlv 9
+7	2	177	89	2	2	34	1	Color Vlv 10
+7	2	178	89	2	2	35	1	Color Vlv 11
+7	2	179	89	2	2	36	1	Color Vlv 12
+7	2	180	89	2	2	37	1	Color Vlv 13
+7	2	181	89	2	2	38	1	Color Vlv 14
+7	2	182	89	2	2	39	1	Color Vlv 15
+7	2	183	89	2	2	40	1	Color Vlv 16
+7	2	184	89	2	2	41	1	Color Vlv 17
+7	2	185	89	2	2	42	1	Color Vlv 18
+7	2	186	89	2	2	43	1	Color Vlv 19
+7	2	187	89	2	2	44	1	Color Vlv 20
+7	2	188	89	2	2	45	1	Color Vlv 21
+7	2	189	89	2	2	46	1	Color Vlv 22
+7	2	190	89	2	2	47	1	Color Vlv 23
+7	2	191	89	2	2	48	1	Color Vlv 24
+
+! Process Group Outputs Standard Color Change Option (Memory-Mapped)
+1	19	2	0	0	29	27	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+1	19	3	0	0	29	28	1	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color2go
+
+! Process Robot Outputs Standard Color Change Option (Ethernet IP)
+7	19	2	89	2	2	25	16	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color_go
+7	19	3	89	2	2	41	8	Color valves	PAVRCCIO	tCCIOEqCmos[1].csb_color2go
+STOPSECTION
+
+!rob_2kgn_use = 41
+VAR	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	which_gun
+! Integral Pump Control Option Variables (Any Type)
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.min_cnts	1600
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_cnts	8000
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.min_units	0
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_units	100
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_requnits	100
+0	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_req_cnts	8000
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.out_to_in	10.0
+0	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.psi_to_cnts	0.015625
+STOPSECTION
+
+!rob_2kgn_use = 41
+VAR	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	proc_io_type
+! Integral Pump Control Option Variables (Any Type)
+7	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.min_cnts	0
+7	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_cnts	6000
+7	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_requnits	100
+7	INTEGER	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.tIo.max_req_cnts	4082
+7	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.out_to_in	10.0
+7	REAL	PAVRIPC	tIpcEqCfg[1].tPmpCfg[2].tRegulator.psi_to_cnts	0.0167
+STOPSECTION
+
+!rob_2kgn_use = 41
+VAR	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	which_gun
+! General 2k Option Variables (Any Type)
+0	INTEGER	PAVRIPC	tIpcCmos.LowPresCCMsk	17
+0	INTEGER	PAVRIPC	tIpcCmos.RegAdjCCMsk	17
+0	BYTE	PAVRCCEX	tCCEXCmos.res_ps_no	4
+0	BYTE	PAVRCCEX	tCCEXCmos.res_ps_no1	4
+0	BYTE	PAVRCCEX	tCCEXCmos.res_oride_no	0
+0	BYTE	PAVRCCEX	tCCEXCmos.res_ps_no2	4
+0	BYTE	PAVRCCEX	tCCEXCmos.res_dump_no	7
+0	BYTE	PAVRCCEX	tCCEXCmos.res_prg_air	5
+0	BYTE	PAVRCCEX	tCCEXCmos.res_byp_no	0
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_ps_no	11
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_ps_no1	11
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_oride_no	0
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_ps_no2	11
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_dump_no	7
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_prg_air	0
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_byp_no	0
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_ratio_no	3
+0	BYTE	PAVRCCEX	tCCEXCmos.hdr_ena_no	3
+0	SHORT	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[3]	1025
+0	SHORT	PAVRCCIO	tCCIOEqCmos[1].cc_dout_do[4]	1025
+0	BOOLEAN	PAVRCCEX	tCCEXCmos.sap_unknown	FALSE
+0	BOOLEAN	PAVRCCEX	tCCEXCmos.cln_unknown	FALSE
+0	INTEGER	PAVRCCEX	tCCEXCmos.cc_res_mask	0
+0	INTEGER	PAVRCCEX	tCCEXCmos.cc_hdr_mask	0
+0	INTEGER	PAVRCCEX	tCCEXCmos.wet_mask	0
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[1]	Push Out Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[2]	Clean Out Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[3]	Cap Clean Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[4]	Fill Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[5]	Trig Fill Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[6]	Full Push
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[7]	Trig Clean Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[8]	Super Purge
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[9]	1K Clean Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.cc_cyc_nam[10]	1K Fill Cycle
+0	STRING	PAVRCCEX	tCCEXCmos.dvalve_nam[03]	Catalyst Enable
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[1]	pPE
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[2]	pIW
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[3]	pBW
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[4]	pSOL
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[5]	pAIR
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[6]	pCC
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[7]	pDUMP
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[8]	pFLUSH
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[9]	ACA
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[10]	pDUMP2
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[11]	pSOL2
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[12]	pFLUSH2
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[13]	pDUMP3
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[14]	p2T
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[15]	pWASH
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[16]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[17]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[18]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[19]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[20]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[21]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[22]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[23]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[24]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[25]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[26]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[27]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[28]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[29]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[30]	RESERVED
+0	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[31]	RESERVED
+
+0	INTEGER	PAVRCCEX	tCCEXCmos.push_cyc_no	1
+0	INTEGER	PAVRCCEX	tCCEXCmos.clean_cyc_no	2
+0	INTEGER	PAVRCCEX	tCCEXCmos.cap_cyc_no	3
+0	INTEGER	PAVRCCEX	tCCEXCmos.fill_cyc_no	4
+0	INTEGER	PAVRCCEX	tCCEXCmos.refil_cyc_no	5
+0	INTEGER	PAVRCCEX	tCCEXCmos.purge_cyc_no	6
+0	INTEGER	PAVRCCEX	tCCEXCmos.trig_cyc_no	7
+0	INTEGER	PAVRCCEX	tCCEXCmos.super_cyc_no	8
+0	INTEGER	PAVRCCEX	tCCEXCmos.cln1k_cyc_no	9
+0	INTEGER	PAVRCCEX	tCCEXCmos.fil1k_cyc_no	10
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[1]	2
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[2]	4
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[3]	5
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.stand_cc_cyc[5]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[1]	6
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[2]	2
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[3]	4
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.full_cc_cyc[5]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[1]	6
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[2]	2
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[3]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.clean_to_0[5]	0
+! General 2k Option Variables (Gun)
+! General 2k Option Variables (Bell-306)
+! General 2k Option Variables (Bell-607)
+STOPSECTION
+
+!rob_2kgn_use = 41
+VAR	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	byOptn[1].byOp[41]	1	PAVROPTN	proc_io_type
+! General 2k Option Variables (Any Type)
+7	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[17]	pACS
+7	STRING	PAVRCCEX	tCCEXCmos.gvalve_nam[18]	ACVA
+STOPSECTION
+
+!rob_trk_use = 56
+CELL	PAVROPTN	byOptn[1].byOp[56]	1	PAVROPTN	byOptn[1].byOp[56]	1	PAVROPTN	cell_io_type
+! Cell Digital Inputs Tracking Option (Memory-Mapped)										
+1	1	9	0	0	28	9	1	Part Detect	PAVRSHIO	tShioInit[1].prt_detct_di
+
+! Cell Digital Inputs Tracking Option (Model A I/O - 5 or 10 Slot Rack)
+2	1	9	1	1	1	9	1	Part Detect	PAVRSHIO	tShioInit[1].prt_detct_di
+
+! Cell Digital Inputs Tracking Option (PLC I/O)
+9	1	9	0	0	1	9	1	Part Detect	PAVRSHIO	tShioInit[1].prt_detct_di
+
+! Cell Digital Inputs (PDI IO)
+13	1	9	48	1	1	9	1	Part Detect	PAVRSHIO	tShioInit[1].prt_detct_di
+
+! Cell Digital Inputs (Robot I/O mapped to RDI[1])
+15	1	9	0	0	8	1	1	Part Detect	PAVRSHIO	tShioInit[1].prt_detct_di
+STOPSECTION										
+
+!rob_trk_use = 56
+VAR	PAVROPTN	byOptn[1].byOp[56]	1	PAVROPTN	byOptn[1].byOp[56]	1	PAVROPTN	which_gun
+! Tracking Option Variables (Any Type)
+0	INTEGER	PAVRLNTR	sim_conv_spd	30						
+0	BOOLEAN	PAVRLNTR	gunoff_opt	FALSE						
+0	BOOLEAN	PAVRLNTR	conv_opt	FALSE						
+0	BOOLEAN	PAVRLNTR	estat_opt	FALSE						
+
+!job_strt_sg = 4
+0	BYTE	PAVROPTN	byOptn[1].byOp[4]	1
+
+! Tracking Option Variables (Gun)
+! Tracking Option Variables (Bell-306)
+! Tracking Option Variables (Bell-607)
+STOPSECTION
+
+!****************************************************************************
+!START OF ACCUCHOP
+!****************************************************************************
+! CELL IO
+!rob_acch_use = 65
+CELL	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	cell_io_type
+! ACCUCHOP CHANNEL 1 and 2 (RESIN-GLASS)
+! Cell Group Output (ABRIO)
+9	19	1	0	0	29	1	1	Resin Flow Rate	PAVRAFIO	flow_rate_go
+9	19	2	0	0	29	7	1	Glass Feed Rate	PAVRAFI2	flow_rate_go	
+9	19	3	0	0	29	13	1	Resin Usage	PAVRAFIO	ttl_cmd_go
+9	19	4	0	0	29	25	1	Glass Usage	PAVRAFI2	ttl_cmd_go	
+STOPSECTION
+
+! PROCESS IO
+!rob_acch_use = 65
+PROCESS	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	proc_io_type
+! ACCUCHOP CHANNEL 1 and 2 (RESIN-GLASS)
+! Process Digital Inputs Accuchop Option (Model A I/O - 10 Slot Rack)
+1	1	43	0	0	28	11	1	Catylst Flow	PAVRCHOP	chp_catfl_di
+1	1	46	0	0	28	14	1	Microphone 1	PAVRCHOP	chp_micr1_di	
+1	1	47	0	0	28	15	1	Microphone 2	PAVRCHOP	chp_micr2_di
+1	1	48	0	0	28	16	1	Microphone 3	PAVRCHOP	chp_micr3_di
+
+! Process Digital Inputs Accuchop Option (Model A I/O - 10 Slot Rack)
+4	1	43	1	1	1	11	1	Catylst Flow	PAVRCHOP	chp_catfl_di
+4	1	46	1	1	1	14	1	Microphone 1	PAVRCHOP	chp_micr1_di	
+4	1	47	1	1	1	15	1	Microphone 2	PAVRCHOP	chp_micr2_di
+4	1	48	1	1	1	16	1	Microphone 3	PAVRCHOP	chp_micr3_di
+
+! OUTPUTS *********************
+! Process Digital Outputs (Memory-Map) 1st channel
+1	2	23	0	0	28	385	1	Res Timer Expire	PAVRCHOP	chp_resin_do
+
+! Process Digital Outputs (Model A I/O - 5 Slot Rack) 1st channel
+2	2	23	0	0	28	385	1	Res Timer Expire	PAVRCHOP	chp_resin_do
+
+! Process Digital Outputs (Model A I/O - 5 Slot Rack #2) 1st channel
+3	2	23	0	0	28	385	1	Res Timer Expire	PAVRCHOP	chp_resin_do
+
+! Process Digital Outputs (Model A I/O - 10 Slot Rack) 1st channel
+4	2	23	1	5	2	7	1	Res Timer Expire	PAVRCHOP	chp_resin_do
+
+! Process Digital Outputs (Device Net)	1st channel
+5	2	23	0	0	28	385	1	Res Timer Expire	PAVRCHOP	chp_resin_do
+
+! ANALOG OUTPUTS ***************************
+! Process Analog Outputs Accuchop Option (Memory-Mapped)
+1	4	1	0	0	29	76	1	Resin Flow	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_num
+1	4	2	0	0	29	72	1	Atomizing Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+1	4	3	0	0	29	78	1	Shaping Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+1	4	7	0	0	29	81	1	Glass Feed	PAVRPARM	tParmEq[1].con_prm_desc[7].app_otpt_num
+
+! Process Analog Outputs Settings for Accuchop (Model A I/O - 10 Slot Rack) 1st and 2nd channels
+4	4	1	1	8	4	1	1	Resin Flow	PAVRCHOP	chp_rs_fl_ao
+4	4	2	1	9	4	2	1	Atomizing Air	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_num
+4	4	3	1	9	4	1	1	Shaping Air	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_num
+4	4	7	1	8	4	2	1	Glass Feed	PAVRCHOP	chp_gl_fd_ao
+
+! Process Analog Outputs Settings for Accuchop (force Memory map) 1st and 2nd channels
+0	4	5	0	0	29	80	1	Resin Flow Setpt	PAVRAFIO	diag_ttl_ao
+0	4	6	0	0	29	81	1	Flow Diag Out	PAVRAFIO	diag_meas_ao
+0	4	11	0	0	29	86	1	Glass Feed Setpt	PAVRAFI2	diag_ttl_ao
+0	4	12	0	0	29	87	1	Feed Diag Out	PAVRAFI2	diag_meas_ao
+STOPSECTION				       
+
+!rob_acch_use = 65
+VAR	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	which_gun
+!       Accuflow/AccuChop interface type, 1 = AID31B, 2 = HDI Pulse module
+! Defaults to 2, Uncomment & set to 1 for the AOD31B type
+0	INTEGER	PAVRAFGL	int_type	2
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[1].app_cntr_typ	3
+0	INTEGER	PAVRSHIO	man_enbl_di	0
+0	BYTE	PAVROPTN	byOptn[1].byOp[62]	1  ! EnbTpInProd
+0	BYTE	PAVROPTN	byOptn[1].byOp[48]	1  ! force_use 
+0	BYTE	PAVROPTN	byOptn[1].byOp[46]	1  ! rob_tper_use 
+0	INTEGER	PAVRGUNS	num_guns	2
+!
+! Applicator parameter 1 - resin gun
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_type	3						
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_source	5						
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_setp	TRUE
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_titl	Resin Flow 	!Title:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_nam	RF	        !Table Name:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_time	-50	   	!Anticipation time (ms):
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[1].cal_units	lb/min	   	!Calibrated units:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_otpt_bts	12        	!Number of bits:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_frst_bit	1          	!First bit or channel:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_strob_ln	0     	  	!Strobe Length (ms):
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_strb_out	0     	  	!Strobe output number: 
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_max	20   	  	!Max command value:
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[1].app_con_min	0     	  	!Min command value:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_max_out	8000  	   	!Max control value:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].app_min_out	1600         	!Min control value:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[1].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[1].app_cntr_typ	8    	        !Applicator Control Type
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[1].app_cntr_st	1   	        !Resin
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[1].app_echo_scl	1
+0	INTEGER	PAVRAFIO	set_pt_do	75
+
+!
+! Applicator parameter 2 - Atomizing Air
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_titl	Atomizing Air  !Title:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_nam	AA             !Table Name:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_units	psi            !Calibrated units:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_type	3
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_source	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].cal_status	3
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_max	150
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[2].app_min_setp	TRUE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_frst_bit	2
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_otpt_bts	12
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_max_out	8000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_min_out	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].app_strb_out	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[2].app_cntr_typ	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[2].app_cntr_st	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[2].app_echo_scl	10
+!
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[1].output	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[2].output	2000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[3].output	2400
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[4].output	3200
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[5].output	4000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[6].output	4800
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[7].output	5600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[8].output	6400
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[9].output	7200
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[10].output	8000
+!
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[1].cmd	5.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[2].cmd	10.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[3].cmd	15.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[4].cmd	20.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[5].cmd	25.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[6].cmd	30.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[7].cmd	35.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[8].cmd	40.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[9].cmd	45.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[2].control_cal[10].cmd	50.0
+
+!
+! Applicator parameter 3 - Shaping Air
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_titl	Shaping Air	!Title:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_nam	SA	        !Table Name:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_units	psi	        !Calibrated units:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_type	3
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_source	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].cal_status	3
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_max	150
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].app_con_min	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_cal_size	10
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[3].app_min_setp	TRUE
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_frst_bit	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_otpt_bts	12
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_max_out	8000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_min_out	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_strob_ln	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].app_strb_out	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[3].app_cntr_typ	1
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[3].app_cntr_st	0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[3].app_echo_scl	10
+!
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[1].output	1600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[2].output	2000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[3].output	2400
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[4].output	3200
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[5].output	4000
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[6].output	4800
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[7].output	5600
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[8].output	6400
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[9].output	7200
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[10].output	8000
+!
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[1].cmd	5.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[2].cmd	10.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[3].cmd	15.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[4].cmd	20.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[5].cmd	25.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[6].cmd	30.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[7].cmd	35.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[8].cmd	40.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[9].cmd	45.0
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[3].control_cal[10].cmd	50.0
+
+!
+! Applicator parameter 7 - glass gun
+0	INTEGER	PAVRGUNS	num_guns	2
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_con_type	3						
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].cal_source	5						
+0	BOOLEAN	PAVRPARM	tParmEq[1].con_prm_desc[7].app_min_setp	TRUE
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[7].app_con_titl	Glass Feed   	!Title:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[7].app_con_nam	GF	        !Table Name:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_con_time	-50    	  	!Anticipation time (ms):
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[7].cal_units	lb/min	        !Calibrated units:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_otpt_bts	12    	        !Number of bits:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_frst_bit	2    	        !First bit or channel:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_strob_ln	0     	        !Strobe Length (ms):
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_strb_out	0     	        !Strobe output number: 
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[7].app_con_max	10.0  	 	!Max command value:
+0	REAL	PAVRPARM	tParmEq[1].con_prm_desc[7].app_con_min	0     	        !Min command value:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_max_out	8000  	        !Max control value:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].app_min_out	1600		!Min control value:
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_desc[7].chg_date	0
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[7].app_cntr_typ	8  	        !Applicator Control Type
+0	INTEGER	PAVRPARM	tParmEq[1].con_prm_des3[7].app_cntr_st	2	        !Glass
+0	REAL	PAVRPARM	tParmEq[1].con_prm_des3[7].app_echo_scl	1
+
+0	INTEGER	PAVRAFI2	set_pt_do	76
+
+! AccuChop only uses the 1st parameter for the second gun so clear additional parameter descriptions!
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[8].app_con_nam	NA	        !Table Name:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[8].app_con_titl	NA		!Title:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[8].cal_units	none	        !Calibrated units:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[9].app_con_nam	NA		!Table Name:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[9].app_con_titl	NA		!Title:
+0	STRING	PAVRPARM	tParmEq[1].con_prm_desc[9].cal_units	none	        !Calibrated units:
+
+!
+! color change
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_to_par[1]	1
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_to_par[2]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_to_par[3]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_to_par[4]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_to_par[5]	0
+0	BYTE	PAVRCCEX	tCCEXCmos.cc_to_par[6]	0
+! instructions to parameter
+0	INTEGER	PAPARMDB	num_con_parm	7
+0	BYTE	PAPARMDB	ins_to_par[1,1]	1
+0	BYTE	PAPARMDB	ins_to_par[1,2]	2
+0	BYTE	PAPARMDB	ins_to_par[1,3]	3
+0	BYTE	PAPARMDB	ins_to_par[1,4]	7
+0	BYTE	PAPARMDB	ins_to_par[1,5]	0
+0	BYTE	PAPARMDB	ins_to_par[1,6]	0
+0	BYTE	PAPARMDB	ins_to_par[2,1]	4
+0	BYTE	PAPARMDB	ins_to_par[2,2]	0
+0	BYTE	PAPARMDB	ins_to_par[2,3]	0
+0	BYTE	PAPARMDB	ins_to_par[2,4]	0
+0	BYTE	PAPARMDB	ins_to_par[2,5]	0
+0	BYTE	PAPARMDB	ins_to_par[2,6]	0
+0	BYTE	PAPARMDB	scrn_to_par[1,1]	1
+0	BYTE	PAPARMDB	scrn_to_par[1,2]	2
+0	BYTE	PAPARMDB	scrn_to_par[1,3]	3
+0	BYTE	PAPARMDB	scrn_to_par[1,4]	7
+0	BYTE	PAPARMDB	scrn_to_par[1,5]	8
+0	BYTE	PAPARMDB	scrn_to_par[1,6]	9
+0	BYTE	PAPARMDB	scrn_to_par[2,1]	4
+0	BYTE	PAPARMDB	scrn_to_par[2,2]	10
+0	BYTE	PAPARMDB	scrn_to_par[2,3]	0
+0	BYTE	PAPARMDB	scrn_to_par[2,4]	0
+0	BYTE	PAPARMDB	scrn_to_par[2,5]	0
+0	BYTE	PAPARMDB	scrn_to_par[2,6]	0
+STOPSECTION
+
+! AccuChop/Accuflow Interface Type:
+!rob_acch_use = 65
+VAR	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVRAFGL	int_type
+1	BOOLEAN	*SYSTEM*	$fqint_setup[1].$freq_enable	0
+1	BOOLEAN	*SYSTEM*	$fqint_setup[2].$freq_enable	0
+! HDI Pulse Module Type:
+2	BOOLEAN	*SYSTEM*	$fqint_setup[1].$freq_enable	1
+2	BOOLEAN	*SYSTEM*	$fqint_setup[2].$freq_enable	1
+2	BOOLEAN	*SYSTEM*	$fqint_setup[1].$fast_on	1
+2	BOOLEAN	*SYSTEM*	$fqint_setup[2].$fast_on	1
+!        Frequency for Max. Frequency Exceeded alarm:
+2	REAL	*SYSTEM*	$fqint_setup[1].$freq_max_al	1020
+2	REAL	*SYSTEM*	$fqint_setup[2].$freq_max_al	1020
+STOPSECTION
+
+!rob_chmp_use = 67
+!rob_acch_use = 65
+VAR	PAVROPTN	byOptn[1].byOp[67]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	which_gun
+! Cell Variables (Any Type)
+0	INTEGER	*SYSTEM*	$FILE_MAXSEC	-1128
+0	STRING	*SYSTEM*	$PCHAMP_CFG.$OUTFILEEXT	.txt
+STOPSECTION
+
+! Do Only if AID32B input Interface Type (new interface enable = false-0):
+!rob_acch_use = 65
+PROCESS	PAVROPTN	byOptn[1].byOp[65]	1	*SYSTEM*	$fqint_setup[1].$freq_enable	0	PAVROPTN	proc_io_type
+! GROUP INPUTS *********************
+! Process Group Inputs Accuchop Option (Memory-Map) 1st and 2nd channels
+1	18	3	0	0	29	3	1	Resin Total Cnt	PAVRAFIO	totl_cntr_gi
+1	18	4	0	0	29	4	1	Resin Rate Cnt	PAVRAFIO	flow_cntr_gi
+1	18	5	0	0	29	5	1	Glass Total Cnt	PAVRAFI2	totl_cntr_gi
+1	18	6	0	0	29	6	1	Glass Rate Cnt	PAVRAFI2	flow_cntr_gi
+
+! Process Group Inputs Accuchop Option (Model A I/O - 5 Slot Rack #1) 1st and 2nd channels
+2	18	3	0	0	29	3	1	Resin Total Cnt	PAVRAFIO	totl_cntr_gi
+2	18	4	0	0	29	4	1	Resin Rate Cnt	PAVRAFIO	flow_cntr_gi
+2	18	5	0	0	29	5	1	Resin Total Cnt	PAVRAFI2	totl_cntr_gi
+2	18	6	0	0	29	6	1	Resin Rate Cnt	PAVRAFI2	flow_cntr_gi
+
+! Process Group Inputs Accuchop Option (Model A I/O - 5 Slot Rack #2) 1st and 2nd channels
+3	18	3	0	0	29	3	1	Resin Total Cnt	PAVRAFIO	totl_cntr_gi
+3	18	4	0	0	29	4	1	Resin Rate Cnt	PAVRAFIO	flow_cntr_gi
+3	18	5	0	0	29	5	1	Resin Total Cnt	PAVRAFI2	totl_cntr_gi
+3	18	6	0	0	29	6	1	Resin Rate Cnt	PAVRAFI2	flow_cntr_gi
+
+! Process Group Inputs Accuchop Option (Model A I/O - 10 Slot Rack) 1st and 2nd channels
+4	18	3	1	10	1	1	16	Resin Total Cnt	PAVRAFIO	totl_cntr_gi
+4	18	4	1	10	1	17	16	Resin Rate Cnt	PAVRAFIO	flow_cntr_gi
+4	18	5	1	3	1	1	16	Glass Total Cnt	PAVRAFI2	totl_cntr_gi
+4	18	6	1	3	1	17	16	Glass Rate Cnt	PAVRAFI2	flow_cntr_gi
+! Process Group Inputs Accuchop Option (Device_net) - mapped to memory - 1st and 2nd channels
+! Not Supported.
+STOPSECTION										
+
+!rob_acch_use = 65
+PROCESS	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	proc_io_type
+! Process Digital Outputs Two Gun Triggers Option (Memory-Mapped)
+1	2	17	0	0	28	417	1	Resin Gun	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+1	2	18	0	0	28	418	1	Chopper Gun	PAVRGUNS	tApplEq[1].ApplNum[2].gun_out_num
+
+! Process Digital Outputs Two Gun Triggers Option (Model A I/O - 10 Slot Rack)
+4	2	17	1	5	2	1	1	Resin Gun	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+4	2	18	1	5	2	2	1	Chopper Gun	PAVRGUNS	tApplEq[1].ApplNum[2].gun_out_num
+STOPSECTION
+
+!rob_acch_use = 65
+VAR	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	byOptn[1].byOp[65]	1	PAVROPTN	which_gun
+!rob_2gun_use = 33
+0	BYTE	PAVROPTN	byOptn[1].byOp[33]	1
+
+! Two Gun Trigger Option Variables (Any Type)
+0	INTEGER	PAVRGUNS	num_guns	2
+0	INTEGER	PAVRGUNS	num_gun_msk	3
+STOPSECTION
+
+!rob_op_use = 29
+CELL	PAVROPTN	byOptn[1].byOp[29]	1	PAVROPTN	byOptn[1].byOp[29]	1	PAVROPTN	cell_io_type	   
+! Cell Digital Inputs Opener Option (Memory-Mapped)
+1	1	15	0	0	28	15	1	Opener Prt Ignor	PAVROPIO	prt_ignor_di
+
+! Cell Digital Inputs Opener Option (Model A - Point-to-Point)
+2	1	15	1	1	1	15	1	Opener Prt Ignor	PAVROPIO	prt_ignor_di
+
+! Cell Digital Inputs Opener Option (PLC I/O)
+9	1	15	0	1	1	15	1	Opener Prt Ignor	PAVROPIO	prt_ignor_di
+STOPSECTION										
+
+!rob_op_use = 29
+VAR	PAVROPTN	byOptn[1].byOp[29]	1	PAVROPTN	byOptn[1].byOp[29]	1	PAVROPTN	which_gun	      
+! Opener Option Variables (Any Type)
+0	BOOLEAN	PAOPSHLL	prt_hldPol	TRUE
+0	BOOLEAN	PAOPSHLL	tool_errPol	FALSE
+STOPSECTION
+
+!PaintTool Diagnostics Variables
+!ANY option loaded
+!rob_padg_use = 66
+VAR	PAVROPTN	byOptn[1].byOp[66]	1	PAVROPTN	byOptn[1].byOp[66]	1	PAVROPTN	which_gun
+0	BOOLEAN	PAVRPADG	dmon_set_sch	TRUE						
+0	BOOLEAN	PAVRPADG	flowoptn_err	TRUE
+0	INTEGER	PAVRPADG	alarm_range[1].min	0
+0	INTEGER	PAVRPADG	alarm_range[1].max	0
+STOPSECTION
+
+!Option specific 
+!rob_padg_use = 66
+!rob_ac_use = 16
+VAR	PAVROPTN	byOptn[1].byOp[66]	1	PAVROPTN	byOptn[1].byOp[16]	1	PAVROPTN	which_gun
+0	INTEGER	PAVRPADG	alarm_range[1].min	52270
+0	INTEGER	PAVRPADG	alarm_range[1].max	52290
+STOPSECTION
+
+!rob_padg_use = 66
+!rob_accu_use = 10
+VAR	PAVROPTN	byOptn[1].byOp[66]	1	PAVROPTN	byOptn[1].byOp[10]	1	PAVROPTN	which_gun
+0	INTEGER	PAVRPADG	alarm_range[1].min	52236
+0	INTEGER	PAVRPADG	alarm_range[1].max	52269
+STOPSECTION
+
+!rob_padg_use = 66
+!rob_ln_use = 19
+VAR	PAVROPTN	byOptn[1].byOp[66]	1	PAVROPTN	byOptn[1].byOp[19]	1	PAVROPTN	which_gun
+0	BOOLEAN	PAVRPADG	paus_w_conv	FALSE
+STOPSECTION
+
+!rob_stio_use = 53								
+!rob_mate_use = 111
+VAR	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[111]	0	PAVROPTN	which_gun
+! Change default port types
+! De-assign P4 from KCL
+0	STRING	*SYSTEM*	$RS232_CFG[4].$COMMENT	No Use
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$DEVICEUSE	1
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$FLOWCONTROL	274
+! De-assign P2 from Floppy
+0	STRING	*SYSTEM*	$RS232_CFG[2].$COMMENT	No Use
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$DEVICEUSE	1
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$FLOWCONTROL	274
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$AUXTASK	0
+! Assign P4 to Floppy
+0	STRING	*SYSTEM*	$RS232_CFG[4].$COMMENT	PS100/200 Disk
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$DEVICEUSE	4
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$FLOWCONTROL	19
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$AUXTASK	75
+! Assign P2 to KCL
+0	STRING	*SYSTEM*	$RS232_CFG[2].$COMMENT	KCL/CRT
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$DEVICEUSE	10
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$FLOWCONTROL	1811
+STOPSECTION
+
+!rob_mate_use = 111
+!rob_mate_set = 112
+VAR	PAVROPTN	byOptn[1].byOp[111]	1	PAVROPTN	byOptn[1].byOp[112]	0	PAVROPTN	which_gun
+! Change default port types
+! De-assign P4 from KCL
+0	STRING	*SYSTEM*	$RS232_CFG[4].$COMMENT	No Use
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$DEVICEUSE	1
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$FLOWCONTROL	274
+! De-assign P2 from Floppy
+0	STRING	*SYSTEM*	$RS232_CFG[2].$COMMENT	No Use
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$DEVICEUSE	1
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$FLOWCONTROL	274
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$AUXTASK	0
+! Assign P4 to Floppy
+0	STRING	*SYSTEM*	$RS232_CFG[4].$COMMENT	PS100/200 Disk
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$DEVICEUSE	4
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$FLOWCONTROL	19
+0	INTEGER	*SYSTEM*	$RS232_CFG[4].$AUXTASK	75
+! Assign P2 to Conssole
+0	STRING	*SYSTEM*	$RS232_CFG[2].$COMMENT	Maintenance Cons
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$DEVICEUSE	3
+0	INTEGER	*SYSTEM*	$RS232_CFG[2].$FLOWCONTROL	275
+
+! Set Option Already processed Flag
+0	BYTE	PAVROPTN	byOptn[1].byOp[112]	1
+STOPSECTION
+
+! Two Gun Option Changes
+
+!rob_stio_use = 51
+!rob_mate_use = 111
+CELL	PAVROPTN	byOptn[1].byOp[51]	1	PAVROPTN	byOptn[1].byOp[111]	1	PAVROPTN	cell_io_type
+! Cell Digital Outputs (Memory-Mapped)
+1	2	17	0	0	28	273	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+
+! Cell Digital Outputs (PDI IO but mapped to RDO[1])
+0	2	17	0	0	9	1	1	Gun 1 Pilot	PAVRGUNS	tApplEq[1].ApplNum[1].gun_out_num
+STOPSECTION
+
+!rob_2gun_use = 33
+CELL	PAVROPTN	byOptn[1].byOp[33]	1	PAVROPTN	byOptn[1].byOp[33]	1	PAVROPTN	cell_io_type
+! Cell Digital Outputs (Memory-Mapped)
+1	2	18	0	0	28	274	1	Gun 2 Pilot	PAVRGUNS	tApplEq[1].ApplNum[2].gun_out_num
+
+! Cell Digital Outputs (PDI IO but mapped to RDO[1])
+15	2	18	0	0	9	2	1	Gun 2 Pilot	PAVRGUNS	tApplEq[1].ApplNum[2].gun_out_num
+STOPSECTION
+
+!rob_2gun_use = 33
+!rob_acch_use = 65
+VAR	PAVROPTN	byOptn[1].byOp[33]	1	PAVROPTN	byOptn[1].byOp[65]	0	PAVROPTN	which_gun
+! Two Gun Trigger Option Variables (Any Type)
+
+0	SHORT	PAVRGUNS	tApplEq[1].ApplNum[2].gun_echo_do	1025
+
+! Two Gun Trigger Option Variables (Any Type)
+0	INTEGER	PAVRGUNS	num_guns	2
+0	INTEGER	PAVRGUNS	num_gun_msk	3
+
+!rob_2fg_use = 34
+0	BYTE	PAVROPTN	byOptn[1].byOp[34]	0
+STOPSECTION
+
+ENDFILE
+

@@ -1,0 +1,32 @@
+# ============================================================
+# Multi-Camera RealSense 3D Reconstruction
+# & Robot Spray-Painting Trajectory Generation System
+# ============================================================
+
+# --- Core Scientific Computing ---
+numpy>=1.24.0,<2.0
+scipy>=1.10.0
+
+# --- Computer Vision ---
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0
+
+# --- 3D Point Cloud Processing ---
+open3d>=0.18.0
+
+# --- Intel RealSense ---
+# Note: Requires Intel RealSense SDK 2.0 installed on the system
+# Download: https://github.com/IntelRealSense/librealsense
+pyrealsense2>=2.54.0
+
+# --- Configuration & Serialization ---
+pyyaml>=6.0
+
+# --- Visualization ---
+matplotlib>=3.7.0
+
+# --- Optional: FANUC Robot Communication ---
+# ftplib        - stdlib (FTP upload)
+# socket        - stdlib (UDP/PLC comm)
+# json          - stdlib
+# argparse      - stdlib
