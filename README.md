@@ -1,388 +1,361 @@
-# Multi-Camera RealSense 3D Reconstruction & Robot Spray-Painting Trajectory Generation System
+# 多目RealSense三维重建与机器人喷涂轨迹生成系统
 
-**多目RealSense三维重建与机器人喷涂轨迹生成系统**
+**Multi-Camera RealSense 3D Reconstruction & Robot Spray-Painting Trajectory Generation System**
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Linux--x86__64-lightgrey.svg)]()
-[![Hardware](https://img.shields.io/badge/Hardware-Intel%20RealSense%20D435-orange.svg)]()
-[![Robot](https://img.shields.io/badge/Robot-FANUC%20Industrial-red.svg)]()
+[![Hardware](https://img.shields.io/badge/硬件-Intel%20RealSense%20D435-orange.svg)]()
+[![Robot](https://img.shields.io/badge/机器人-FANUC%20工业机器人-red.svg)]()
 
-> ⚠️ **IMPORTANT: Intellectual Property Notice**
+> ⚠️ **知识产权声明**
 >
-> This repository publishes **core algorithm code and hardware designs** for demonstration purposes.
-> Certain implementation details, production parameters, and complete configuration files have been
-> abstracted with placeholder values (`YOUR_CAMERA_SERIAL`, `YOUR_ROBOT_IP`, etc.) due to
-> laboratory intellectual property restrictions. **Full working code is available upon request**
-> for collaboration or evaluation. See [LICENSE](LICENSE) for details.
+> 本仓库发布**核心算法代码与硬件设计**用于技术展示。部分实现细节、生产参数和完整配置
+> 因课题组知识产权限制已做抽象处理（用 `YOUR_CAMERA_SERIAL`、`YOUR_ROBOT_IP` 等占位符
+> 替代）。**完整可运行代码可根据合作或评估需要提供**。详见 [LICENSE](LICENSE)。
+
+[English README](README.md)
 
 ---
 
-## 📸 System at a Glance
+## 📸 系统一览
 
-| 4-Camera Acquisition Rig | FANUC Robot On-Site |
+| 四相机采集系统 | FANUC 机器人现场部署 |
 |:---:|:---:|
 | ![数据采集系统](images/acquisition-system.jpg) | ![FANUC现场](images/fanuc-robot.jpg) |
 
-| CAD Assembly (SolidWorks) | Rendered Rig Design |
+| SolidWorks 装配体 | 相机支架渲染图 |
 |:---:|:---:|
 | ![CAD装配体](images/cad-assembly.png) | ![渲染图](images/cad-render.png) |
 
-| Calibration Setup |
+| 标定系统 |
 |:---:|
 | ![标定设置](images/calib-setup.jpg) |
 
----
-
-## Overview
-
-This project implements an **end-to-end 3D vision pipeline** for robotic spray painting. Four Intel
-RealSense D435 depth cameras capture multi-view point clouds of a workpiece placed on a production
-line. The system then automatically reconstructs a high-fidelity 3D mesh, plans collision-free
-spray-painting trajectories, generates native FANUC LS (TP) program files, and uploads them to the
-robot controller — all with minimal human intervention.
-
-The pipeline has been **validated on a real FANUC M-10iD/12 industrial robot production line**.
-
-### Key Capabilities
-
-- **Multi-View 3D Reconstruction** — Four synchronized D435 cameras provide 360° coverage; dense
-  ICP and TSDF fusion produce a complete, watertight mesh.
-- **Automatic Trajectory Generation** — Convex-hull slicing and B-spline smoothing generate smooth,
-  uniform-coverage spray paths from arbitrary workpiece geometry.
-- **Native Robot Code Output** — Trajectories are compiled to FANUC LS format and uploaded via FTP;
-  the system handshakes with a PLC over UDP for fully automated production cycles.
-- **Pre-Deployment Simulation** — FANUC Roboguide paint simulation validates trajectories before
-  they reach the physical robot.
-- **Self-Contained Hardware** — Custom-designed 4-camera calibration rig with **full SolidWorks
-  source files** (`.SLDPRT`/`.SLDASM`), CAD exports (`.STEP`/`.DWG`), 3D-printable parts (`.3MF`),
-  and a complete bill of materials.
+> 📹 [标定过程演示视频](images/calib-process.mp4)
 
 ---
 
-## Pipeline
+## 项目概述
+
+本项目构建了一套完整的 **"视觉感知 → 三维重建 → 轨迹规划 → 机器人执行"** 闭环系统。
+使用 4 台 Intel RealSense D435 深度相机搭建多视角采集平台，实现工件的高精度稠密三维重建，
+并基于重建结果自动生成 FANUC 工业机器人喷涂轨迹程序（LS 文件），通过 FTP 直接下发至机器
+人控制器执行。整套系统已在 **FANUC M-10iD/12 工业机器人喷涂产线** 实际部署验证。
+
+### 核心能力
+
+- **多视角三维重建** — 4 台 D435 同步采集，稠密 ICP + TSDF 体积融合生成水密网格模型
+- **自动轨迹规划** — 凸包切片 + B样条平滑，从任意形状工件自动生成均匀覆盖喷涂路径
+- **原生机器人代码输出** — 直接生成 FANUC LS 程序，FTP 上传至控制器即刻执行
+- **产线级自动化** — UDP 与 PLC 握手，循环工作模式，全程无需人工干预
+- **预部署仿真验证** — FANUC Roboguide 喷涂仿真，提前发现碰撞风险
+- **完整硬件方案** — 自研四相机标定平台，含 **SolidWorks 源文件**（`.SLDPRT`/`.SLDASM`）、
+  3D 打印文件（`.3MF`）、采购清单
+
+---
+
+## 技术管线
 
 ```
-┌──────────────┐    ┌────────────────┐    ┌─────────────────┐    ┌───────────────┐
-│ 1.CALIBRATE  │───▶│  2.FUSE        │───▶│ 3.POST-PROCESS  │───▶│ 4.REGISTER    │
-│ Multi-camera │    │ Point Cloud    │    │ Crop, Segment,  │    │ PCD → STL     │
-│ ChArUco      │    │ ICP/TSDF       │    │ Transform       │    │ FPFH+RANSAC   │
-└──────────────┘    └────────────────┘    └─────────────────┘    └───────┬───────┘
-                                                                         │
-                                                                         ▼
-┌──────────────┐    ┌────────────────┐    ┌─────────────────┐    ┌───────────────┐
-│ 8.SIMULATE   │◀───│ 7.COMMUNICATE  │◀───│  6.PLAN         │◀───│ 5.MESH        │
-│ Roboguide    │    │ FTP + UDP/PLC  │    │ Convex Hull +   │    │ Poisson       │
-│ Validation   │    │ Handshake      │    │ B-Spline Path   │    │ Reconstruction│
-└──────────────┘    └────────────────┘    └─────────────────┘    └───────────────┘
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌───────────┐
+│ 1.标定   │───▶│ 2.融合   │───▶│ 3.后处理 │───▶│ 4.配准    │
+│ 多相机   │    │ 点云     │    │ 裁剪分割 │    │ PCD→STL   │
+│ ChArUco  │    │ ICP/TSDF │    │ 坐标变换 │    │ FPFH+RANSAC│
+└──────────┘    └──────────┘    └──────────┘    └─────┬─────┘
+                                                      │
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌────▼─────┐
+│ 8.仿真   │◀───│ 7.通讯   │◀───│ 6.规划   │◀───│ 5.网格    │
+│ Roboguide│    │ FTP/UDP  │    │ 凸包切片 │    │ Poisson   │
+│ 验证     │    │ 手眼标定 │    │ B样条    │    │ 曲面重建  │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
 ```
 
-### Stage-by-Stage
+### 各阶段说明
 
-| # | Stage | Key Techniques | Output |
-|---|-------|---------------|--------|
-| 1 | **Calibration** | ChArUco detection, solvePnP, MAD-based outlier rejection | Multi-camera extrinsics (4×4) |
-| 2 | **Point Cloud Fusion** | Dense ICP, TSDF volumetric fusion, spatial-temporal filtering | Fused point cloud |
-| 3 | **Post-processing** | BBox cropping, RANSAC segmentation, coordinate alignment | Clean workpiece PCD |
-| 4 | **Registration** | FPFH + RANSAC global + Point-to-Plane ICP refinement | PCD → STL transform |
-| 5 | **Mesh Generation** | Poisson surface reconstruction, mesh cleanup | Watertight mesh |
-| 6 | **Trajectory Planning** | Convex hull slicing, B-spline, surface-normal poses | 6-DOF waypoints |
-| 7 | **Robot Communication** | Eye-to-hand calib, FTP upload, UDP/PLC handshake | LS program on controller |
-| 8 | **Simulation** | FANUC Roboguide paint simulation | Validated trajectory |
-
----
-
-## Tech Stack
-
-| Layer | Technologies |
-|-------|-------------|
-| **Language** | Python 3.8+ |
-| **Depth Sensing** | Intel RealSense SDK 2.0 (`pyrealsense2`) |
-| **Computer Vision** | OpenCV (ChArUco, solvePnP, calibration) |
-| **3D Processing** | Open3D (ICP, TSDF, FPFH, RANSAC, Poisson) |
-| **Numerical** | NumPy, SciPy (linear algebra, B-spline, transforms) |
-| **Robot Programming** | FANUC TP/LS language |
-| **Communication** | Python `ftplib`, `socket` (UDP), PLC protocol |
-| **Simulation** | FANUC Roboguide (paint plugin) |
-| **CAD** | SolidWorks (`.SLDPRT`, `.SLDASM`), STEP, DWG |
+| # | 阶段 | 关键技术 | 输出 |
+|---|------|---------|------|
+| 1 | **多相机标定** | ChArUco 检测、solvePnP 位姿估计、MAD 离群剔除 | 各相机→参考相机 4×4 变换 |
+| 2 | **点云融合** | 稠密 ICP、TSDF 体积融合、时空滤波（4 种模式） | 融合点云（~80 万点/帧） |
+| 3 | **后处理** | 包围盒裁剪、RANSAC 平面分割、欧式聚类去噪 | 干净工件点云 |
+| 4 | **配准** | FPFH 特征 + RANSAC 全局粗配准 + Point-to-Plane ICP | PCD→STL 变换矩阵 |
+| 5 | **网格重建** | Poisson 曲面重建 + 非流形边修复 + 顶点聚类简化 | 水密三角网格 |
+| 6 | **轨迹规划** | 凸包切片 + OBB + B样条平滑 + 最近表面姿态 | 6-DOF 喷枪轨迹 |
+| 7 | **机器人通讯** | Eye-to-hand 标定、FTP 上传、UDP/PLC 握手 | 机器人可执行 LS 程序 |
+| 8 | **仿真验证** | FANUC Roboguide 喷涂仿真 | 验证后的安全轨迹 |
 
 ---
 
-## Key Features
+## 技术栈
 
-- 🔧 **Custom 4-Camera Rig** — Full SolidWorks source files, 3D-printable parts, and BOM in
-  `hardware/`. Rigid aluminum profile construction with adjustable camera angles.
-
-- 🎯 **Dual Point-Cloud Strategy** — Dense cloud preserved for visualization quality; spatially
-  downsampled sparse cloud drives ICP registration. Fast enough for near-line use without
-  sacrificing reconstruction fidelity.
-
-- 🔄 **Multi-Path Fusion** — Switch between basic ICP, dense Point-to-Plane ICP, TSDF volumetric
-  integration, and temporally filtered variants depending on speed/quality requirements.
-
-- 📐 **Convex Hull + OBB Trajectory** — Spray paths generated by intersecting workpiece convex
-  hull with parallel slicing planes. OBB determines optimal spray direction. Handles complex,
-  non-convex geometries robustly.
-
-- 🎨 **Surface-Normal-Aligned Poses** — Each waypoint's tool Z-axis derived from local surface
-  normal. Singularity checks prevent unreachable wrist configurations.
-
-- 🏭 **Production Automation** — UDP heartbeat with PLC, workpiece trigger, auto-pipeline, FTP
-  upload, cleanup. Runs in loop mode on the factory floor.
+| 层级 | 技术 |
+|------|------|
+| **编程语言** | Python 3.8+ |
+| **深度传感** | Intel RealSense SDK 2.0 (pyrealsense2) |
+| **计算机视觉** | OpenCV (ChArUco 标记检测、solvePnP、相机标定) |
+| **三维处理** | Open3D (ICP、TSDF、FPFH、RANSAC、Poisson 重建) |
+| **数值计算** | NumPy、SciPy (线性代数、B样条插值、空间变换) |
+| **机器人编程** | FANUC TP/LS 语言 |
+| **通讯协议** | FTP (ftplib)、UDP (socket)、PLC 握手协议 |
+| **仿真平台** | FANUC Roboguide (喷涂插件) |
+| **机械设计** | SolidWorks（零件/装配体）、3D 打印（PLA/ABS） |
 
 ---
 
-## 💻 Core Code Showcase
+## 核心亮点
 
-### Feature 1: Dual Point-Cloud Strategy for Real-time ICP Fusion
+- 🔧 **自研四相机平台** — 完整 SolidWorks 设计文件 + 3D 打印件 + BOM 采购清单，铝型材框架，
+  可调角度相机支架，保证产线级重复定位精度
 
-From [`fusion/multi_d435_fusion_dense_icp.py`](fusion/multi_d435_fusion_dense_icp.py):
+- 🎯 **双路点云策略** — **稠密点云**（stride=2）保留细节用于最终融合，**稀疏 ICP 点云**
+  （stride=8 + 体素降采样）用于快速配准。ICP 只修正位姿，不损失点云密度
+
+- 🔄 **多路径融合方案** — 基础 ICP / 稠密 Point-to-Plane ICP / TSDF 体积融合 / 时序滤波融合，
+  按场景切换速度-精度平衡
+
+- 📐 **凸包切片轨迹规划** — 计算工件点云凸包 → 提取有向包围盒 OBB → 沿长轴等距切片（20mm）
+  → 法向偏移（80mm standoff）→ B样条平滑（C²连续）→ 弧长重采样。对任意复杂外形工件鲁棒
+
+- 🎨 **最近表面姿态定向** — 喷枪 Z 轴始终指向工件表面最近点，确保喷涂均匀。最大转角步长约束
+  （8°/步）防止机器人腕部奇异
+
+- 🏭 **产线级自动化** — UDP 接收 PLC 启动信号 → 自动采集处理 → 生成 LS → FTP 上传 → 回复
+  完成状态 → 自动清理中间文件，循环运行
+
+---
+
+## 💻 核心代码展示
+
+### 特性一：双路点云 ICP 融合策略
+
+来自 [`fusion/multi_d435_fusion_dense_icp.py`](fusion/multi_d435_fusion_dense_icp.py)：
 
 ```python
-# Point clouds split into two independent pipelines:
-#   - dense_pcds: stride=2, high detail → final fusion, display, save
-#   - icp_pcds:   stride=8 + voxel downsampling → ICP matching only
+# 点云分为两套独立管线：
+#   - dense_pcds: stride=2, 高细节 → 最终融合、显示、保存
+#   - icp_pcds:   stride=8 + 体素降采样 → 仅用于 ICP 匹配
 #
-# ICP estimates correction T_icp_refine from sparse clouds,
-# then applies T_total = T_icp_refine @ T_init to dense clouds.
-# Result: fast ICP convergence + high-fidelity output
+# ICP 在稀疏点云上估计位姿修正 T_icp_refine，
+# 然后将 T_total = T_icp_refine @ T_init 应用于稠密点云。
+# 效果：快速 ICP 收敛 + 高保真输出
 
-# Per non-reference camera:
 for cam_idx in range(1, len(cam_serials)):
-    # 1. Build sparse ICP cloud and dense cloud separately
+    # 1. 分别构建稀疏 ICP 点云和稠密点云
     icp_pcd = preprocess_pcd_for_icp(depth_frame, stride=8, voxel=0.01)
     dense_pcd = preprocess_dense_single_pcd(depth_frame, stride=2)
 
-    # 2. ICP on sparse cloud — fast and stable
+    # 2. 稀疏点云做 ICP — 快速稳定
     T_icp_refine = run_icp(icp_pcd, ref_icp_pcd, init_transform=T_init)
 
-    # 3. Apply total correction to dense cloud
+    # 3. 总修正应用于稠密点云
     T_total = T_icp_refine @ T_init
     dense_pcd.transform(T_total)
 ```
 
-### Feature 2: MAD-Based Robust Extrinsic Selection
+### 特性二：MAD 鲁棒外参筛选
 
-From [`calib/multi_select_best_extrinsics_yaml.py`](calib/multi_select_best_extrinsics_yaml.py):
+来自 [`calib/multi_select_best_extrinsics_yaml.py`](calib/multi_select_best_extrinsics_yaml.py)：
 
 ```python
-# Collect N calibration samples per camera → find robust best extrinsic
+# 收集每台相机 N 次标定样本 → 筛选最优外参
 
-# Step 1: Statistical center estimation
-trans_median = np.median(all_translations, axis=0)       # Element-wise median
-quat_avg = quaternion_average(all_quaternions)            # Eigen decomposition of outer product
+# 第一步：统计中心估计
+trans_median = np.median(all_translations, axis=0)      # 逐元素平移中位数
+quat_avg = quaternion_average(all_quaternions)           # 四元数外积矩阵特征分解
 
-# Step 2: MAD (Median Absolute Deviation) outlier rejection
+# 第二步：MAD 离群剔除（中位数绝对偏差）
 trans_dist = np.linalg.norm(trans - trans_median, axis=1)
 rot_dist = rotation_geodesic_angle_deg(rot, rot_center)
 mad_trans = np.median(np.abs(trans_dist - np.median(trans_dist)))
 mad_rot = np.median(np.abs(rot_dist - np.median(rot_dist)))
 is_outlier = (trans_dist / mad_trans > K) | (rot_dist / mad_rot > K)
 
-# Step 3: Score inliers and pick best
+# 第三步：非离群样本综合评分选最优
 score = W_TRANS * trans_dist + W_ROT * (rot_dist / 180.0)
 best_idx = np.argmin(score[~is_outlier])
 ```
 
-### Feature 3: FANUC LS Program Upload via FTP
+### 特性三：FANUC LS 程序 FTP 上传
 
-From [`robot_comm/ftp_upload_test.py`](robot_comm/ftp_upload_test.py):
+来自 [`robot_comm/ftp_upload_test.py`](robot_comm/ftp_upload_test.py)：
 
 ```python
 def upload_ls_to_fanuc(local_ls_path, host, user, password, remote_dir="md:/"):
-    """Upload a .ls trajectory file to FANUC robot controller via FTP."""
+    """将 .ls 轨迹文件通过 FTP 上传至 FANUC 机器人控制器"""
 
-    # Connect with active mode (FANUC default)
+    # 建立连接（FANUC 默认 Active 模式）
     ftp = FTP()
     ftp.connect(host=host, port=21, timeout=15.0)
     ftp.login(user=user, passwd=password)
     ftp.cwd(remote_dir)
 
-    # ASCII mode required for .ls text files
+    # ASCII 模式上传（FANUC .ls 为文本文件）
     ftp.voidcmd("TYPE A")
 
-    # Normalize line endings before upload
+    # 换行符标准化后上传
     with open(local_ls_path, "rb") as f:
         raw = f.read()
     raw = raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
 
     ftp.storlines(f"STOR {remote_filename}", io.BytesIO(raw))
 
-    # Verify upload via NLST
+    # 验证上传结果
     names = ftp.nlst()
-    ok = any(n.upper() == remote_filename.upper() for n in names)
-    ftp.quit()
     return remote_filename
 ```
 
-### Feature 4: Convex Hull Slicing for Spray Trajectory
+### 特性四：凸包切片喷涂轨迹规划
 
-From [`trajectory/conv_hull_traj_planner.py`](trajectory/conv_hull_traj_planner.py):
+来自 [`trajectory/conv_hull_traj_planner.py`](trajectory/conv_hull_traj_planner.py)：
 
 ```python
-# Workpiece point cloud → convex hull → OBB → slice → offset → B-spline → LS
+# 工件点云 → 凸包 → OBB → 切片 → 偏移 → B样条 → 姿态 → LS
 
-# 1. Compute convex hull and oriented bounding box
+# 1. 计算凸包网格与有向包围盒
 hull_mesh, _ = pcd.compute_convex_hull()
 obb = hull_mesh.get_oriented_bounding_box()
 
-# 2. Slice along OBB long axis at 20mm intervals
-for offset in np.arange(-half_length, half_length + slice_spacing, slice_spacing):
+# 2. 沿 OBB 长轴以 20mm 间距切片
+for offset in np.arange(-half_length, half_length + spacing, spacing):
     slice_plane = create_plane(obb_center + offset * long_axis, long_axis)
     slice_polygon = hull_mesh.section(slice_plane)
 
-# 3. Offset by standoff distance (80mm) along surface normal
+# 3. 沿表面法向偏移 standoff 距离（80mm）
 trajectory_points = slice_polygon + standoff * surface_normals
 
-# 4. B-spline smoothing with arc-length resampling
+# 4. B样条平滑 + 弧长重采样（C²连续）
 tck, _ = splprep(trajectory_points.T, s=smoothing_factor, k=3)
-u_new = np.linspace(0, 1, num_resample_points)
-smooth_points = np.array(splev(u_new, tck)).T
+smooth_points = np.array(splev(np.linspace(0, 1, N), tck)).T
 
-# 5. Surface-normal-aligned pose + curvature-adaptive speed
+# 5. 最近表面姿态定向 + 曲率自适应速度
 for pt in smooth_points:
     normal = closest_surface_normal(pt, mesh)
-    wpr = compute_wpr(z_axis=normal, y_tangent=trajectory_tangent)
-    speed = 150 if curvature > CURVE_THRESHOLD else 100  # mm/s
+    wpr = compute_wpr(z_axis=normal, y_tangent=tangent)
+    speed = 150 if curvature > THRESHOLD else 100  # mm/s
 
-# 6. Export to FANUC LS format
+# 6. 导出 FANUC LS 文件
 export_ls(poses, speeds, output_path)
 ```
 
 ---
 
-## Repository Structure
+## 仓库结构
 
 ```
 multi-cam-recon-robot-spray/
-├── calib/                     # Multi-camera ChArUco calibration & extrinsic selection
-│   ├── generate_charuco_board.py
-│   ├── camera_serial.py
-│   ├── multi_d435_charuco_calibrate.py      # Real-time 4-camera calibration
-│   └── multi_select_best_extrinsics_yaml.py  # MAD-based robust extrinsic selection
+├── calib/                     # 多相机 ChArUco 标定与外参筛选
+│   ├── generate_charuco_board.py           # 生成 ChArUco 标定板
+│   ├── camera_serial.py                    # 查询相机序列号
+│   ├── multi_d435_charuco_calibrate.py     # 实时四相机标定采集
+│   └── multi_select_best_extrinsics_yaml.py # MAD 最优外参筛选 ← 见代码展示
 │
-├── fusion/                    # Point cloud fusion
-│   ├── multi_d435_fusion_dense_icp.py       # Dual-strategy dense ICP (featured above)
-│   ├── multi_d435_fusion_icp.py             # Basic ICP fusion
-│   ├── multi_d435_tsdf_batch_icp.py         # TSDF volumetric integration
-│   └── single_camera_plane_test.py
+├── fusion/                    # 点云融合
+│   ├── multi_d435_fusion_dense_icp.py      # 双路策略稠密 ICP ← 见代码展示
+│   ├── multi_d435_fusion_icp.py            # 基础 ICP 融合
+│   ├── multi_d435_tsdf_batch_icp.py        # TSDF 体积融合
+│   └── single_camera_plane_test.py         # 单相机测试
 │
-├── processing/                # Point cloud post-processing
-│   ├── multi_d435_segmented_icp.py          # BBox-cropped segmented ICP fusion
-│   ├── multi_d435_tsdf_batch_filtered.py    # Custom-filtered TSDF fusion
-│   ├── spatial_temporal_filter.py           # Depth filtering demo (4 modes)
-│   ├── RANSAC.py                            # Plane segmentation + cluster cleanup
-│   ├── R_local_to_world.py                  # Coordinate transform + cropping
-│   └── pipeline_extract.py                  # One-click extraction pipeline
+├── processing/                # 点云后处理
+│   ├── multi_d435_segmented_icp.py         # 包围盒裁剪 ICP 融合
+│   ├── multi_d435_tsdf_batch_filtered.py   # 自定义滤波 TSDF
+│   ├── spatial_temporal_filter.py          # 4 模式深度滤波演示
+│   ├── RANSAC.py                           # RANSAC 平面分割 + 聚类
+│   ├── R_local_to_world.py                 # 坐标变换 + 裁剪
+│   └── pipeline_extract.py                 # 一键提取管线
 │
-├── registration/              # PCD → STL registration & mesh conversion
-│   ├── register_pcd_to_stl.py              # FPFH + RANSAC global + ICP refinement
-│   ├── apply_transform.py
-│   ├── inspect_data.py
-│   └── pcd_to_mesh.py                       # Poisson surface reconstruction
+├── registration/              # 配准与网格重建
+│   ├── register_pcd_to_stl.py             # FPFH + RANSAC + ICP
+│   ├── apply_transform.py                 # 应用变换矩阵
+│   ├── inspect_data.py                    # 数据预检
+│   └── pcd_to_mesh.py                     # Poisson 曲面重建
 │
-├── trajectory/                # Spray trajectory planning & LS generation
-│   ├── conv_hull_traj_planner.py            # Convex hull slicing (featured above)
-│   ├── ply_ls_ALL_one.py                   # Multi-face ray scan → LS export
-│   ├── ply_surface_all_ls.py
-│   └── pc_plc_generation.py                # UDP/PLC automated production loop
+├── trajectory/                # 喷涂轨迹规划 ← 核心模块
+│   ├── conv_hull_traj_planner.py           # 凸包切片轨迹 ← 见代码展示
+│   ├── ply_ls_ALL_one.py                  # 多面射线扫描 + LS 导出
+│   ├── ply_surface_all_ls.py              # PLY → LS 轨迹
+│   └── pc_plc_generation.py               # UDP/PLC 自动化生产循环
 │
-├── robot_comm/                # Robot communication
-│   ├── ftp_upload_test.py                   # FTP upload (featured above)
-│   └── robot_hand_eye_calibrate/            # Eye-to-hand calibration pipeline
+├── robot_comm/                # 机器人通讯
+│   ├── ftp_upload_test.py                  # FTP 上传 ← 见代码展示
+│   └── robot_hand_eye_calibrate/           # Eye-to-hand 手眼标定全套
 │
-├── hardware/                  # Hardware design
-│   ├── solidworks/                          # Full SolidWorks source files (.SLDPRT/.SLDASM)
-│   ├── cad_exports/                         # STEP/DWG/3MF exports
-│   ├── photos/                              # On-site photos (see images/ for more)
+├── hardware/                  # 硬件设计
+│   ├── solidworks/                         # SolidWorks 源文件（.SLDPRT/.SLDASM）
+│   ├── cad_exports/                        # STEP/DWG/3MF 导出 + BOM
+│   ├── photos/                             # 现场照片
 │   └── README.md
 │
-├── sim/                       # FANUC Roboguide simulation
-│   └── roboguide/paint/                     # Paint simulation workspace (.ptw)
+├── sim/                       # FANUC Roboguide 仿真
+│   └── roboguide/paint/                    # 喷涂仿真工程（.ptw）
 │
-├── fanuc/                     # FANUC ROS2 driver documentation & references
-├── docs/                      # Detailed technical documentation (Chinese)
-├── images/                    # System photos, CAD screenshots, demo videos
-├── requirements.txt
-└── README.md
+├── fanuc/                     # FANUC ROS2 驱动文档
+├── docs/                      # 详细中文技术文档
+├── images/                    # 系统照片、CAD 截图、演示视频
+└── README.md / README_CN.md   # 本文件
 ```
 
 ---
 
-## Hardware Design
+## 硬件设计
 
-The custom 4-camera calibration rig provides fixed, repeatable camera geometry for production use.
-**Full SolidWorks source files are available in [`hardware/solidworks/`](hardware/solidworks/).**
+自研四相机标定平台，**完整 SolidWorks 源文件**在 [`hardware/solidworks/`](hardware/solidworks/)：
 
-| Component | Description |
-|-----------|-------------|
-| Camera Mounts | Individually adjustable aluminum brackets (SolidWorks: `相机连接板2.SLDPRT`) |
-| Calibration Connector | Precision plate for ChArUco board mounting (`标定连接板.SLDPRT`, `标定连接板.3MF`) |
-| Main Assembly | Full rig assembly (`装配体1.SLDASM`, `装配体2.SLDASM`) |
-| Frame | Aluminum profile 2020/3030 construction |
-| BOM | Complete procurement list (`cad_exports/BOM_采购清单.xlsx`) |
-
-### CAD Exports (`hardware/cad_exports/`)
-
-| File | Format | Description |
-|------|--------|-------------|
-| `装配体2.STEP` | STEP | Full assembly |
-| `标定连接板.STEP` | STEP | Calibration connector plate |
-| `三角形.STEP` | STEP | Triangular bracket |
-| `十字架形.STEP` | STEP | Cross bracket |
-| `标定板.DWG` | DWG | Calibration board drawing |
-| `板材.DWG` | DWG | Panel machining drawing |
-| `标定连接板.3mf` | 3MF | 3D-printable connector |
+| 组件 | 说明 |
+|------|------|
+| 相机安装支架 | 铝合金材质，独立角度可调（`相机连接板2.SLDPRT`） |
+| 标定连接板 | 精密加工 ChArUco 标定板安装件（`标定连接板.SLDPRT`、`.3MF` 可打印） |
+| 整机装配 | 完整装配体（`装配体1.SLDASM`、`装配体2.SLDASM`） |
+| 框架 | 2020/3030 铝型材，减振脚垫 |
+| 采购清单 | `cad_exports/BOM_采购清单.xlsx` |
 
 ---
 
-## Getting Started
+## 快速开始
 
-### Prerequisites
+### 环境要求
 
-- **OS**: Ubuntu 20.04 / 22.04 (x86_64)
-- **Python**: 3.8 or later
-- **Hardware**: 4× Intel RealSense D435 (USB 3.0)
-- **Robot**: FANUC industrial robot with R-30iB+ controller, Ethernet
-- **Optional**: FANUC Roboguide (Windows) for simulation
+- **操作系统**: Ubuntu 20.04 / 22.04 (x86_64)
+- **Python**: 3.8+
+- **硬件**: 4× Intel RealSense D435（USB 3.0）
+- **机器人**: FANUC 工业机器人 + R-30iB+ 控制器，以太网接口
+- **可选**: FANUC Roboguide（Windows，用于仿真）
 
-### Installation
+### 安装
 
 ```bash
 git clone --recurse-submodules https://github.com/zpt00/multi-cam-recon-robot-spray.git
 cd multi-cam-recon-robot-spray
 pip install -r requirements.txt
-# Install Intel RealSense SDK 2.0 separately:
+# Intel RealSense SDK 2.0 需单独安装：
 # https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md
 ```
 
-### Running the Pipeline
+### 运行管线
 
 ```bash
-# 1. Multi-camera calibration
+# 1. 多相机标定
 python calib/generate_charuco_board.py
 python calib/camera_serial.py
 python calib/multi_d435_charuco_calibrate.py
 python calib/multi_select_best_extrinsics_yaml.py
 
-# 2. Point cloud fusion (choose one)
-python fusion/multi_d435_fusion_dense_icp.py    # Real-time dense fusion
-python fusion/multi_d435_tsdf_batch_icp.py      # TSDF batch fusion
+# 2. 点云融合（三选一）
+python fusion/multi_d435_fusion_dense_icp.py    # 实时稠密融合
+python fusion/multi_d435_tsdf_batch_icp.py      # TSDF 批量融合
 
-# 3. Post-processing
-python processing/pipeline_extract.py            # One-click crop → RANSAC
+# 3. 后处理
+python processing/pipeline_extract.py            # 一键裁剪 → RANSAC
 
-# 4. Registration
+# 4. 配准
 python registration/register_pcd_to_stl.py
 
-# 5. Mesh
+# 5. 网格重建
 python registration/pcd_to_mesh.py
 
-# 6. Trajectory planning
+# 6. 轨迹规划
 python trajectory/conv_hull_traj_planner.py
 python trajectory/ply_ls_ALL_one.py
 
-# 7. Eye-to-hand calibration & FTP upload
+# 7. 手眼标定 + FTP 上传
 python robot_comm/robot_hand_eye_calibrate/01_collect_fanuc_cam0_charuco.py
 python robot_comm/robot_hand_eye_calibrate/02_solve_fanuc_cam0_eye_to_hand.py
 python robot_comm/ftp_upload_test.py --host YOUR_ROBOT_IP SPRAY_001.LS
@@ -390,35 +363,35 @@ python robot_comm/ftp_upload_test.py --host YOUR_ROBOT_IP SPRAY_001.LS
 
 ---
 
-## Documentation
+## 技术文档
 
-Detailed technical documentation (Chinese) in [`docs/`](docs/):
+[`docs/`](docs/) 目录下有 7 篇中文技术文档：
 
-| Document | Content |
-|----------|---------|
-| [`pipeline.md`](docs/pipeline.md) | Full pipeline overview with ASCII diagram |
-| [`calibration.md`](docs/calibration.md) | ChArUco board design, solvePnP, MAD outlier filtering |
-| [`fusion.md`](docs/fusion.md) | ICP variants, TSDF theory, 4-filter-mode depth filtering |
-| [`trajectory.md`](docs/trajectory.md) | Convex hull algorithm, OBB fitting, B-spline, LS format |
-| [`hardware.md`](docs/hardware.md) | Rig design, materials, CAD, 3D printing |
-| [`robot_integration.md`](docs/robot_integration.md) | Eye-to-hand calib, FTP, Stream Motion, RMI, PLC |
-| [`requirements.md`](docs/requirements.md) | Hardware/software requirements & setup checklist |
-
----
-
-## License
-
-MIT License — see [LICENSE](LICENSE). Some code details abstracted due to IP restrictions.
+| 文档 | 内容 |
+|------|------|
+| [`pipeline.md`](docs/pipeline.md) | 完整管线架构与数据流 |
+| [`calibration.md`](docs/calibration.md) | ChArUco 标定板设计、solvePnP 链式推导、MAD 离群筛选 |
+| [`fusion.md`](docs/fusion.md) | ICP 变体、TSDF 理论、4 种深度滤波模式 |
+| [`trajectory.md`](docs/trajectory.md) | 凸包算法、OBB 提取、B样条、LS 文件格式 |
+| [`hardware.md`](docs/hardware.md) | 相机平台设计、材料清单、3D 打印 |
+| [`robot_integration.md`](docs/robot_integration.md) | 手眼标定、FTP、Stream Motion、RMI、PLC |
+| [`requirements.md`](docs/requirements.md) | 硬件/软件环境要求与检查清单 |
 
 ---
 
-## Acknowledgements
+## 开源协议
 
-- **FANUC CORPORATION** — Official ROS2 driver and Roboguide simulation software
-- **Intel RealSense** — D435 depth cameras and cross-platform SDK
-- **Open3D** — High-performance 3D data processing library
-- **OpenCV** — Camera calibration and ChArUco marker support
+MIT License — 详见 [LICENSE](LICENSE)。部分代码因课题组知识产权限制已做抽象处理。
 
 ---
 
-*For questions or collaboration, contact **Pengtu Zhang** (张鹏图) at 2386580469@qq.com.*
+## 致谢
+
+- **FANUC CORPORATION** — 官方 ROS2 驱动与 Roboguide 仿真软件
+- **Intel RealSense** — D435 深度相机及跨平台 SDK
+- **Open3D** — 高性能三维数据处理库
+- **OpenCV** — 相机标定与 ChArUco 标记支持
+
+---
+
+*技术交流与合作请联系 **张鹏图** — 2386580469@qq.com*
