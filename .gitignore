@@ -43,11 +43,8 @@ ls_per_face/
 !**/example_data/**
 !**/example_*/
 
-# CAD source files (large binaries)
-*.SLDPRT
-*.SLDASM
-*.SLDDRW
-*.bak
+# CAD source files — SolidWorks source files are intentionally tracked
+# (available in hardware/solidworks/)
 
 # Roboguide simulation caches
 SavePoints/
