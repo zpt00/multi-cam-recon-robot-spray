@@ -9,9 +9,9 @@
 
 > ⚠️ **知识产权声明**
 >
-> 本仓库发布**核心算法代码与硬件设计**用于技术展示。部分实现细节、生产参数和完整配置
-> 因课题组知识产权限制已做抽象处理（用 `YOUR_CAMERA_SERIAL`、`YOUR_ROBOT_IP` 等占位符
-> 替代）。**完整可运行代码可根据合作或评估需要提供**。详见 [LICENSE](LICENSE)。
+> 本仓库为项目**技术展示**，包含系统架构、硬件设计（SolidWorks 源文件 / CAD 图纸 / BOM）、
+> 技术文档和仿真工程。**核心算法源代码因课题组知识产权限制未公开**，可根据合作或评估需要
+> 单独提供。详见 [LICENSE](LICENSE)。
 
 ---
 
@@ -118,17 +118,12 @@
 
 ```
 multi-cam-recon-robot-spray/
-├── calib/            # 多相机 ChArUco 标定与外参筛选
-├── fusion/           # 点云融合（ICP / TSDF）
-├── processing/       # 点云后处理（滤波 / 裁剪 / 分割）
-├── registration/     # PCD→STL 配准 + Poisson 网格重建
-├── trajectory/       # 喷涂轨迹规划 + LS 文件生成
-├── robot_comm/       # 机器人通讯（FTP / 手眼标定）
-├── hardware/         # 硬件设计（SolidWorks 源文件 / STEP / BOM）
-├── sim/              # FANUC Roboguide 仿真
-├── fanuc/            # FANUC ROS2 驱动文档
-├── docs/             # 中文技术文档
-└── images/           # 系统照片与演示视频
+├── hardware/         # 硬件设计（SolidWorks 源文件 / CAD 导出 / BOM / 现场照片）
+├── sim/              # FANUC Roboguide 喷涂仿真工程
+├── fanuc/            # FANUC ROS2 驱动参考文档
+├── docs/             # 中文技术文档（管线 / 标定 / 融合 / 轨迹 / 硬件 / 集成）
+├── images/           # 系统照片、CAD 渲染图、演示视频
+└── requirements.txt  # 运行依赖列表
 ```
 
 ---
@@ -157,28 +152,14 @@ multi-cam-recon-robot-spray/
 - **机器人**: FANUC 工业机器人 + R-30iB+ 控制器，以太网接口
 - **可选**: FANUC Roboguide（Windows，用于仿真）
 
-### 安装
+### 依赖环境
 
-```bash
-git clone --recurse-submodules https://github.com/zpt00/multi-cam-recon-robot-spray.git
-cd multi-cam-recon-robot-spray
-pip install -r requirements.txt
-# Intel RealSense SDK 2.0 需单独安装：
-# https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md
+```
+Python 3.8+ · Open3D · OpenCV (ChArUco) · Intel RealSense SDK 2.0
+NumPy · SciPy · PyYAML · FANUC TP/LS
 ```
 
-### 运行管线
-
-```bash
-# 标定 → 融合 → 后处理 → 配准 → 网格 → 轨迹 → 上传
-python calib/multi_d435_charuco_calibrate.py       # 多相机标定
-python calib/multi_select_best_extrinsics_yaml.py   # 最优外参筛选
-python fusion/multi_d435_fusion_dense_icp.py         # 稠密点云融合
-python processing/pipeline_extract.py                # 一键后处理
-python registration/register_pcd_to_stl.py           # PCD→STL配准
-python trajectory/conv_hull_traj_planner.py          # 轨迹规划
-python robot_comm/ftp_upload_test.py SPRAY_001.LS   # FTP上传
-```
+> 核心源代码因课题组限制未公开，可联系作者获取。技术文档和硬件设计文件完整开放。
 
 ---
 
