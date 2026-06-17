@@ -1,39 +1,31 @@
-# Robot Communication — FANUC Controller Interface
+# 机器人通讯 — FANUC 控制器接口
 
-Tools for robot integration: hand-eye calibration, program upload, and automated
-production loop control.
+手眼标定、程序上传、自动化生产循环控制。
 
-## Scripts
+## 脚本
 
-| Script | Description |
-|--------|-------------|
-| `ftp_upload_test.py` | FTP upload of LS trajectory files to FANUC controller |
-| `robot_hand_eye_calibrate/` | Eye-to-hand calibration (camera → robot base) |
+| 脚本 | 说明 |
+|------|------|
+| `ftp_upload_test.py` | FTP 上传 LS 文件至 FANUC 控制器 |
+| `robot_hand_eye_calibrate/` | Eye-to-hand 手眼标定全套 |
 
-## Hand-Eye Calibration
+## 手眼标定流程
 
 ```
-01_collect_fanuc_cam0_charuco.py   ← Collect ChArUco poses + robot TCP poses
-02_solve_fanuc_cam0_eye_to_hand.py ← Solve AX=XB for camera-to-base transform
-03_convert_cam_to_base.py           ← Apply transform to convert coordinates
-04_convert_cam_to_tcp.py            ← Convert camera-frame poses to TCP-frame
-ls_cam0_to_base.py                  ← Batch convert LS files from cam to base frame
-ply_surface_all_ls_M10iD12_cam0_to_base_exec.py  ← Full pipeline: mesh → LS in base coordinates
+01_collect   → 采集 ChArUco 位姿 + 机器人 TCP 位姿
+02_solve     → 求解 AX=XB，得到相机→基座变换
+03_convert   → 将 cam0 坐标系轨迹转换到基座坐标系
+04_convert   → 进一步转换到 TCP 坐标系
 ```
 
-## FTP Upload
+## FTP 上传
 
 ```bash
-python ftp_upload_test.py --host YOUR_ROBOT_IP --local_dir /path/to/ls_files
+python ftp_upload_test.py --host 机器人IP 轨迹文件.ls
 ```
 
-Automatically uploads generated LS files to the FANUC controller's program
-directory for immediate execution.
-
-## UDP/PLC Production Loop
+## 生产循环
 
 ```
-PLC → [UDP start signal] → Process PCD → Generate LS → Upload LS → [UDP complete] → PLC
+PLC → [UDP 启动信号] → 处理点云 → 生成 LS → FTP 上传 → [UDP 完成] → PLC
 ```
-
-See `trajectory/pc_plc_generation.py` for the automated production loop controller.

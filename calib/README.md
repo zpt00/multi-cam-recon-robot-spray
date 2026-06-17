@@ -1,35 +1,28 @@
-# Calibration — Multi-Camera ChArUco Extrinsic Calibration
+# 标定 — 多相机 ChArUco 外参标定
 
-## Scripts
+## 脚本
 
-| Script | Description |
-|--------|-------------|
-| `generate_charuco_board.py` | Generate printable ChArUco calibration board (Diamond markers) |
-| `camera_serial.py` | Query and list all connected RealSense camera serial numbers |
-| `multi_d435_charuco_calibrate.py` | **Main**: Multi-camera ChArUco extrinsic calibration in real-time |
-| `multi_select_best_extrinsics_yaml.py` | **Post-processing**: Robust best extrinsic selection via MAD outlier rejection |
+| 脚本 | 说明 |
+|------|------|
+| `generate_charuco_board.py` | 生成可打印的 ChArUco 标定板 |
+| `camera_serial.py` | 查询所有连接的 RealSense 相机序列号 |
+| `multi_d435_charuco_calibrate.py` | **主程序**：实时多相机 ChArUco 外参标定 |
+| `multi_select_best_extrinsics_yaml.py` | **后处理**：MAD 离群剔除，筛选最优外参 |
 
-## Pipeline
+## 流程
 
 ```
 camera_serial.py → multi_d435_charuco_calibrate.py → multi_select_best_extrinsics_yaml.py
 ```
 
-1. **Query cameras**: `python camera_serial.py` — note the serial numbers
-2. **Set serials**: Edit `CAM_SERIALS` list in the calibrate script
-3. **Calibrate**: `python multi_d435_charuco_calibrate.py` — press `s` to save each sample
-4. **Select best**: `python multi_select_best_extrinsics_yaml.py`
+1. 查询相机序列号，填入 `CAM_SERIALS` 列表
+2. 运行标定程序，移动标定板覆盖各相机视野，按 `s` 保存每组外参
+3. 运行筛选程序，自动剔除离群样本，选出最优外参
 
-## Key Parameters
+## 关键参数
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `SQUARES_X / SQUARES_Y` | 5 / 7 | ChArUco board grid dimensions |
-| `SQUARE_LENGTH_M` | 0.040 | Square side length (meters) |
-| `MARKER_LENGTH_M` | 0.030 | ArUco marker side length (meters) |
-| `MIN_VALID_CAMERAS` | 2 | Minimum cameras needed for a valid capture |
-
-## Output
-
-- `output_multi_extrinsics/` — All raw calibration samples
-- `output_multi_extrinsics_selected/` — Filtered best extrinsics + CSV report
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `SQUARES_X / SQUARES_Y` | 5 / 7 | 棋盘格行列数 |
+| `SQUARE_LENGTH_M` | 0.040 | 方格边长（米） |
+| `MARKER_LENGTH_M` | 0.030 | ArUco 标记边长（米） |

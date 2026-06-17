@@ -1,41 +1,20 @@
-# Fusion — Multi-View Point Cloud Fusion
+# 融合 — 多视角点云融合
 
-Real-time dense 3D reconstruction from multiple RealSense D435 depth cameras.
+实时稠密三维重建，将多台 RealSense D435 的深度图转化为统一坐标系下的完整点云。
 
-## Scripts
+## 脚本
 
-| Script | Description |
-|--------|-------------|
-| `multi_d435_fusion_icp.py` | **Basic**: Point cloud fusion with optional Point-to-Plane ICP refinement |
-| `multi_d435_fusion_dense_icp.py` | **Dense**: Dual point-cloud strategy — dense for visualization, sparse for ICP |
-| `multi_d435_tsdf_batch_icp.py` | **TSDF**: Batch capture + ICP-corrected TSDF volumetric fusion |
-| `single_camera_plane_test.py` | Single-camera validation utility |
+| 脚本 | 说明 |
+|------|------|
+| `multi_d435_fusion_icp.py` | **基础版**：点云融合 + Point-to-Plane ICP 微调 |
+| `multi_d435_fusion_dense_icp.py` | **稠密版**：双路策略——稠密点云用于融合，稀疏点云用于 ICP |
+| `multi_d435_tsdf_batch_icp.py` | **TSDF 版**：批量采集 + ICP 修正 + TSDF 体积融合 |
+| `single_camera_plane_test.py` | 单相机验证工具 |
 
-## Fusion Methods
+## 三种融合方式
 
-### 1. Basic ICP Fusion (`fusion_icp.py`)
-- Per-frame depth → point cloud → coordinate transform → ICP → merge
-- Post-processing: statistical outlier removal, radius filtering, voxel hole-filling
-- Interactive: `s` save, `r` reset ICP, `q` quit
-
-### 2. Dense ICP Fusion (`fusion_dense_icp.py`)
-- **Dual cloud strategy**:
-  - **Dense cloud** (stride=2): Full detail for final fusion
-  - **ICP cloud** (stride=8 + voxel downsampling): Lightweight for fast registration
-- ICP only adjusts pose; final point cloud density is preserved
-
-### 3. TSDF Batch Fusion (`tsdf_batch_icp.py`)
-- Warmup → batch capture → accumulated ICP → TSDF integration
-- Outputs colored point cloud + triangle mesh + extrinsic YAML
-- Volumetric fusion naturally fills small holes
-
-## Key Parameters
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `ICP_MAX_CORR_DIST` | 0.03 | Max correspondence distance (m) |
-| `ICP_FITNESS_TH` | 0.12 | Fitness threshold for ICP acceptance |
-| `TSDF_VOXEL_LENGTH` | 0.005 | TSDF voxel size (m) |
-| `TSDF_SDF_TRUNC` | 0.04 | TSDF truncation distance (m) |
-| `DENSE_STRIDE` | 2 | Dense point cloud stride |
-| `ICP_STRIDE` | 8 | ICP point cloud stride |
+| 方式 | 特点 |
+|------|------|
+| 基础 ICP | 单路降采样 + ICP → 合并后处理，简单直接 |
+| 稠密 ICP | **双路策略**：稠密点云保细节，稀疏 ICP 快速配准 |
+| TSDF 批次 | 体积融合天然补洞，输出彩色点云 + 三角网格 |

@@ -1,49 +1,24 @@
-# Trajectory — Spray-Painting Path Planning & Robot Code Generation
+# 轨迹 — 喷涂路径规划与机器人代码生成
 
-The core trajectory planning module. Takes reconstructed 3D meshes as input and
-generates FANUC robot spray-painting programs (LS files).
+将重建好的三维网格自动转化为 FANUC 机器人可执行的喷涂轨迹程序（LS 文件）。
 
-## Scripts
+## 脚本
 
-| Script | Description |
-|--------|-------------|
-| `conv_hull_traj_planner.py` | **Convex hull + OBB**: Convex hull slicing, OBB extraction, B-spline smoothing, closest-surface pose generation |
-| `ply_surface_all_ls.py` | **Multi-face scanning**: First-hit ray scanning, snake trajectory, W/P/R computation |
-| `ply_ls_ALL_one.py` | **All-in-one**: Full pipeline from PLY mesh to LS file export |
-| `pc_plc_generation.py` | **Production loop**: UDP/PLC handshake for automated batch processing |
+| 脚本 | 说明 |
+|------|------|
+| `conv_hull_traj_planner.py` | **凸包切片法**：凸包 + OBB + 切片偏移 + B样条 + 最近表面姿态 |
+| `ply_surface_all_ls.py` | **多面射线法**：六面 first-hit 扫描 + 蛇形连接 + LS 导出 |
+| `ply_ls_ALL_one.py` | **一体化**：PLY 网格 → 喷枪轨迹 → LS 文件 |
+| `pc_plc_generation.py` | **生产循环**：UDP/PLC 握手，自动批量处理 |
 
-## Trajectory Planning Approaches
+## 两种规划方法
 
-### 1. Convex Hull + OBB Slicing (`conv_hull_traj_planner.py`)
+| 方法 | 适用场景 |
+|------|----------|
+| 凸包切片 + OBB | 复杂外形工件的环绕喷涂 |
+| 多面射线扫描 | 规则工件的六面分区喷涂 |
 
-```
-Point cloud → Convex hull → OBB → Slice along long axis → Offset by standoff → B-spline smooth → Pose generation
-```
+## LS 输出格式
 
-- Computes convex hull mesh and oriented bounding box (OBB) from workpiece point cloud
-- Slices the OBB along its local axes at configurable spacing (default: 20mm)
-- Offsets slices by standoff distance (default: 80mm) for spray gun clearance
-- B-spline curve fitting + arc-length resampling for smooth trajectories
-- **`closest_surface`** orientation: each trajectory point aims at nearest mesh surface
-- Curvature-adaptive speed: 100mm/s straight, 150mm/s curved
-- Max angular step constraint (8°/step) to prevent robot wrist singularities
-
-### 2. Multi-Face Ray Scanning (`ply_surface_all_ls.py`)
-
-```
-PLY mesh → Axis-aligned crop → Per-face first-hit rays → Voxel dedup → Snake connect → LS export
-```
-
-- 6-face scanning (top/bottom/front/back/left/right)
-- Ray-casting from each face direction, first-hit on mesh surface
-- Voxel-based deduplication within each face
-- Snake-pattern trajectory connection (zigzag optimization)
-- Direct FANUC LS file export with UFRAME/UTOOL configuration
-
-## Output Format
-
-FANUC `.LS` program files containing:
-- `UFRAME_NUM` / `UTOOL_NUM` coordinate system config
-- Position data: X, Y, Z, W, P, R (Euler angles)
-- Speed commands with curvature adaptation
-- Safe retract/home positions between faces
+生成的 FANUC LS 程序包含：用户坐标系（UFRAME）、工具坐标系（UTOOL）、
+位置数据（X/Y/Z/W/P/R）、曲率自适应速度指令、面间安全回退。

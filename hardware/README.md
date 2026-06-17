@@ -1,48 +1,48 @@
-# Hardware Design — Multi-Camera Acquisition Rig
+# 硬件设计 — 多相机采集平台
 
-Custom-designed 4-camera mounting rig for Intel RealSense D435 depth sensors
-in an industrial spray-painting workcell.
+自研四相机标定平台，用于 FANUC 机器人喷涂工位的工件三维扫描。
 
-## Design Overview
+## 设计概述
 
-The rig holds **4 Intel RealSense D435 cameras** in fixed positions around the
-workpiece, providing multi-view depth coverage for dense 3D reconstruction.
+平台集成 **4 台 Intel RealSense D435 深度相机**，固定在工件周围提供多视角覆盖。
 
-### Key Components
+### 主要组件
 
-| Component | Description |
-|-----------|-------------|
-| Camera Mount Plates | Aluminum alloy brackets — individually adjustable angle |
-| Calibration Connector | Precision-machined plate for ChArUco board mounting during calibration |
-| Base Frame | Aluminum profile (2020/3030) construction — mounts to workcell frame |
-| Fasteners | M5/M6 screws, T-nuts, corner brackets |
+| 组件 | 说明 |
+|------|------|
+| 相机安装支架 | 铝合金加工件，独立角度可调 |
+| 标定连接板 | 精密加工 ChArUco 标定板安装件（含 3D 打印版本） |
+| 基座框架 | 2020/3030 铝型材，减振脚垫 |
+| 紧固件 | M5/M6 螺丝、T 型螺母、角码 |
 
-## Files
+## 文件说明
 
-### CAD Exports (`cad_exports/`)
+### SolidWorks 源文件（`solidworks/`）
+完整零件和装配体源文件（`.SLDPRT`、`.SLDASM`、`.SLDDRW`），可直接编辑修改。
 
-| File | Format | Description |
-|------|--------|-------------|
-| `装配体2.STEP` | STEP | Full assembly model |
-| `标定连接板.STEP` | STEP | Calibration board connector plate |
-| `三角形.STEP` | STEP | Triangular bracket |
-| `十字架形.STEP` | STEP | Cross-shaped bracket |
-| `标定板.DWG` | DWG | ChArUco calibration board CAD drawing |
-| `板材.DWG` | DWG | Panel machining drawing |
-| `标定连接板.3mf` | 3MF | 3D-printable calibration connector |
-| `BOM_采购清单.xlsx` | Excel | Bill of materials & procurement list |
+### CAD 导出（`cad_exports/`）
 
-### Photos (`photos/`)
+| 文件 | 格式 | 说明 |
+|------|------|------|
+| `装配体2.STEP` | STEP | 整机装配 |
+| `标定连接板.STEP` | STEP | 标定板连接件 |
+| `三角形.STEP` | STEP | 三角支架 |
+| `十字架形.STEP` | STEP | 十字支架 |
+| `标定板.DWG` | DWG | 标定板工程图 |
+| `板材.DWG` | DWG | 板材加工图 |
+| `标定连接板.3mf` | 3MF | 可 3D 打印的标定连接件 |
+| `BOM_采购清单.xlsx` | Excel | 完整采购清单 |
 
-| File | Description |
-|------|-------------|
-| `标定板机器人连接件及标定板图片.jpg` | Calibration board + robot connector |
-| `数据采集系统图片.jpg` | 4-camera data acquisition system setup |
-| `fanuc现场图片.jpg` | On-site installation with FANUC robot |
+### 现场照片（`photos/`）
 
-## Notes
+| 文件 | 内容 |
+|------|------|
+| `标定板机器人连接件及标定板图片.jpg` | 标定板与机器人连接件 |
+| `数据采集系统图片.jpg` | 四相机采集系统全景 |
+| `fanuc现场图片.jpg` | FANUC 机器人现场部署 |
 
-- Original SolidWorks source files (`.SLDPRT`, `.SLDASM`) available upon request
-- 3D-printable parts were fabricated in PLA — STL/3MF files included
-- The rig is designed to be rigid enough for industrial environments while
-  allowing fine angular adjustment per camera
+## 备注
+
+- SolidWorks 源文件完全开放
+- 3D 打印件为 PLA 材质，STL/3MF 文件可直接使用
+- 平台设计兼顾产线环境的刚性和相机角度的精细调节

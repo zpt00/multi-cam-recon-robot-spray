@@ -1,36 +1,24 @@
-# Registration — PCD-to-STL Model Registration
+# 配准 — PCD 与 STL 模型配准及网格重建
 
-Align scanned point clouds with CAD reference models for trajectory planning.
+将扫描点云对齐到 CAD 参考模型，并重建为水密三角网格。
 
-## Scripts
+## 脚本
 
-| Script | Description |
-|--------|-------------|
-| `register_pcd_to_stl.py` | **Main**: Auto-register PCD to STL via FPFH + RANSAC + ICP |
-| `apply_transform.py` | Apply saved transform matrix to a point cloud |
-| `inspect_data.py` | Pre-registration data inspection (scale, stats, overlay) |
-| `pcd_to_mesh.py` | Point cloud → Poisson surface reconstruction → mesh |
+| 脚本 | 说明 |
+|------|------|
+| `register_pcd_to_stl.py` | **主程序**：FPFH 特征 + RANSAC 全局配准 + ICP 精配准 |
+| `apply_transform.py` | 将保存的变换矩阵应用到点云 |
+| `inspect_data.py` | 配准前数据预检（尺度单位、统计、叠加预览） |
+| `pcd_to_mesh.py` | 点云 → Poisson 曲面重建 → 三角网格 |
 
-## Registration Pipeline
+## 配准流程
 
 ```
-PCD scan + STL model
+inspect_data.py           ← 检查尺度和单位
     ↓
-inspect_data.py         ← Check scale, units, preview overlay
+register_pcd_to_stl.py    ← FPFH+RANSAC 粗配准 → Point-to-Plane ICP 精配准
     ↓
-register_pcd_to_stl.py  ← 1) FPFH features + RANSAC global alignment
-                             2) Point-to-Plane ICP refinement
+apply_transform.py        ← 应用 T_pcd_to_stl
     ↓
-apply_transform.py      ← Apply T_pcd_to_stl to register
-    ↓
-pcd_to_mesh.py           ← Poisson reconstruction → clean mesh
+pcd_to_mesh.py            ← Poisson 重建 → 网格清理
 ```
-
-## Key Parameters
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `STL_SAMPLE_POINTS` | 10000 | Points sampled from STL for FPFH |
-| `FPFH_RADIUS_FACTORS` | [3, 5, 8] | Multi-scale FPFH radii |
-| `RANSAC_MAX_ITER` | 4000000 | RANSAC iterations |
-| `ICP_MAX_ITER` | 100 | ICP refinement iterations |
