@@ -21,7 +21,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 -------------------------------------------------------------------------------
-NOTE: Some code in this repository has been abstracted with placeholder values
-(YOUR_CAMERA_SERIAL, YOUR_ROBOT_IP, etc.) due to laboratory intellectual
-property restrictions. Full working code is available upon request for
-collaboration or evaluation purposes.
+NOTE: 本仓库所展示的全部技术细节均为已公开内容。核心算法源代码因课题组知识产权限制未公开。
