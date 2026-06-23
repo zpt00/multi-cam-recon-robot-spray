@@ -171,7 +171,6 @@ NumPy · SciPy · PyYAML · FANUC TP/LS
 |------|------|
 | [`pipeline.md`](docs/pipeline.md) | 系统技术概述与管线说明 |
 | [`project_overview.md`](docs/project_overview.md) | 项目背景与设计思路 |
-| [`project_presentation.pdf`](docs/project_presentation.pdf) | 阶段性汇报 PPT（13 页） |
 
 ---
 
