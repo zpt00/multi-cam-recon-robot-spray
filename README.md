@@ -169,13 +169,9 @@ NumPy · SciPy · PyYAML · FANUC TP/LS
 
 | 文档 | 内容 |
 |------|------|
-| [`pipeline.md`](docs/pipeline.md) | 完整管线架构与数据流 |
-| [`calibration.md`](docs/calibration.md) | ChArUco 标定板设计、solvePnP 链式推导、MAD 离群筛选 |
-| [`fusion.md`](docs/fusion.md) | ICP 变体、TSDF 理论、4 种深度滤波模式 |
-| [`trajectory.md`](docs/trajectory.md) | 凸包算法、OBB 提取、B样条、LS 文件格式 |
-| [`hardware.md`](docs/hardware.md) | 相机平台设计、材料清单、3D 打印 |
-| [`robot_integration.md`](docs/robot_integration.md) | 手眼标定、FTP、Stream Motion、RMI、PLC |
-| [`requirements.md`](docs/requirements.md) | 硬件/软件环境要求与检查清单 |
+| [`pipeline.md`](docs/pipeline.md) | 系统技术概述与管线说明 |
+| [`project_overview.md`](docs/project_overview.md) | 项目背景与设计思路 |
+| [`project_presentation.pdf`](docs/project_presentation.pdf) | 阶段性汇报 PPT（13 页） |
 
 ---
 
